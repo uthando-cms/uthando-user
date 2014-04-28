@@ -1,0 +1,31 @@
+{
+    "name": "uthando-cms/uthando-user",
+    "description": "User module for Uthando CMS",
+    "license": "BSD-3-Clause",
+    "keywords": [ "framework", "zf2","cms", "uthando", "user"],
+    "homepage": "http://shaunfreeman.name/",
+    
+    "authors": [
+        {
+            "name": "Shaun Freeman",
+            "email": "shaun@shaunfreeman.co.uk",
+            "homepage": "https://github.com/shaunfreeman",
+            "role": "Developer"
+        }
+    ],
+    
+    "require" : {
+	    "php" : ">=5.4",
+	    "zendframework/zendframework" : "2.*",
+	    "uthando-cms/uthando-common" : "dev-master"
+    },
+    
+    "autoload": {
+        "psr-0": {
+            "UthandoUser": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}

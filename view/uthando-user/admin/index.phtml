@@ -1,0 +1,32 @@
+
+<div class="tab-wrap">
+
+	<div class="row-fluid">
+    	<?=$this->partial('uthando-admin/partial/search', [
+    		'name'			=> 'user',
+    		'searchInputs'	=> [
+    			'Email' => 'email',
+                'User'  => 'firstname-lastname',
+    		],
+    	]);?>
+	</div>
+	
+	<div id="table-user" class="row-fluid table-wrap">
+    	<?=$this->partial('uthando-user/admin/list', [
+    	    'models' => $this->models
+    	]); ?>
+	</div>
+
+</div>
+
+<?php $this->headScript()->captureStart(); ?>
+$(document).ready(function(){
+	$('#table-user').dataGrid({
+    	url : 'user/list',
+    	query: { sort : 'name' },
+    	searchForm : $('#search-user'),
+    	paging : 'links',
+    	columnSort: true
+	});
+});
+<?php $this->headScript()->captureEnd(); ?>

@@ -1,0 +1,92 @@
+<?php
+$form = $this->form;
+$routeArray = ['action' => $this->formAction];
+?>
+
+<form class="form-horizontal"  method="post" action="<?=$this->url('user/default', $routeArray) ?>">
+    <fieldset>
+    <legend><?=$this->legend; ?> </legend>
+    <div class="control-group<?php if ($form->get('firstname')->getMessages()) echo ' error'; ?>">
+        <label class="control-label" for="title">Forename:</label>
+        <div class="controls">
+            <?=$this->formInput($form->get('firstname')); ?>
+            <span class="help-block">
+            <?=$this->formElementErrors($form->get('firstname'), array(
+                'class' => 'unstyled'
+            )); ?>
+            </span>
+        </div>
+    </div>
+    
+    <div class="control-group<?php if ($form->get('lastname')->getMessages()) echo ' error'; ?>">
+        <label class="control-label" for="title">Surname:</label>
+        <div class="controls">
+            <?=$this->formInput($form->get('lastname')); ?>
+            <span class="help-block">
+            <?=$this->formElementErrors($form->get('lastname'), [
+                'class' => 'unstyled'
+            ]); ?>
+            </span>
+        </div>
+    </div>
+    
+    <div class="control-group<?php if ($form->get('email')->getMessages()) echo ' error'; ?>">
+        <label class="control-label" for="title">Email:</label>
+        <div class="controls">
+            <?=$this->formEmail($form->get('email')); ?>
+            <span class="help-block">
+            <?=$this->formElementErrors($form->get('email'), [
+                'class' => 'unstyled'
+            ]); ?>
+            </span>
+        </div>
+    </div>
+    
+    <?php if($this->formAction === 'add'):?>
+    <div class="control-group<?php if ($form->get('passwd')->getMessages()) echo ' error'; ?>">
+        <label class="control-label" for="title">Password:</label>
+        <div class="controls">
+            <?=$this->formPassword($form->get('passwd')); ?>
+            <label class="checkbox inline">
+            	<input type="checkbox" id="showPassword"> Show Password
+            </label>
+            <span class="help-block">
+            <?=$this->formElementErrors($form->get('passwd'), [
+                'class' => 'unstyled'
+            ]); ?>
+            </span>
+        </div>
+    </div>
+    
+    <div class="control-group<?php if ($form->get('passwd-confirm')->getMessages()) echo ' error'; ?>">
+        <label class="control-label" for="title">Confirm Password:</label>
+        <div class="controls">
+            <?=$this->formPassword($form->get('passwd-confirm')); ?>
+            <span class="help-block">
+            <?=$this->formElementErrors($form->get('passwd-confirm'), [
+                'class' => 'unstyled'
+            ]); ?>
+            </span>
+        </div>
+    </div>
+    <?php endif;?>
+    
+    <?=$this->formElement($form->get('userId')); ?>
+   	
+    <input type="hidden" name="action" value="<?=$this->formAction; ?>">
+    
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn btn-primary" 
+            data-loading-text="Please wait...">Submit</button>
+            <button type="button" class="btn btn-warning" 
+            data-loading-text="Please wait..." onClick="window.location = '<?=$this->url('home') ?>';">Cancel</button>
+        </div>
+    </div>
+    </fieldset>
+    
+    <?=$this->formElement($form->get('returnTo')); ?>
+    
+</form>
+
+

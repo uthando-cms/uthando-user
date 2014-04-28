@@ -1,0 +1,14 @@
+<?php $this->headTitle('Add User') ?>
+<?=$this->ztbFlashMessenger()->render(); ?>
+
+<?=$this->partial('uthando-admin/partial/add-edit-form', [
+	'form' 			=> $this->form,
+	'formAction' 	=> 'add',
+	'formName'		=> 'User',
+	'postRoute'		=> 'admin/user/edit',
+	'cancelRoute'	=> 'admin/user',
+	'formElements'	=> [
+		'firstname', 'lastname', 'email', 'passwd',
+        'passwd-confirm', 'role', 
+	],
+]); ?>

@@ -1,0 +1,7 @@
+<?php $this->headTitle('Edit User Details') ?>
+
+<?=$this->partial('uthando-user/user/user-form', [
+	'form' => $this->form,
+	'formAction' => 'edit',
+    'legend' => 'Edit User Form:'
+]); ?>

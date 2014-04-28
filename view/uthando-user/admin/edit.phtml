@@ -1,0 +1,15 @@
+<?php $this->headTitle('Edit User') ?>
+<?=$this->ztbFlashMessenger()->render(); ?>
+
+<?=$this->partial('uthando-admin/partial/add-edit-form', [
+	'form' 			=> $this->form,
+	'formAction' 	=> 'edit',
+	'formName'		=> 'User',
+    'primaryKey'    => $this->model->getUserId(),
+	'postRoute'		=> 'admin/user/edit',
+	'cancelRoute'	=> 'admin/user',
+	'formElements'	=> [
+		'firstname', 'lastname', 'email', 'passwd',
+        'passwd-confirm', 'role', 'userId',
+	],
+]); ?>
