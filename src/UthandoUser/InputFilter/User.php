@@ -12,95 +12,95 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
     
 	public function __construct()
 	{
-		$this->add(array(
+		$this->add([
             'name'       => 'firstname',
             'required'   => true,
-            'filters'    => array(
-                array('name'    => 'StripTags'),
-                array('name'    => 'StringTrim'),
-            ),
-            'validators' => array(
-                array('name' => 'Alpha', 'options' => array(
+            'filters'    => [
+                ['name'    => 'StripTags'],
+                ['name'    => 'StringTrim'],
+            ],
+            'validators' => [
+                ['name' => 'Alpha', 'options' => [
                     'allowWhiteSpace' => true,
-                )),
-                array('name'    => 'StringLength', 'options' => array(
+                ]],
+                ['name'    => 'StringLength', 'options' => [
                     'encoding' => 'UTF-8',
                     'min'      => 2,
                     'max'      => 255,
-                )),
-            ),
-        ));
+                ]],
+            ],
+        ]);
 		
-		$this->add(array(
+		$this->add([
             'name'       => 'lastname',
             'required'   => true,
-            'filters'    => array(
-                array('name'    => 'StripTags'),
-                array('name'    => 'StringTrim'),
-            ),
-            'validators' => array(
-                array('name' => 'Alpha', 'options' => array(
+            'filters'    => [
+                ['name'    => 'StripTags'],
+                ['name'    => 'StringTrim'],
+            ],
+            'validators' => [
+                ['name' => 'Alpha', 'options' => [
                     'allowWhiteSpace' => true,
-                )),
-                array('name'    => 'StringLength', 'options' => array(
+                ]],
+                ['name'    => 'StringLength', 'options' => [
                     'encoding' => 'UTF-8',
                     'min'      => 2,
                     'max'      => 255,
-                )),
-            ),
-        ));
+                ]],
+            ],
+        ]);
 		
-		$this->add(array(
+		$this->add([
             'name'       => 'passwd',
             'required'   => true,
-            'filters'    => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-		    'validators' => array(
-		        array('name' => 'StringLength', 'options' => array(
+            'filters'    => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+		    'validators' => [
+		        ['name' => 'StringLength', 'options' => [
 		            'min'       => 8,
 		            'encoding'  => 'UTF-8',
-		        )),
-            ),
-        ));
+		        ]],
+            ],
+        ]);
 		
-		$this->add(array(
+		$this->add([
 		    'name'       => 'passwd-confirm',
 		    'required'   => true,
-		    'filters'    => array(
-		        array('name' => 'StripTags'),
-		        array('name' => 'StringTrim'),
-		    ),
-		    'validators' => array(
-		    	array('name' => 'Identical', 'options' => array(
+		    'filters'    => [
+		        ['name' => 'StripTags'],
+		        ['name' => 'StringTrim'],
+		    ],
+		    'validators' => [
+		    	['name' => 'Identical', 'options' => [
                     'token' => 'passwd',
-                )),
-		    )
-		));
+                ]],
+		    ],
+		]);
 	}
 	
 	public function init()
 	{
-	    $this->add(array(
+	    $this->add([
 	        'name'       => 'email',
 	        'required'   => true,
-	        'filters'    => array(
-	            array('name'    => 'StripTags'),
-	            array('name'    => 'StringTrim'),
-	        ),
-	        'validators' => array(
-	            array('name' => 'Zend\Validator\Db\NoRecordExists', 'options' => array(
+	        'filters'    => [
+	            ['name'    => 'StripTags'],
+	            ['name'    => 'StringTrim'],
+	        ],
+	        'validators' => [
+	            ['name' => 'Zend\Validator\Db\NoRecordExists', 'options' => [
 	                'table'    => 'user',
 	                'field'    => 'email',
 	                'adapter'  => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
-	            )),
-	            array('name' => 'EmailAddress', 'options' => array(
+	            ]],
+	            ['name' => 'EmailAddress', 'options' => [
 	                'allow'            => Hostname::ALLOW_DNS,
 	                'useMxCheck'       => true,
 	                'useDeepMxCheck'   => true
-	            )),
-	        )
-	    ));
+	            ]],
+	        ],
+	    ]);
 	}
 }

@@ -10,27 +10,27 @@ class UserSearch extends Form
 	{
 		parent::__construct('Search');
 	
-		$this->add(array(
+		$this->add([
 			'name' => 'user',
-			'attributes' => array(
+			'attributes' => [
 				'type'  => 'text',
 				'placeholder' => 'User:'
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'User:',
-			),
-		));
+			],
+		]);
 	
-		$this->add(array(
+		$this->add([
 			'name' => 'eamil',
-			'attributes' => array(
+			'attributes' => [
 				'type'  => 'email',
 				'placeholder' => 'Email:'
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Site:',
-			),
-		));
+			],
+		]);
 	}
 	
 }

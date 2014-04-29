@@ -7,33 +7,33 @@ class Password extends InputFilter
 {
     public function __construct()
     {
-        $this->add(array(
+        $this->add([
             'name'       => 'passwd',
             'required'   => true,
-            'filters'    => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array('name' => 'StringLength', 'options' => array(
+            'filters'    => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+            'validators' => [
+                ['name' => 'StringLength', 'options' => [
                     'min'       => 8,
                     'encoding'  => 'UTF-8',
-                )),
-            ),
-        ));
+                ]],
+            ],
+        ]);
         
-        $this->add(array(
+        $this->add([
             'name'       => 'passwd-confirm',
             'required'   => true,
-            'filters'    => array(
-                array('name' => 'StripTags'),
-                array('name' => 'StringTrim'),
-            ),
-            'validators' => array(
-                array('name' => 'Identical', 'options' => array(
+            'filters'    => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+            'validators' => [
+                ['name' => 'Identical', 'options' => [
                     'token' => 'passwd',
-                )),
-            )
-        ));
+                ]],
+            ],
+        ]);
     }
 }

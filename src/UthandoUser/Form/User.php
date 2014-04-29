@@ -10,99 +10,99 @@ class User extends Form
 	{
 		parent::__construct('User');
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'userId',
 			'type' => 'hidden',
-		));
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'firstname',
 			'type'  => 'text',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder'    => 'Forename:',
 				'autofocus'      => true,
 			    'autocapitalize' => 'words'
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Forename:',
-			),
-		));
+			],
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'lastname',
 			'type'  => 'text',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder'    => 'Surname:',
 			    'autocapitalize' => 'words'
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Surname:',
-			),
-		));
+			],
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'email',
 			'type'  => 'email',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder' => 'Email:',
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Email:',
-			),
-		));
+			],
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'passwd',
 			'type' => 'password',
-			'attributes' => array(
+			'attributes' => [
 				'id'			=> 'password',
 				'placeholder' 	=> 'Password:',
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Password:',
-			),
-		));
+			],
+		]);
 		
-		$this->add(array(
+		$this->add([
 		    'name' => 'passwd-confirm',
 		    'type' => 'password',
-		    'attributes' => array(
+		    'attributes' => [
 		        'placeholder' 	=> 'Repeat Password:',
-		    ),
-		    'options' => array(
+		    ],
+		    'options' => [
 		        'label' => 'Confirm Password:',
-		    ),
-		));
+		    ],
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'role',
 			'type'  => 'select',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder' => 'Role:',
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Role:',
 				'empty_option' => 'Please choose a user role',
-				'value_options' => array(
+				'value_options' => [
 					'admin' 		=> 'Admin',
 					'registered' 	=> 'Registered',
-				),
-			),
-		));
+				],
+			],
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'dateCreated',
 			'type' => 'hidden',
-		));
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'dateModified',
 			'type' => 'hidden',
-		));
+		]);
 		
-		$this->add(array(
+		$this->add([
 			'name' => 'returnTo',
 		    'type' => 'hidden',
-		));
+		]);
 	}
 }

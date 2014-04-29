@@ -1,5 +1,4 @@
 <?php $this->headTitle('Users') ?>
-<?=$this->ztbFlashMessenger()->render(); ?>
 
 <?php if (count($this->models) > 0): ?>
 
@@ -28,12 +27,12 @@
 			<td><?=$this->escapeHtml($this->formatDate($row->getDateCreated())); ?></td>
 			<td><?=$this->escapeHtml($this->formatDate($row->getDateModified())); ?></td>
 			<td>
-				<?=$this->partial('uthando-admin/partial/edit-actions', array(
+				<?=$this->partial('uthando-admin/partial/edit-actions', [
                 	'pk'		=> 'userId',
                 	'id'		=> $row->getUserId(),
 		    		'tableName'	=> 'user',
                 	'route'		=> 'admin/user/edit',
-		    	));?>
+		    	]);?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
@@ -44,7 +43,7 @@
 <?=$this->paginationControl(
     $this->models,
     'Elastic',
-    'paginate',
+    'application/partial/paginate',
 	['route' => 'admin/user/page']
 ); ?>
 

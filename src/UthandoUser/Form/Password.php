@@ -9,27 +9,27 @@ class Password extends Form
     {
         parent::__construct('Password');
         
-        $this->add(array(
+        $this->add([
             'name' => 'passwd',
             'type' => 'password',
-            'attributes' => array(
+            'attributes' => [
                 'id'			=> 'password',
                 'placeholder' 	=> 'Password:',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => 'Password:',
-            ),
-        ));
+            ],
+        ]);
         
-        $this->add(array(
+        $this->add([
             'name' => 'passwd-confirm',
             'type' => 'password',
-            'attributes' => array(
+            'attributes' => [
                 'placeholder' 	=> 'Repeat Password:',
-            ),
-            'options' => array(
+            ],
+            'options' => [
                 'label' => 'Confirm Password:',
-            ),
-        ));
+            ],
+        ]);
     }
 }

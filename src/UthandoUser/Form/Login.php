@@ -9,39 +9,39 @@ class Login extends Form
     {
     	parent::__construct('Login');
     
-    	$this->add(array(
+    	$this->add([
 			'name' => 'email',
 			'type'  => 'email',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder' => 'Email:',
 				'required' => true,
 				'autofocus' => true
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Email:',
-			),
-    	));
+			],
+    	]);
     
-    	$this->add(array(
+    	$this->add([
 			'name' => 'passwd',
 			'type'  => 'password',
-			'attributes' => array(
+			'attributes' => [
 				'placeholder' => 'Password:',
 				'required' => true
-			),
-			'options' => array(
+			],
+			'options' => [
 				'label' => 'Password:',
-			),
-    	));
+			],
+    	]);
     	
-    	$this->add(array(
+    	$this->add([
     		'name'    => 'security',
     	    'type'    => 'csrf',
-    	));
+    	]);
     	
-    	$this->add(array(
+    	$this->add([
     	    'name' => 'returnTo',
     	    'type' => 'hidden',
-    	));
+    	]);
     }
 }

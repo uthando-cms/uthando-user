@@ -22,7 +22,7 @@ class MvcListener implements ListenerAggregateInterface
         $this->listeners[] = $events->attach(
         	'Zend\Mvc\Controller\AbstractActionController',
             MvcEvent::EVENT_DISPATCH,
-            array($this, 'doAuthentication'),
+            [$this, 'doAuthentication'],
             2
         );
     }

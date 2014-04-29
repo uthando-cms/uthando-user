@@ -2,9 +2,9 @@
 return [
 	'user' => [
 		'auth' => [
-			'credentialTreatment'          => '',
+			'credentialTreatment'          => 'Zend\Crypt\Password\Bcrypt',
 		    'useFallbackTreatment'         => false,
-		    'fallbackCredentialTreatment'  => '',
+		    'fallbackCredentialTreatment'  => 'UthandoUser\Crypt\Password\Md5',
 		],
 	],
 	'userAcl' => [
@@ -178,44 +178,58 @@ return [
         ],
     ],
 	'navigation' => [
+        'default' => [
+            'login' => [
+                'label'     => 'Sing In',
+                'action'    => 'login',
+                'route'     => 'user/login',
+                'resource'  => 'menu:guest',
+            ],
+            'logout' => [
+                'label'     => 'Sign Out',
+                'action'    => 'logout',
+                'route'     => 'user/logout',
+                'resource'  => 'menu:user',
+            ],
+        ],
 		'admin' => [
 			'user' => [
                 'label' => 'User',
                 'pages' => [
                     'list' => [
-                        'label' => 'List All Users',
-                        'action' => 'index',
-                        'route' => 'admin/user',
-                        'resource' => 'menu:admin'
+                        'label'     => 'List All Users',
+                        'action'    => 'index',
+                        'route'     => 'admin/user',
+                        'resource'  => 'menu:admin'
                     ],
                     'add' => [
-                        'label' => 'Add New User',
-                        'action' => 'add',
-                        'route' => 'admin/user/edit',
-                        'resource' => 'menu:admin'
+                        'label'     => 'Add New User',
+                        'action'    => 'add',
+                        'route'     => 'admin/user/edit',
+                        'resource'  => 'menu:admin'
                     ],
                 ],
-                'route' => 'admin/user',
-                'resource' => 'menu:admin'
+                'route'     => 'admin/user',
+                'resource'  => 'menu:admin'
             ],
 		],
 	    'user' => [
             'edit_profile' => [
-                'label' => 'Edit Profile',
-                'action' => 'edit',
-                'route' => 'user/default',
-                'resource' => 'menu:user',
+                'label'     => 'Edit Profile',
+                'action'    => 'edit',
+                'route'     => 'user/default',
+                'resource'  => 'menu:user',
             ],
             'password' => [
-            	'label' => 'Password',
-                'action' => 'password',
-                'route' => 'user/default',
-                'resource' => 'menu:user',
+            	'label'     => 'Password',
+                'action'    => 'password',
+                'route'     => 'user/default',
+                'resource'  => 'menu:user',
             ],
 	        'logout' => [
-	            'label' => 'Logout',
-	            'action' => 'logout',
-	            'route' => 'user/logout',
+	            'label'    => 'Logout',
+	            'action'   => 'logout',
+	            'route'    => 'user/logout',
 	            'resource' => 'menu:user',
 	        ],
         ],
