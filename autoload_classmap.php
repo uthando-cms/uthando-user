@@ -15,6 +15,7 @@ return [
     'UthandoUser\Event\MvcListener'                     => __DIR__ . '/src/UthandoUser/Event/MvcListener.php',
     
     'UthandoUser\Form\Login'                            => __DIR__ . '/src/UthandoUser/Form/Login.php',
+    'UthandoUser\Form\Password'                         => __DIR__ . '/src/UthandoUser/Form/Password.php',
     'UthandoUser\Form\User'                             => __DIR__ . '/src/UthandoUser/Form/User.php',
     'UthandoUser\Form\UserSearch'                       => __DIR__ . '/src/UthandoUser/Form/UserSearch.php',
     
