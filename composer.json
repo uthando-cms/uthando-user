@@ -16,9 +16,7 @@
     
     "require" : {
 	    "php" : ">=5.4",
-	    "zendframework/zendframework" : "2.*",
-	    "uthando-cms/uthando-common" : "dev-master",
-	    "uthando-cms/uthando-admin" : "dev-master"
+	    "zendframework/zendframework" : "2.*"
     },
     
     "autoload": {
