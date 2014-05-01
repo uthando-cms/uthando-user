@@ -87,11 +87,14 @@ class UserController extends AbstractActionController
 	                'form' => $result,
 	            ];
 	        }
+	        
+	        // Redirect to user
+            return $this->redirect()->toRoute('user');
 	    }
 	    
-	    return array(
+	    return [
 	        'form' => $this->getServiceLocator()->get('UthandoUser\Form\Password'),
-	    );
+	    ];
 	}
 
 	public function editAction()
@@ -127,7 +130,7 @@ class UserController extends AbstractActionController
 					);
 					
 					// Redirect to user
-					//return $this->redirect()->toRoute('user');
+					return $this->redirect()->toRoute('user');
 					
 				} else {
 					$this->flashMessenger()->addErrorMessage(

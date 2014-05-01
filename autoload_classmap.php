@@ -23,6 +23,7 @@ return [
     
     'UthandoUser\InputFilter\Login'                     => __DIR__ . '/src/UthandoUser/InputFilter/Login.php',
     'UthandoUser\InputFilter\User'                      => __DIR__ . '/src/UthandoUser/InputFilter/User.php',
+    'UthandoUser\InputFilter\Password'                  => __DIR__ . '/src/UthandoUser/InputFilter/Password.php',
     
     'UthandoUser\Mapper\User'                           => __DIR__ . '/src/UthandoUser/Mapper/User.php',
     
@@ -33,6 +34,7 @@ return [
     'UthandoUser\Service\Factory\AclFactory'            => __DIR__ . '/src/UthandoUser/Service/Factory/AclFactory.php',
     'UthandoUser\Service\Factory\AuthControllerFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/AuthControllerFactory.php',
     'UthandoUser\Service\Factory\AuthenticationFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/AuthenticationFactory.php',
+    'UthandoUser\Service\Factory\UserNavigationFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/UserNavigationFactory.php',
     'UthandoUser\Service\User'                          => __DIR__ . '/src/UthandoUser/Service/User.php',
     
     'UthandoUser\UthandoUserException'                  => __DIR__ . '/src/UthandoUser/UthandoUserException.php',

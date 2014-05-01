@@ -96,9 +96,9 @@ class User extends AbstractService implements EventManagerAwareInterface
     public function changePasswd(array $post, UserModel $user)
     {
         $sl = $this->getServiceLocator();
-        $form = $sl->get('User\Form\Password');
+        $form = $sl->get('UthandoUser\Form\Password');
         
-        $form->setInputFilter($sl->get('User\InputFilter\Password'));
+        $form->setInputFilter($sl->get('UthandoUser\InputFilter\Password'));
         $form->setData($post);
         $form->setHydrator($this->getMapper()->getHydrator());
         $form->bind($user);
@@ -124,6 +124,8 @@ class User extends AbstractService implements EventManagerAwareInterface
         if ($data instanceof UserModel) {
             $data = $this->getMapper()->extract($data);
         }
+        
+        \FB::info($data);
         
     	if (array_key_exists('passwd', $data) && '' != $data['passwd']) {
     		$data['passwd'] = $this->createPassword($data['passwd']);
