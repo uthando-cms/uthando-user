@@ -125,8 +125,6 @@ class User extends AbstractService implements EventManagerAwareInterface
             $data = $this->getMapper()->extract($data);
         }
         
-        \FB::info($data);
-        
     	if (array_key_exists('passwd', $data) && '' != $data['passwd']) {
     		$data['passwd'] = $this->createPassword($data['passwd']);
     	} else {
@@ -134,6 +132,21 @@ class User extends AbstractService implements EventManagerAwareInterface
     	}
     
  		return parent::save($data);
+    }
+    
+    public function delete($id)
+    {
+        // sanity check to see if we are deleting yourselfs!
+        $id = (int) $id;
+        
+        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $identity = $auth->getIdentity();
+        
+        if ($id == $identity->getUserId()) {
+            throw new UthandoUserException('You cannot delete yourself!');
+        }
+        
+        return parent::delete($id);
     }
     
     public function createPassword($password)
