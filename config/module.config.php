@@ -13,8 +13,10 @@ return [
 				'label'			=> 'Guest',
 				'parent'		=> null,
 				'privileges'	=> [
-					['controller' => 'UthandoUser\Controller\Auth', 'action' => ['login', 'authenticate']],
-					['controller' => 'UthandoUser\Controller\User', 'action' => ['register', 'thank-you']],
+					'allow' => [
+                        ['controller' => 'UthandoUser\Controller\Auth', 'action' => ['login', 'authenticate']],
+                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['register', 'thank-you']],
+                    ],
 				],
 				'resources' => ['menu:guest'],
 			],
@@ -22,8 +24,10 @@ return [
 				'label'         => 'User',
 				'parent'        => null,
 				'privileges'    => [
-					['controller' => 'UthandoUser\Controller\Auth', 'action' => ['logout']],
-					['controller' => 'UthandoUser\Controller\User', 'action' => ['edit', 'password']],
+					'allow' => [
+                        ['controller' => 'UthandoUser\Controller\Auth', 'action' => ['logout']],
+                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['edit', 'password']],
+                    ],
 				],
 				'resources' => ['menu:user'],
 			],
@@ -31,7 +35,9 @@ return [
 				'label'         => 'Admin',
 				'parent'        => 'registered',
 				'privileges'    => [
-					['controller' => 'UthandoUser\Controller\Admin', 'action' => 'all'],
+					'allow' => [
+                        ['controller' => 'UthandoUser\Controller\Admin', 'action' => 'all'],
+                    ],
 				],
 				'resources' => ['menu:admin'],
 			],
