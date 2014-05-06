@@ -41,7 +41,7 @@ class MvcListener implements ListenerAggregateInterface
         if (!$event->getRequest() instanceof Request) {
     	    return;
         }
-      	
+        
         $application    = $event->getApplication();
 		$sm             = $application->getServiceManager();
     	$match          = $event->getRouteMatch();
@@ -51,6 +51,7 @@ class MvcListener implements ListenerAggregateInterface
     	$hasIdentity    = $plugin->getIdentity();
     	
     	if (!$plugin->isAllowed($controller, $action)) {
+    	    
     		$router = $event->getRouter();
     		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user/login' : 'home']);
     		 

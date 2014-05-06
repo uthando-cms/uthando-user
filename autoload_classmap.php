@@ -30,11 +30,13 @@ return [
     'UthandoUser\Model\User'                            => __DIR__ . '/src/UthandoUser/Model/User.php',
     
     'UthandoUser\Service\Acl'                           => __DIR__ . '/src/UthandoUser/Service/Acl.php',
+    'UthandoUser\Service\AclAwareInterface'             => __DIR__ . '/src/UthandoUser/Service/AclAwareInterface.php',
     'UthandoUser\Service\Authentication'                => __DIR__ . '/src/UthandoUser/Service/Authentication.php',
     'UthandoUser\Service\Factory\AclFactory'            => __DIR__ . '/src/UthandoUser/Service/Factory/AclFactory.php',
     'UthandoUser\Service\Factory\AuthControllerFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/AuthControllerFactory.php',
     'UthandoUser\Service\Factory\AuthenticationFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/AuthenticationFactory.php',
     'UthandoUser\Service\Factory\UserNavigationFactory' => __DIR__ . '/src/UthandoUser/Service/Factory/UserNavigationFactory.php',
+    'UthandoUser\Service\Initializer\AclInitializer'    => __DIR__ . '/src/UthandoUser/Service/Initializer/AclInitializer.php',
     'UthandoUser\Service\User'                          => __DIR__ . '/src/UthandoUser/Service/User.php',
     
     'UthandoUser\UthandoUserException'                  => __DIR__ . '/src/UthandoUser/UthandoUserException.php',
