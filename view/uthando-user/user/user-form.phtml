@@ -3,7 +3,7 @@ $form = $this->form;
 $routeArray = ['action' => $this->formAction];
 ?>
 
-<form class="form-horizontal"  method="post" action="<?=$this->url('user/default', $routeArray) ?>">
+<form class="form-horizontal"  method="post" action="<?=$this->url('user', $routeArray) ?>">
     <fieldset>
     <legend><?=$this->legend; ?> </legend>
     <div class="control-group<?php if ($form->get('firstname')->getMessages()) echo ' error'; ?>">

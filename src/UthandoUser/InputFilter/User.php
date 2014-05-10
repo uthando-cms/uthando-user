@@ -90,11 +90,6 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 	            ['name'    => 'StringTrim'],
 	        ],
 	        'validators' => [
-	            ['name' => 'Zend\Validator\Db\NoRecordExists', 'options' => [
-	                'table'    => 'user',
-	                'field'    => 'email',
-	                'adapter'  => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
-	            ]],
 	            ['name' => 'EmailAddress', 'options' => [
 	                'allow'            => Hostname::ALLOW_DNS,
 	                'useMxCheck'       => true,
@@ -102,5 +97,24 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 	            ]],
 	        ],
 	    ]);
+	}
+	
+	public function addEmailNoRecordExists($exclude = null)
+	{
+	    $exclude = (!$exclude) ?: [
+            'field' => 'email',
+            'value' => $exclude,
+        ];
+	    
+	    $this->get('email')
+	       ->getValidatorChain()
+	       ->attachByName('Zend\Validator\Db\NoRecordExists', [
+                'table'     => 'user',
+                'field'     => 'email',
+                'adapter'   => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'exclude'   => $exclude,
+            ]);
+	    
+	    return $this;
 	}
 }

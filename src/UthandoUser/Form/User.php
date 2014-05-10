@@ -101,6 +101,11 @@ class User extends Form
 		]);
 		
 		$this->add([
+			'name'    => 'security',
+			'type'    => 'csrf',
+		]);
+		
+		$this->add([
 			'name' => 'returnTo',
 		    'type' => 'hidden',
 		]);

@@ -5,7 +5,9 @@ $email = $form->get('email');
 $passwd = $form->get('passwd');
 ?>
 
-<form class="form-horizontal"  method="post" action="<?=$this->url('user/authenticate') ?>">
+<form class="form-horizontal"  method="post" action="<?=$this->url('user', [
+	'action' => 'authenticate',
+]) ?>">
     <fieldset>
     <legend><?=$this->legend;?></legend>
     <div class="control-group<?php if ($email->getMessages()) echo ' error'; ?>">

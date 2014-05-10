@@ -3,8 +3,7 @@
 namespace UthandoUser\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use UthandoUser\Form\Password as PasswordForm;
-use UthandoUser\Form\User as UserForm;
+use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
 
 class UserController extends AbstractActionController
@@ -30,7 +29,7 @@ class UserController extends AbstractActionController
         
         	$result = $this->getUserService()->add($post);
         
-        	if ($result instanceof UserForm) {
+        	if ($result instanceof Form) {
         		$this->flashMessenger()->addInfoMessage(
         			'There were one or more isues with your submission. Please correct them as indicated below.'
         		);
@@ -78,7 +77,7 @@ class UserController extends AbstractActionController
 	        
 	        $result = $this->getUserService()->changePasswd($params, $user);
 	        
-	        if ($result instanceof PasswordForm) {
+	        if ($result instanceof Form) {
 	            $this->flashMessenger()->addInfoMessage(
 	               'There were one or more isues with your submission. Please correct them as indicated below.'
                 );
@@ -93,7 +92,7 @@ class UserController extends AbstractActionController
 	    }
 	    
 	    return [
-	        'form' => $this->getServiceLocator()->get('UthandoUser\Form\Password'),
+	        'form' => $this->getUserService()->getForm(),
 	    ];
 	}
 
@@ -113,7 +112,7 @@ class UserController extends AbstractActionController
                 return $this->redirect()->toRoute('user');
             }
 				
-			if ($result instanceof UserForm) {
+			if ($result instanceof Form) {
 
 				$this->flashMessenger()->addInfoMessage(
 					'There were one or more isues with your submission. Please correct them as indicated below.'
@@ -145,6 +144,64 @@ class UserController extends AbstractActionController
 		return new ViewModel([
 			'form' => $form
 		]);
+	}
+	
+	public function loginAction()
+	{
+		return new ViewModel([
+			'form' => $this->getUserService()->getForm()
+		]);
+	}
+	
+	public function logoutAction()
+	{
+	    $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+		$auth->clear();
+		return $this->redirect()->toRoute('home');
+	}
+	
+	public function authenticateAction()
+	{
+		$request = $this->getRequest();
+	
+		if (!$request->isPost()) {
+			return $this->redirect()->toRoute('user', [
+        	   'action' => 'login',
+			]);
+		}
+	
+		// Validate
+		$post = $this->params()->fromPost();
+		$form = $this->getUserService()->getForm(null, $post, true);
+		$form->setValidationGroup('passwd', 'email');
+	
+		$viewModel = new ViewModel();
+	
+		$viewModel->setTemplate('uthando-user/user/login');
+	
+		if (!$form->isValid()) {
+			return $viewModel->setVariables(['form' => $form]); // re-render the login form
+		}
+	
+		$data = $form->getData();
+		$auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+	
+		if (false === $auth->doAuthentication($data['email'], $data['passwd'])) {
+			
+			$this->flashMessenger()->addErrorMessage(
+				'Login failed, Please try again.'
+			);
+	
+			return $viewModel->setVariables(['form' => $form]); // re-render the login form
+		}
+	
+		$return = ($post['returnTo']) ? $post['returnTo'] : 'home';
+	
+		if ('admin' === $this->identity()->getRole()) {
+			return $this->redirect()->toRoute('admin');
+		}
+	
+		return $this->redirect()->toRoute($return);
 	}
 	
 	/**

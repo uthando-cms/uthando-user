@@ -14,8 +14,7 @@ return [
 				'parent'		=> null,
 				'privileges'	=> [
 					'allow' => [
-                        ['controller' => 'UthandoUser\Controller\Auth', 'action' => ['login', 'authenticate']],
-                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['register', 'thank-you']],
+                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['register', 'thank-you', 'login', 'authenticate']],
                     ],
 				],
 				'resources' => ['menu:guest'],
@@ -25,8 +24,7 @@ return [
 				'parent'        => null,
 				'privileges'    => [
 					'allow' => [
-                        ['controller' => 'UthandoUser\Controller\Auth', 'action' => ['logout']],
-                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['edit', 'password']],
+                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['edit', 'password', 'logout']],
                     ],
 				],
 				'resources' => ['menu:user'],
@@ -44,16 +42,18 @@ return [
 		],
 		'userResources' => [
 			'UthandoUser\Controller\Admin',
-			'UthandoUser\Controller\Auth',
 			'UthandoUser\Controller\User',
 		],
 	],
     'router' => [
         'routes' => [
             'user' => [
-                'type'    => 'Literal',
+                'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/user',
+                    'route'    => '/user[/[:action]]',
+                    'constraints' => [
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
+            		],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'User',
@@ -62,77 +62,6 @@ return [
                     ],
                 ],
                 'may_terminate' => true,
-                'child_routes' => [
-                	'default' => [
-                		'type' => 'Segment',
-                		'options' => [
-                			'route' => '/[:action]',
-                			'constraints' => [
-                				'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
-                			],
-                			'defaults' => [
-                				'controller'    => 'User',
-                				'action'        => 'index',
-                			    'force-ssl'     => 'ssl'
-                			],
-                		],
-                	],
-                	'register' => [
-                		'type' => 'Literal',
-                		'options' => [
-                			'route' => '/register',
-                			'defaults' => [
-                				'controller'    => 'User',
-                				'action'        => 'register',
-                			    'force-ssl'     => 'ssl'
-                			],
-                		],
-                	],
-                	'thank-you' => [
-                		'type' => 'Literal',
-                		'options' => [
-                			'route' => '/thank-you',
-                			'defaults' => [
-                				'controller'    => 'User',
-                				'action'        => 'thank-you',
-                			    'force-ssl'     => 'ssl'
-                			],
-                		],
-                	],
-                    'authenticate' => [
-						'type' => 'Literal',
-						'options' => [
-							'route' => '/authenticate',
-							'defaults' => [
-								'controller'    => 'Auth',
-								'action'        => 'authenticate',
-							    'force-ssl'     => 'ssl'
-							],
-						],
-    				],
-    				'logout' => [
-    					'type' => 'Literal',
-    					'options' => [
-    						'route' => '/logout',
-    						'defaults' => [
-    							'controller'    => 'Auth',
-    							'action'        => 'logout',
-    						    'force-ssl'     => 'ssl'
-    						],
-    					],
-    				],
-    				'login' => [
-						'type' => 'Literal',
-						'options' => [
-							'route' => '/login',
-							'defaults' => [
-								'controller'    => 'Auth',
-								'action'        => 'login',
-							    'force-ssl'     => 'ssl'
-							],
-						],
-    				],
-                ],
             ],
         	'admin' => [
         		'child_routes' => [
@@ -188,13 +117,13 @@ return [
             'login' => [
                 'label'     => 'Sing In',
                 'action'    => 'login',
-                'route'     => 'user/login',
+                'route'     => 'user',
                 'resource'  => 'menu:guest',
             ],
             'logout' => [
                 'label'     => 'Sign Out',
                 'action'    => 'logout',
-                'route'     => 'user/logout',
+                'route'     => 'user',
                 'resource'  => 'menu:user',
             ],
         ],
@@ -223,19 +152,19 @@ return [
             'edit_profile' => [
                 'label'     => 'Edit Profile',
                 'action'    => 'edit',
-                'route'     => 'user/default',
+                'route'     => 'user',
                 'resource'  => 'menu:user',
             ],
             'password' => [
             	'label'     => 'Password',
                 'action'    => 'password',
-                'route'     => 'user/default',
+                'route'     => 'user',
                 'resource'  => 'menu:user',
             ],
 	        'logout' => [
 	            'label'    => 'Logout',
 	            'action'   => 'logout',
-	            'route'    => 'user/logout',
+	            'route'    => 'user',
 	            'resource' => 'menu:user',
 	        ],
         ],

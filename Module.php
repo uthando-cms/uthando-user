@@ -20,22 +20,49 @@ class Module
     
     public function getServiceConfig()
     {
-    	return include __DIR__ . '/config/service.config.php';
+    	return [
+            'invokables' => [
+                'UthandoUser\InputFilter\User'                      => 'UthandoUser\InputFilter\User',
+                'UthandoUser\Mapper\User'                           => 'UthandoUser\Mapper\User',
+                'UthandoUser\Service\User'                          => 'UthandoUser\Service\User'
+            ],
+            'factories' => [
+                'Zend\Authentication\AuthenticationService'         => 'UthandoUser\Service\Factory\AuthenticationFactory',
+                'UthandoUser\Service\Acl'                           => 'UthandoUser\Service\Factory\AclFactory',
+                'UthandoUser\Navigation'                            => 'UthandoUser\Service\Factory\UserNavigationFactory'
+            ],
+            'initializers' => [ 
+                //'UthandoUser\Service\Initializer\AclInitializer'    => 'UthandoUser\Service\Initializer\AclInitializer',
+            ],
+        ];
     }
     
     public function getViewHelperConfig()
     {
-        return include __DIR__ . '/config/viewHelper.config.php';
+        return [
+            'invokables' => [
+            	'IsAllowed' => 'UthandoUser\View\IsAllowed',
+            ], 
+        ];
     }
     
     public function getControllerConfig()
     {
-        return include __DIR__ . '/config/controller.config.php';
+        return [
+            'invokables' => [
+                'UthandoUser\Controller\Admin'  => 'UthandoUser\Controller\AdminController',
+                'UthandoUser\Controller\User'   => 'UthandoUser\Controller\UserController'
+            ],
+        ];
     }
     
     public function getControllerPluginConfig()
     {
-        return include __DIR__ . '/config/controllerPlugins.config.php';
+        return [
+            'invokables' => [
+            	'IsAllowed' => 'UthandoUser\Controller\Plugin\IsAllowed'
+            ],
+        ];
     }
     
     public function getAutoloaderConfig()

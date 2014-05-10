@@ -24,9 +24,12 @@ class User extends AbstractService implements EventManagerAwareInterface
     	return $this->getMapper()->getUserByEmail($email, $ignore, $emptyPassword);
     }
     
-    public function add(array $post)
+    public function add(array $post, Form $form = null)
     {
-        $saved = parent::add($post);
+        $form = $this->getForm($this->getMapper()->getModel(), $post, true, true);
+        $form->getInputFilter()->addEmailNoRecordExists();
+        
+        $saved = parent::add($post, $form);
         
         if ($saved) {
             $this->getEventManager()->trigger('user.add', $this, $post);
@@ -60,22 +63,9 @@ class User extends AbstractService implements EventManagerAwareInterface
     	// we need to find if this email has changed,
     	// if not then exclude it from validation,
     	// if changed then revalidate it.
-    	if ($model->getEmail() === $post['email']) {
-    	    
-    	    $validatorChain = $form->getInputFilter()
-    	       ->get('email')
-    	       ->getValidatorChain()
-    	       ->getValidators();
-    	    
-    	    foreach ($validatorChain as $validator) {
-    	        if ($validator['instance'] instanceof \Zend\Validator\Db\NoRecordExists) {
-    	            $validator['instance']->setExclude(array(
-	                    'field' => 'email',
-	                    'value' => $model->getEmail(),
-    	            ));
-    	        }
-    	    }
-    	}
+    	$email = ($model->getEmail() === $post['email']) ? $model->getEmail() : null;
+    	
+    	$form->getInputFilter()->addEmailNoRecordExists($email);
     	
     	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId');
 		
@@ -95,23 +85,15 @@ class User extends AbstractService implements EventManagerAwareInterface
      */
     public function changePasswd(array $post, UserModel $user)
     {
-        $sl = $this->getServiceLocator();
-        $form = $sl->get('UthandoUser\Form\Password');
+        $form  = $this->getForm($user, $post, true, true);
         
-        $form->setInputFilter($sl->get('UthandoUser\InputFilter\Password'));
-        $form->setData($post);
-        $form->setHydrator($this->getMapper()->getHydrator());
-        $form->bind($user);
+        $form->setValidationGroup('passwd', 'passwd-confirm');
         
         if (!$form->isValid()) {
             return $form;
         }
         
-        /* @var $data UserModel */
-        $data = $form->getData();
-        $data->setDateModified();
-        
-        return $this->save($data);
+        return parent::edit($user, $post, $form);
     }
     
     public function resetPassword()
