@@ -31,7 +31,7 @@ class User extends AbstractService implements EventManagerAwareInterface
         
         $saved = parent::add($post, $form);
         
-        if ($saved) {
+        if (!$saved instanceof Form && $saved) {
             $this->getEventManager()->trigger('user.add', $this, $post);
         }
         
@@ -49,7 +49,7 @@ class User extends AbstractService implements EventManagerAwareInterface
     public function edit(ModelInterface $model, array $post, Form $form = null)
     {
         if (!$model instanceof UserModel) {
-            throw new UthandoUserException('$model must be an instance of User\Model\User, ' . get_class($model) . ' given.');
+            throw new UthandoUserException('$model must be an instance of UthandoUser\Model\User, ' . get_class($model) . ' given.');
         }
         
     	if (!isset($post['role'])) {
@@ -71,7 +71,7 @@ class User extends AbstractService implements EventManagerAwareInterface
 		
 		$saved = parent::edit($model, $post, $form);
 		
-		if ($saved) {
+		if (!$saved instanceof Form && $saved) {
 		    $this->getEventManager()->trigger('user.edit', $this, $post);
 		}
 		
