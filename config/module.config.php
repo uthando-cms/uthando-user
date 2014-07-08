@@ -57,7 +57,7 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'User',
-                        'action'        => 'index',
+                        'action'        => 'login',
                         'force-ssl'     => 'ssl'
                     ],
                 ],

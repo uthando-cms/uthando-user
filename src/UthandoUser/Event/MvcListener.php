@@ -53,7 +53,7 @@ class MvcListener implements ListenerAggregateInterface
     	if (!$plugin->isAllowed($controller, $action)) {
     	    
     		$router = $event->getRouter();
-    		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user/login' : 'home']);
+    		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
     		 
     		$response = $event->getResponse();
     		$response->setStatusCode(302);
