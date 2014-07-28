@@ -7,13 +7,9 @@ use UthandoCommon\Service\AbstractService;
 use UthandoUser\UthandoUserException;
 use UthandoUser\Model\User as UserModel;
 use Zend\Crypt\Password\PasswordInterface;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerAwareTrait;
 
-class User extends AbstractService implements EventManagerAwareInterface
+class User extends AbstractService
 {   
-    use EventManagerAwareTrait;
-    
 	protected $mapperClass = 'UthandoUser\Mapper\User';
 	protected $form = 'UthandoUser\Form\User';
 	protected $inputFilter = 'UthandoUser\InputFilter\User';
@@ -32,7 +28,7 @@ class User extends AbstractService implements EventManagerAwareInterface
         $saved = parent::add($post, $form);
         
         if (!$saved instanceof Form && $saved) {
-            $this->getEventManager()->trigger('user.add', $this, $post);
+            $this->getEventManager()->trigger('user.add', get_class($this), $post);
         }
         
         return $saved;

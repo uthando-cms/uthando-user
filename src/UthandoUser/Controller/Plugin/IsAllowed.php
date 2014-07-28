@@ -59,7 +59,7 @@ class IsAllowed extends AbstractPlugin
      * @return \UthandoUser\Controller\Plugin\Acl
      */
     public function setIdentity($identity)
-    {
+    { 
         if ($identity instanceof User) {
             $this->identity = $identity;
         } elseif (null === $identity) {
