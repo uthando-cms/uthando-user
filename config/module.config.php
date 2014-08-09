@@ -128,24 +128,28 @@ return [
             ],
         ],
 		'admin' => [
-			'user' => [
-                'label' => 'User',
+			'modules' => [
                 'pages' => [
-                    'list' => [
-                        'label'     => 'List All Users',
-                        'action'    => 'index',
+                    'user' => [
+                        'label' => 'User',
+                        'pages' => [
+                            'list' => [
+                                'label'     => 'List All Users',
+                                'action'    => 'index',
+                                'route'     => 'admin/user',
+                                'resource'  => 'menu:admin'
+                            ],
+                            'add' => [
+                                'label'     => 'Add New User',
+                                'action'    => 'add',
+                                'route'     => 'admin/user/edit',
+                                'resource'  => 'menu:admin'
+                            ],
+                        ],
                         'route'     => 'admin/user',
                         'resource'  => 'menu:admin'
                     ],
-                    'add' => [
-                        'label'     => 'Add New User',
-                        'action'    => 'add',
-                        'route'     => 'admin/user/edit',
-                        'resource'  => 'menu:admin'
-                    ],
                 ],
-                'route'     => 'admin/user',
-                'resource'  => 'menu:admin'
             ],
 		],
 	    'user' => [
