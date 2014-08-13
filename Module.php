@@ -31,9 +31,6 @@ class Module
                 'UthandoUser\Service\Acl'                           => 'UthandoUser\Service\Factory\AclFactory',
                 'UthandoUser\Navigation'                            => 'UthandoUser\Service\Factory\UserNavigationFactory'
             ],
-            'initializers' => [ 
-                //'UthandoUser\Service\Initializer\AclInitializer'    => 'UthandoUser\Service\Initializer\AclInitializer',
-            ],
         ];
     }
     
