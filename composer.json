@@ -20,8 +20,8 @@
 	    "zendframework/zend-crypt" : "2.*",
 	    "zendframework/zend-permissions-acl" : "2.*",
 	    "zendframework/zend-form" : "2.*",
-	    "uthando-cms/uthando-common" : "dev-master",
-	    "uthando-cms/uthando-admin" : "dev-master"
+	    "uthando-cms/uthando-common" : "1.*",
+	    "uthando-cms/uthando-admin" : "1.*"
     },
     "require-dev" : {
     	"zendframework/zendframework" : "2.*"
