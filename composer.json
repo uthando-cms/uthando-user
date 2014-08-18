@@ -21,7 +21,7 @@
 	    "zendframework/zend-permissions-acl" : "2.*",
 	    "zendframework/zend-form" : "2.*",
 	    "uthando-cms/uthando-common" : "1.*",
-	    "uthando-cms/uthando-navigation" : "1.*"
+	    "uthando-cms/uthando-navigation" : "1.*",
 	    "uthando-cms/uthando-admin" : "1.*"
     },
     "require-dev" : {
