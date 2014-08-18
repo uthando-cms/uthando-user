@@ -1,49 +1,56 @@
 <?php
 return [
-	'user' => [
+	'uthando_user' => [
 		'auth' => [
 			'credentialTreatment'          => 'Zend\Crypt\Password\Bcrypt',
 		    'useFallbackTreatment'         => false,
 		    'fallbackCredentialTreatment'  => 'UthandoUser\Crypt\Password\Md5',
 		],
-	],
-	'userAcl' => [
-		'userRoles' => [
-			'guest'			=> [
-				'label'			=> 'Guest',
-				'parent'		=> null,
-				'privileges'	=> [
-					'allow' => [
-                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['register', 'thank-you', 'login', 'authenticate']],
+		'acl' => [
+            'roles' => [
+                'guest'			=> [
+                    'label'			=> 'Guest',
+                    'parent'		=> null,
+                    'privileges'	=> [
+                        'allow' => [
+                            'controllers' => [
+                                'UthandoUser\Controller\User' => ['action' => ['register', 'thank-you', 'login', 'authenticate']],
+                            ],
+                        ],
                     ],
-				],
-				'resources' => ['menu:guest'],
-			],
-			'registered'    => [
-				'label'         => 'User',
-				'parent'        => null,
-				'privileges'    => [
-					'allow' => [
-                        ['controller' => 'UthandoUser\Controller\User', 'action' => ['edit', 'password', 'logout']],
+                ],
+                'registered'    => [
+                    'label'         => 'User',
+                    'parent'        => 'guest',
+                    'privileges'    => [
+                        'deny' => [
+                            'controllers' => [
+                                'UthandoUser\Controller\User' => ['action' => ['register', 'thank-you', 'login', 'authenticate']],
+                            ],
+                        ],
+                        'allow' => [
+                            'controllers' => [
+                                'UthandoUser\Controller\User' => ['action' => ['edit', 'password', 'logout']]
+                            ],
+                        ],
                     ],
-				],
-				'resources' => ['menu:user'],
-			],
-			'admin'        => [
-				'label'         => 'Admin',
-				'parent'        => 'registered',
-				'privileges'    => [
-					'allow' => [
-                        ['controller' => 'UthandoUser\Controller\Admin', 'action' => 'all'],
+                ],
+                'admin'        => [
+                    'label'         => 'Admin',
+                    'parent'        => 'registered',
+                    'privileges'    => [
+                        'allow' => [
+                            'controllers' => [
+                                'UthandoUser\Controller\Admin' => ['action' => 'all']],
+                        ],
                     ],
-				],
-				'resources' => ['menu:admin'],
-			],
-		],
-		'userResources' => [
-			'UthandoUser\Controller\Admin',
-			'UthandoUser\Controller\User',
-		],
+                ],
+            ],
+            'resources' => [
+                'UthandoUser\Controller\Admin',
+                'UthandoUser\Controller\User',
+            ],
+        ],
 	],
     'router' => [
         'routes' => [

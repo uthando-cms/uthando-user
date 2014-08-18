@@ -16,7 +16,7 @@ class AuthenticationFactory implements FactoryInterface
         $auth = new Authentication();
         
         $auth->setUserService($service);
-        $auth->setOptions($config['user']['auth']);
+        $auth->setOptions($config['uthando_user']['auth']);
         
         return $auth;
     }

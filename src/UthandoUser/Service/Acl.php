@@ -45,12 +45,12 @@ class Acl extends ZendAcl
     	$this->deny();
     	//$this->allow();
     
-    	if (isset($config['userRoles'])) {
-    		$this->userRoles = $config['userRoles'];
+    	if (isset($config['roles'])) {
+    		$this->userRoles = $config['roles'];
     	}
     
-    	if (isset($config['userResources'])) {
-    		$this->userResources = $config['userResources'];
+    	if (isset($config['resources'])) {
+    		$this->userResources = $config['resources'];
     	}
     
     	// add resources.
@@ -60,7 +60,7 @@ class Acl extends ZendAcl
     
     	foreach ($this->userRoles as $role => $values) {
     		$this->addRole(new Role($role), $values['parent']);
-    
+    		
     		foreach ($values['privileges'] as $action => $privileges) {
     		    if ('allow' === $action) {
     		        $this->allowRules[$role] = $privileges;
@@ -70,32 +70,49 @@ class Acl extends ZendAcl
     		        $this->denyRules[$role] = $privileges;
     		    }
     		}
-    		
-    		foreach ($values['resources'] as $value) {
-    			$this->allow($role, $value);
-    		}
     	}
     	
     	// set up allow rules.
+    	// TODO: this needs serious rethinking...
     	foreach ($this->allowRules as $role => $privileges) {
-    	    foreach ($privileges as $value) {
-    	        if (is_string($value['action']) && 'all' === $value['action']) {
-    				$this->allow($role, $value['controller']);
-    	        } else {
-    				$this->allow($role, $value['controller'], $value['action']);
+    	   foreach ($privileges as $key => $value) {
+    	        if ('resources' === $key) {
+    	            foreach ($value as $resource) {
+    	                $this->allow($role, $resource);
+    	            }
     	        }
-    	    }
+    	        
+    	        if ('controllers' === $key) {
+    	            foreach ($value as $controller => $actions) {
+    	                if (is_string($actions['action']) && 'all' === $actions['action']) {
+    	                	$this->allow($role, $controller);
+    	                } else {
+    	                	$this->allow($role, $controller, $actions['action']);
+    	                }
+    	            }
+                }
+            }
     	}
     	
     	// set up deny rules.
     	foreach ($this->denyRules as $role => $privileges) {
-    	    foreach ($privileges as $value) {
-    	        if (is_string($value['action']) && 'all' === $value['action']) {
-    	            $this->deny($role, $value['controller']);
-    	        } else {
-    	            $this->deny($role, $value['controller'], $value['action']);
+    	    foreach ($privileges as $key => $value) {
+    	        if ('resources' === $key) {
+    	           foreach ($value as $resource) {
+    	                $this->deny($role, $resource);
+    	            }
     	        }
-    	    }
+    	        
+    	        if ('controllers' === $key) {
+    	            foreach ($value as $controller => $actions) {
+    	                if (is_string($actions['action']) && 'all' === $actions['action']) {
+    	                	$this->allow($role, $controller);
+    	                } else {
+    	                	$this->allow($role, $controller, $actions['action']);
+    	                }
+    	            }
+                }
+            }
     	}
     }
 }
