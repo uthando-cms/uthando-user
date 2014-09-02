@@ -133,7 +133,7 @@ class UserController extends AbstractActionController
 					
 				} else {
 					$this->flashMessenger()->addErrorMessage(
-						'We could not save your cahnges due to a database error.'
+						'We could not save your changes due to a database error.'
 					);
 				}
 			}
