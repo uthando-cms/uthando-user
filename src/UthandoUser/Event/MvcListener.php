@@ -49,7 +49,7 @@ class MvcListener implements ListenerAggregateInterface
     	$action         = $match->getParam('action');
     	$plugin         = $sm->get('ControllerPluginManager')->get('IsAllowed');
     	$hasIdentity    = $plugin->getIdentity();
-    	
+
     	if (!$plugin->isAllowed($controller, $action)) {
     	    
     		$router = $event->getRouter();

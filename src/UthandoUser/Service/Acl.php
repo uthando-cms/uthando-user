@@ -106,9 +106,9 @@ class Acl extends ZendAcl
     	        if ('controllers' === $key) {
     	            foreach ($value as $controller => $actions) {
     	                if (is_string($actions['action']) && 'all' === $actions['action']) {
-    	                	$this->allow($role, $controller);
+    	                	$this->deny($role, $controller);
     	                } else {
-    	                	$this->allow($role, $controller, $actions['action']);
+    	                	$this->deny($role, $controller, $actions['action']);
     	                }
     	            }
                 }
