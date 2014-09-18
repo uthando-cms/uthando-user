@@ -79,7 +79,7 @@ class UserController extends AbstractActionController
 	        
 	        if ($result instanceof Form) {
 	            $this->flashMessenger()->addInfoMessage(
-	               'There were one or more isues with your submission. Please correct them as indicated below.'
+	               'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
 	            
 	            return [
@@ -115,7 +115,7 @@ class UserController extends AbstractActionController
 			if ($result instanceof Form) {
 
 				$this->flashMessenger()->addInfoMessage(
-					'There were one or more isues with your submission. Please correct them as indicated below.'
+					'There were one or more issues with your submission. Please correct them as indicated below.'
 				);
 
 				return new ViewModel([

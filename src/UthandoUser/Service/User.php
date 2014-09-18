@@ -30,6 +30,7 @@ class User extends AbstractMapperService
      * @param array $post
      * @param Form $form
      * @return int|Form
+     * @deprecated moving to event listener
      */
     public function add(array $post, Form $form = null)
     {
@@ -55,6 +56,7 @@ class User extends AbstractMapperService
      * @param Form $form
      * @throws \UthandoUser\UthandoUserException
      * @return int results from self::save()
+     * @deprecated moving to event listener
      */
     public function edit(ModelInterface $model, array $post, Form $form = null)
     {
@@ -116,13 +118,14 @@ class User extends AbstractMapperService
     /**
      * @param array|ModelInterface $data
      * @return int
+     * @deprecated moving to event listener
      */
     public function save($data)
     {	
         if ($data instanceof UserModel) {
             $data = $this->getMapper()->extract($data);
         }
-        
+
     	if (array_key_exists('passwd', $data) && '' != $data['passwd']) {
     		$data['passwd'] = $this->createPassword($data['passwd']);
     	} else {
@@ -136,6 +139,7 @@ class User extends AbstractMapperService
      * @param int $id
      * @return int
      * @throws \UthandoUser\UthandoUserException
+     * @deprecated moving to event listener
      */
     public function delete($id)
     {
@@ -160,8 +164,8 @@ class User extends AbstractMapperService
      */
     public function createPassword($password)
     {
-        $authOptions = $this->getConfig('user');
-        
+        $authOptions = $this->getConfig('uthando_user');
+
         if (!class_exists($authOptions['auth']['credentialTreatment'])) {
             throw new UthandoUserException('Credential treatment must be an class name');
         } else {
