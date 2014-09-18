@@ -9,10 +9,10 @@ use Zend\Validator\Hostname;
 class User extends InputFilter implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
-    
-	public function __construct()
+	
+	public function init()
 	{
-		$this->add([
+        $this->add([
             'name'       => 'firstname',
             'required'   => true,
             'filters'    => [
@@ -30,8 +30,8 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ]],
             ],
         ]);
-		
-		$this->add([
+
+        $this->add([
             'name'       => 'lastname',
             'required'   => true,
             'filters'    => [
@@ -49,39 +49,36 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ]],
             ],
         ]);
-		
-		$this->add([
+
+        $this->add([
             'name'       => 'passwd',
             'required'   => true,
             'filters'    => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-		    'validators' => [
-		        ['name' => 'StringLength', 'options' => [
-		            'min'       => 8,
-		            'encoding'  => 'UTF-8',
-		        ]],
+            'validators' => [
+                ['name' => 'StringLength', 'options' => [
+                    'min'       => 8,
+                    'encoding'  => 'UTF-8',
+                ]],
             ],
         ]);
-		
-		$this->add([
-		    'name'       => 'passwd-confirm',
-		    'required'   => true,
-		    'filters'    => [
-		        ['name' => 'StripTags'],
-		        ['name' => 'StringTrim'],
-		    ],
-		    'validators' => [
-		    	['name' => 'Identical', 'options' => [
+
+        $this->add([
+            'name'       => 'passwd-confirm',
+            'required'   => true,
+            'filters'    => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+            'validators' => [
+                ['name' => 'Identical', 'options' => [
                     'token' => 'passwd',
                 ]],
-		    ],
-		]);
-	}
-	
-	public function init()
-	{
+            ],
+        ]);
+
 	    $this->add([
 	        'name'       => 'email',
 	        'required'   => true,
@@ -105,13 +102,13 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'field' => 'email',
             'value' => $exclude,
         ];
-	    
+
 	    $this->get('email')
 	       ->getValidatorChain()
 	       ->attachByName('Zend\Validator\Db\NoRecordExists', [
                 'table'     => 'user',
                 'field'     => 'email',
-                'adapter'   => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'adapter'   => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
                 'exclude'   => $exclude,
             ]);
 	    

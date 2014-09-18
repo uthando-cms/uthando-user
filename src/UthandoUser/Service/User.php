@@ -1,29 +1,42 @@
 <?php
 namespace UthandoUser\Service;
 
+use UthandoCommon\Service\AbstractMapperService;
 use Zend\Form\Form;
 use UthandoCommon\Model\ModelInterface;
-use UthandoCommon\Service\AbstractService;
 use UthandoUser\UthandoUserException;
 use UthandoUser\Model\User as UserModel;
 use Zend\Crypt\Password\PasswordInterface;
 
-class User extends AbstractService
+class User extends AbstractMapperService
 {   
-	protected $mapperClass = 'UthandoUser\Mapper\User';
-	protected $form = 'UthandoUser\Form\User';
-	protected $inputFilter = 'UthandoUser\InputFilter\User';
-    
+	protected $serviceAlias = 'UthandoUser';
+
+    /**
+     * @param $email
+     * @param null $ignore
+     * @param bool $emptyPassword
+     * @return mixed
+     */
     public function getUserByEmail($email, $ignore=null, $emptyPassword = true)
     {
     	$email = (string) $email;
-    	return $this->getMapper()->getUserByEmail($email, $ignore, $emptyPassword);
+        /* @var $mapper \UthandoUser\Mapper\User */
+        $mapper = $this->getMapper();
+    	return $mapper->getUserByEmail($email, $ignore, $emptyPassword);
     }
-    
+
+    /**
+     * @param array $post
+     * @param Form $form
+     * @return int|Form
+     */
     public function add(array $post, Form $form = null)
     {
         $form = $this->getForm($this->getMapper()->getModel(), $post, true, true);
-        $form->getInputFilter()->addEmailNoRecordExists();
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addEmailNoRecordExists();
         
         $saved = parent::add($post, $form);
         
@@ -33,15 +46,16 @@ class User extends AbstractService
         
         return $saved;
     }
-    
+
     /**
-	 * prepare data to be updated and saved into database.
-	 * 
-	 * @param UserModel $model
-	 * @param array $post
-	 * @param Form $form
-	 * @return int results from self::save()
-	 */
+     * prepare data to be updated and saved into database.
+     *
+     * @param \UthandoCommon\Model\ModelInterface|\UthandoUser\Model\User $model
+     * @param array $post
+     * @param Form $form
+     * @throws \UthandoUser\UthandoUserException
+     * @return int results from self::save()
+     */
     public function edit(ModelInterface $model, array $post, Form $form = null)
     {
         if (!$model instanceof UserModel) {
@@ -58,10 +72,12 @@ class User extends AbstractService
     	
     	// we need to find if this email has changed,
     	// if not then exclude it from validation,
-    	// if changed then revalidate it.
+    	// if changed then reevaluate it.
     	$email = ($model->getEmail() === $post['email']) ? $model->getEmail() : null;
-    	
-    	$form->getInputFilter()->addEmailNoRecordExists($email);
+
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addEmailNoRecordExists($email);
     	
     	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId');
 		
@@ -73,13 +89,13 @@ class User extends AbstractService
 		
 		return $saved;
     }
-    
+
     /**
      * @param array $post
      * @param UserModel $user
-     * @return Ambigous <object, multitype:, \User\Form\Password>
+     * @return int|Form
      */
-    public function changePasswd(array $post, UserModel $user)
+    public function changePassword(array $post, UserModel $user)
     {
         $form  = $this->getForm($user, $post, true, true);
         
@@ -96,7 +112,11 @@ class User extends AbstractService
     {
         
     }
-    
+
+    /**
+     * @param array|ModelInterface $data
+     * @return int
+     */
     public function save($data)
     {	
         if ($data instanceof UserModel) {
@@ -111,22 +131,33 @@ class User extends AbstractService
     
  		return parent::save($data);
     }
-    
+
+    /**
+     * @param int $id
+     * @return int
+     * @throws \UthandoUser\UthandoUserException
+     */
     public function delete($id)
     {
-        // sanity check to see if we are deleting yourselfs!
         $id = (int) $id;
-        
+
+        /* @var $auth \Zend\Authentication\AuthenticationService */
         $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
         $identity = $auth->getIdentity();
-        
+
+        // sanity check to see if we are deleting ourselves!
         if ($id == $identity->getUserId()) {
             throw new UthandoUserException('You cannot delete yourself!');
         }
         
         return parent::delete($id);
     }
-    
+
+    /**
+     * @param $password
+     * @return string
+     * @throws \UthandoUser\UthandoUserException
+     */
     public function createPassword($password)
     {
         $authOptions = $this->getConfig('user');

@@ -9,7 +9,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
 class IsAllowed extends AbstractPlugin
 {
     /**
-     * @var Zend\Permissions\Acl\Acl
+     * @var \Zend\Permissions\Acl\Acl
      */
     protected $acl;
 
@@ -21,7 +21,7 @@ class IsAllowed extends AbstractPlugin
     /**
      * Get the current acl
      *
-     * @return Zend\Permissions\Acl\Acl
+     * @return \Zend\Permissions\Acl\Acl
      */
     public function getAcl()
     {
