@@ -1,14 +1,17 @@
 <?php
 namespace UthandoUser\Model;
 
+use UthandoCommon\Model\DateCreatedTrait;
+use UthandoCommon\Model\DateModifiedTrait;
 use UthandoCommon\Model\ModelInterface;
 use UthandoCommon\Model\Model;
 use Zend\Permissions\Acl\Role\RoleInterface;
-use DateTime;
 
 class User implements RoleInterface, ModelInterface
 {   
-    use Model;
+    use Model,
+        DateCreatedTrait,
+        DateModifiedTrait;
     
 	/**
 	 * @var int
@@ -39,163 +42,134 @@ class User implements RoleInterface, ModelInterface
 	 * @var string
 	 */
 	protected $role;
-	
-	/**
-	 * @var DateTime
-	 */
-	protected $dateCreated;
-	
-	/**
-	 * @var DateTime
-	 */
-	protected $dateModified;
-	
+
     /**
-	 * @return the $userId
-	 */
+     * @return int
+     */
 	public function getUserId()
 	{
 		return $this->userId;
 	}
 
-	/**
-	 * @param number $userId
-	 */
+    /**
+     * @param int $userId
+     * @return $this
+     */
 	public function setUserId($userId)
 	{
 		$this->userId = $userId;
 		return $this;
 	}
 
-	/**
-	 * @return the $firstname
-	 */
+    /**
+     * @return string
+     */
 	public function getFirstname()
 	{
 		return $this->firstname;
 	}
 
-	/**
-	 * @param string $firstname
-	 */
+    /**
+     * @param string $firstname
+     * @return $this
+     */
 	public function setFirstname($firstname)
 	{
 		$this->firstname = $firstname;
 		return $this;
 	}
 
-	/**
-	 * @return the $lastmane
-	 */
+    /**
+     * @return string
+     */
 	public function getLastname()
 	{
 		return $this->lastname;
 	}
 
-	/**
-	 * @param string $lastmane
-	 */
+    /**
+     * @param string $lastname
+     * @return $this
+     */
 	public function setLastname($lastname)
 	{
 		$this->lastname = $lastname;
 		return $this;
 	}
 
-	/**
-	 * @return the $email
-	 */
+    /**
+     * @return string
+     */
 	public function getEmail()
 	{
 		return $this->email;
 	}
 
-	/**
-	 * @param string $email
-	 */
+    /**
+     * @param string $email
+     * @return $this
+     */
 	public function setEmail($email)
 	{
 		$this->email = $email;
 		return $this;
 	}
 
-	/**
-	 * @return the $passwd
-	 */
+    /**
+     * @return string
+     */
 	public function getPasswd()
 	{
 		return $this->passwd;
 	}
 
-	/**
-	 * @param string $passwd
-	 */
+    /**
+     * @param string $passwd
+     * @return $this
+     */
 	public function setPasswd($passwd)
 	{
 		$this->passwd = $passwd;
 		return $this;
 	}
 
-	/**
-	 * @return the $role
-	 */
+    /**
+     * @return string
+     */
 	public function getRole()
 	{
 		return $this->role;
 	}
 
-	/**
-	 * @param string $role
-	 */
+    /**
+     * @param string $role
+     * @return $this
+     */
 	public function setRole($role)
 	{
 		$this->role = $role;
 		return $this;
 	}
 
-	/**
-	 * @return the $dateCreated
-	 */
-	public function getDateCreated()
-	{
-		return $this->dateCreated;
-	}
-
-	/**
-	 * @param DateTime $dateCreated
-	 */
-	public function setDateCreated(DateTime $dateCreated=null)
-	{
-		$this->dateCreated = $dateCreated;
-		return $this;
-	}
-
-	/**
-	 * @return the $dateModified
-	 */
-	public function getDateModified()
-	{
-		return $this->dateModified;
-	}
-
-	/**
-	 * @param DateTime $dateModified
-	 */
-	public function setDateModified(DateTime $dateModified=null)
-	{
-		$this->dateModified = $dateModified;
-		return $this;
-	}
-	
+    /**
+     * @return string
+     */
 	public function getRoleId()
 	{
 	    return $this->getRole();
 	}
 
+    /**
+     * @return string
+     */
 	public function getFullName()
     {
     	return $this->getFirstname() . ' ' . $this->getLastname();
     }
-    
+
+    /**
+     * @return string
+     */
     public function getLastNameFirst()
     {
     	return $this->getLastname() . ', ' . $this->getFirstname();
