@@ -41,7 +41,7 @@ class MvcListener implements ListenerAggregateInterface
         if (!$event->getRequest() instanceof Request) {
     	    return;
         }
-        
+
         $application    = $event->getApplication();
 		$sm             = $application->getServiceManager();
     	$match          = $event->getRouteMatch();
