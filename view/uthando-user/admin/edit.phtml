@@ -2,11 +2,11 @@
 
 <?=$this->partial('uthando-admin/partial/add-edit-form', [
 	'form' 			=> $this->form,
-	'formAction' 	=> 'edit',
 	'formName'		=> 'User',
-    'primaryKey'    => $this->model->getUserId(),
-	'postRoute'		=> 'admin/user/edit',
-	'cancelRoute'	=> 'admin/user',
+    'postUrl'		=> $this->url('admin/user/edit', [
+        'id'    => $this->model->getUserId(),
+    ]),
+    'cancelUrl'     => $this->url('admin/user'),
 	'formElements'	=> [
 		'firstname', 'lastname', 'email', 'role', 'userId',
 	],
