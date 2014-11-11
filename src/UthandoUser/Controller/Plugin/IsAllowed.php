@@ -2,6 +2,7 @@
 namespace UthandoUser\Controller\Plugin;
 
 use UthandoUser\Model\User;
+use UthandoUser\Service\Acl;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Role\RoleInterface;
@@ -17,6 +18,13 @@ class IsAllowed extends AbstractPlugin
      * @var string
      */
     protected $identity;
+
+    public function __construct($acl = null)
+    {
+        if ($acl instanceof Acl) {
+            $this->acl = $acl;
+        }
+    }
 
     /**
      * Get the current acl
