@@ -42,7 +42,7 @@ class User extends AbstractMapperService
         $saved = parent::add($post, $form);
         
         if (!$saved instanceof Form && $saved) {
-            $this->getEventManager()->trigger('user.add', get_class($this), $post);
+            $this->getEventManager()->trigger('user.add', $this, $post);
         }
         
         return $saved;
