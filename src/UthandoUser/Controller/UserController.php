@@ -194,8 +194,10 @@ class UserController extends AbstractActionController
 	
 			return $viewModel->setVariables(['form' => $form]); // re-render the login form
 		}
-	
-		$return = ($post['returnTo']) ? $post['returnTo'] : 'home';
+
+        $returnTo = $this->params()->fromPost('returnTo', null);
+
+		$return = ($returnTo) ? $returnTo : 'home';
 	
 		if ('admin' === $this->identity()->getRole()) {
 			return $this->redirect()->toRoute('admin');
