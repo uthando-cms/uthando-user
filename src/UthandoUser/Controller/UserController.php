@@ -199,10 +199,6 @@ class UserController extends AbstractActionController
 
 		$return = ($returnTo) ? $returnTo : 'home';
 	
-		if ('admin' === $this->identity()->getRole()) {
-			return $this->redirect()->toRoute('admin');
-		}
-	
 		return $this->redirect()->toRoute($return);
 	}
 	
