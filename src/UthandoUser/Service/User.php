@@ -1,4 +1,13 @@
 <?php
+/**
+ * Uthando CMS (http://www.shaunfreeman.co.uk/)
+ *
+ * @package   UthandoUser\Service
+ * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @link      https://github.com/uthando-cms for the canonical source repository
+ * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license   see LICENSE.txt
+ */
 namespace UthandoUser\Service;
 
 use UthandoCommon\Service\AbstractMapperService;
@@ -8,6 +17,10 @@ use UthandoUser\UthandoUserException;
 use UthandoUser\Model\User as UserModel;
 use Zend\Crypt\Password\PasswordInterface;
 
+/**
+ * Class User
+ * @package UthandoUser\Service
+ */
 class User extends AbstractMapperService
 {   
 	protected $serviceAlias = 'UthandoUser';

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Uthando CMS (http://www.shaunfreeman.co.uk/)
+ *
+ * @package   UthandoUser\Controller\Plugin
+ * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @link      https://github.com/uthando-cms for the canonical source repository
+ * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license   see LICENSE.txt
+ */
 namespace UthandoUser\Controller\Plugin;
 
 use UthandoUser\Model\User;
@@ -7,6 +16,10 @@ use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Role\RoleInterface;
 
+/**
+ * Class IsAllowed
+ * @package UthandoUser\Controller\Plugin
+ */
 class IsAllowed extends AbstractPlugin
 {
     /**

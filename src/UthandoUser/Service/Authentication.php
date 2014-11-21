@@ -1,4 +1,13 @@
 <?php
+/**
+ * Uthando CMS (http://www.shaunfreeman.co.uk/)
+ *
+ * @package   UthandoUser\Service
+ * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @link      https://github.com/uthando-cms for the canonical source repository
+ * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license   see LICENSE.txt
+ */
 namespace UthandoUser\Service;
 
 use UthandoUser\Model\User as UserModel;
@@ -6,6 +15,10 @@ use UthandoUser\Service\User;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 use UthandoUser\Authentication\Adapter as AuthAdapter;
 
+/**
+ * Class Authentication
+ * @package UthandoUser\Service
+ */
 class Authentication extends ZendAuthenticationService
 {
     /**
@@ -31,7 +44,7 @@ class Authentication extends ZendAuthenticationService
     /**
      * Set the user mapper
      * 
-     * @param User $mapper
+     * @param User $service
      * @return \UthandoUser\Model\Authentication
      */
     public function setUserService(User $service)
@@ -99,7 +112,7 @@ class Authentication extends ZendAuthenticationService
     }
     
     /**
-     * Set the auth adpater.
+     * Set the auth adapter.
      *
      * @param AuthAdapter $adapter
      */
@@ -111,7 +124,6 @@ class Authentication extends ZendAuthenticationService
     /**
      * Get and configure the auth adapter
      *
-     * @param  string $email
      * @param string $password
      * @param UserModel $user
      * @return AuthAdapter

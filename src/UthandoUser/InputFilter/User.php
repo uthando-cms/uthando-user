@@ -1,4 +1,13 @@
 <?php
+/**
+ * Uthando CMS (http://www.shaunfreeman.co.uk/)
+ *
+ * @package   UthandoUser\InputFilter
+ * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @link      https://github.com/uthando-cms for the canonical source repository
+ * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license   see LICENSE.txt
+ */
 namespace UthandoUser\InputFilter;
 
 use Zend\InputFilter\InputFilter;
@@ -6,6 +15,10 @@ use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Validator\Hostname;
 
+/**
+ * Class User
+ * @package UthandoUser\InputFilter
+ */
 class User extends InputFilter implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
