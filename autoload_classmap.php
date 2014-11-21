@@ -8,6 +8,7 @@ return array(
   'UthandoUser\Controller\UserController'             => __DIR__ . '/src/UthandoUser/Controller/UserController.php',
   'UthandoUser\Crypt\Password\Md5'                    => __DIR__ . '/src/UthandoUser/Crypt/Password/Md5.php',
   'UthandoUser\Event\MvcListener'                     => __DIR__ . '/src/UthandoUser/Event/MvcListener.php',
+  'UthandoUser\Form\Element\RoleList'                 => __DIR__ . '/src/UthandoUser/Form/Element/RoleList.php',
   'UthandoUser\Form\Element\UserList'                 => __DIR__ . '/src/UthandoUser/Form/Element/UserList.php',
   'UthandoUser\Form\User'                             => __DIR__ . '/src/UthandoUser/Form/User.php',
   'UthandoUser\Form\UserSearch'                       => __DIR__ . '/src/UthandoUser/Form/UserSearch.php',

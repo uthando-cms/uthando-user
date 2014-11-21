@@ -2,9 +2,10 @@
 
 return [
     'invokables' => [
-        'UthandoUser'       => 'UthandoUser\Form\User',
-        'UthandoUserSearch' => 'UthandoUser\Form\UserSearch',
+        'UthandoUser'           => 'UthandoUser\Form\User',
+        'UthandoUserSearch'     => 'UthandoUser\Form\UserSearch',
 
-        'UthandoUserList'   => 'UthandoUser\Form\Element\UserList',
+        'UthandoUserRoleList'   => 'UthandoUser\Form\Element\RoleList',
+        'UthandoUserList'       => 'UthandoUser\Form\Element\UserList',
     ]
 ];

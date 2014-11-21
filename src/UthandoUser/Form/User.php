@@ -6,10 +6,8 @@ use Zend\Form\Form;
 
 class User extends Form
 {
-	public function __construct()
+	public function init()
 	{
-		parent::__construct('User');
-		
 		$this->add([
 			'name' => 'userId',
 			'type' => 'hidden',
@@ -76,17 +74,12 @@ class User extends Form
 		
 		$this->add([
 			'name' => 'role',
-			'type'  => 'select',
+			'type'  => 'UthandoUserRoleList',
 			'attributes' => [
 				'placeholder' => 'Role:',
 			],
 			'options' => [
 				'label' => 'Role:',
-				'empty_option' => 'Please choose a user role',
-				'value_options' => [
-					'admin' 		=> 'Admin',
-					'registered' 	=> 'Registered',
-				],
 			],
 		]);
 		

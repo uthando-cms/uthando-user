@@ -52,7 +52,11 @@ class Adapter extends AbstractAdapter
             $messages
         );
     }
-    
+
+    /**
+     * @param $useFallback
+     * @return bool
+     */
     public function verifyPassword($useFallback)
     {
         if ($useFallback === false) {
@@ -80,16 +84,17 @@ class Adapter extends AbstractAdapter
     {
         return $this->credentialTreatment;
     }
-    
+
     /**
-     * @param string $credentialTreatment
+     * @param $credentialTreatment
+     * @return $this
      */
     public function setCredentialTreatment($credentialTreatment)
     {
         $this->credentialTreatment = $credentialTreatment;
         return $this;
     }
-    
+
     /**
      * @return string
      */
@@ -97,26 +102,28 @@ class Adapter extends AbstractAdapter
     {
         return $this->fallbackCredentialTreatment;
     }
-    
+
     /**
-     * @param string $fallbackCredentialTreatment
+     * @param $fallbackCredentialTreatment
+     * @return $this
      */
     public function setFallbackCredentialTreatment($fallbackCredentialTreatment)
     {
         $this->fallbackCredentialTreatment = $fallbackCredentialTreatment;
         return $this;
     }
-    
+
     /**
-     * @return boolean
+     * @return bool
      */
     public function getUseFallback()
     {
         return $this->useFallback;
     }
-    
+
     /**
-     * @param bool $useFallback
+     * @param $useFallback
+     * @return $this
      */
     public function setUseFallback($useFallback)
     {
