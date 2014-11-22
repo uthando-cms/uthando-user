@@ -23,13 +23,9 @@ use Zend\Permissions\Acl\Role\RoleInterface;
 class User implements RoleInterface, ModelInterface
 {   
     use Model,
+        UserIdTrait,
         DateCreatedTrait,
         DateModifiedTrait;
-    
-	/**
-	 * @var int
-	 */
-	protected $userId;
 	
 	/**
 	 * @var string
@@ -55,24 +51,6 @@ class User implements RoleInterface, ModelInterface
 	 * @var string
 	 */
 	protected $role;
-
-    /**
-     * @return int
-     */
-	public function getUserId()
-	{
-		return $this->userId;
-	}
-
-    /**
-     * @param int $userId
-     * @return $this
-     */
-	public function setUserId($userId)
-	{
-		$this->userId = $userId;
-		return $this;
-	}
 
     /**
      * @return string

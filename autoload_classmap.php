@@ -16,6 +16,7 @@ return array(
   'UthandoUser\InputFilter\User'                      => __DIR__ . '/src/UthandoUser/InputFilter/User.php',
   'UthandoUser\Mapper\User'                           => __DIR__ . '/src/UthandoUser/Mapper/User.php',
   'UthandoUser\Model\User'                            => __DIR__ . '/src/UthandoUser/Model/User.php',
+  'UthandoUser\Model\UserIdTrait'                     => __DIR__ . '/src/UthandoUser/Model/UserIdTrait.php',
   'UthandoUser\Service\Acl'                           => __DIR__ . '/src/UthandoUser/Service/Acl.php',
   'UthandoUser\Service\AclAwareInterface'             => __DIR__ . '/src/UthandoUser/Service/AclAwareInterface.php',
   'UthandoUser\Service\Authentication'                => __DIR__ . '/src/UthandoUser/Service/Authentication.php',
