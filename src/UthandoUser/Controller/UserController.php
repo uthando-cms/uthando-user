@@ -90,17 +90,18 @@ class UserController extends AbstractActionController
 	        $result = $this->getUserService()->changePassword($params, $user);
 	        
 	        if ($result instanceof Form) {
-	            $this->flashMessenger()->addInfoMessage(
+	            $this->flashMessenger()->addErrorMessage(
 	               'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
 	            
 	            return [
-	                'form' => $result,
+                    'form' => $result,
 	            ];
 	        }
-	        
-	        // Redirect to user
-            return $this->redirect()->toRoute('user');
+
+            $this->flashMessenger()->addSuccessMessage(
+                'Your new password has been saved.'
+            );
 	    }
 	    
 	    return [
