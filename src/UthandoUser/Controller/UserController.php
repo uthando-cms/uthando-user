@@ -43,11 +43,11 @@ class UserController extends AbstractActionController
         
         	if ($result instanceof Form) {
         		$this->flashMessenger()->addInfoMessage(
-        			'There were one or more isues with your submission. Please correct them as indicated below.'
+        			'There were one or more issues with your submission. Please correct them as indicated below.'
         		);
         
         		return new ViewModel([
-        			'form' => $result
+        			'registerForm' => $result
         		]);
         
         	} else {
@@ -74,7 +74,7 @@ class UserController extends AbstractActionController
         }
         
         return new ViewModel(array(
-        	'form' => $this->getUserService()->getForm(),
+        	'registerForm' => $this->getUserService()->getForm(),
         ));
 	}
 	
@@ -161,7 +161,7 @@ class UserController extends AbstractActionController
 	public function loginAction()
 	{
 		return new ViewModel([
-			'form' => $this->getUserService()->getForm()
+			'loginForm' => $this->getUserService()->getForm()
 		]);
 	}
 	
@@ -192,7 +192,7 @@ class UserController extends AbstractActionController
 		$viewModel->setTemplate('uthando-user/user/login');
 	
 		if (!$form->isValid()) {
-			return $viewModel->setVariables(['form' => $form]); // re-render the login form
+			return $viewModel->setVariables(['loginForm' => $form]); // re-render the login form
 		}
 	
 		$data = $form->getData();

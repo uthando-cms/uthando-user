@@ -10,6 +10,8 @@ return array(
   'UthandoUser\Event\MvcListener'                     => __DIR__ . '/src/UthandoUser/Event/MvcListener.php',
   'UthandoUser\Form\Element\RoleList'                 => __DIR__ . '/src/UthandoUser/Form/Element/RoleList.php',
   'UthandoUser\Form\Element\UserList'                 => __DIR__ . '/src/UthandoUser/Form/Element/UserList.php',
+  'UthandoUser\Form\Login'                            => __DIR__ . '/src/UthandoUser/Form/Login.php',
+  'UthandoUser\Form\Register'                         => __DIR__ . '/src/UthandoUser/Form/Register.php',
   'UthandoUser\Form\User'                             => __DIR__ . '/src/UthandoUser/Form/User.php',
   'UthandoUser\Form\UserSearch'                       => __DIR__ . '/src/UthandoUser/Form/UserSearch.php',
   'UthandoUser\Hydrator\User'                         => __DIR__ . '/src/UthandoUser/Hydrator/User.php',

@@ -29,9 +29,10 @@ class User extends Form
 			'name' => 'firstname',
 			'type'  => 'text',
 			'attributes' => [
-				'placeholder'    => 'Forename:',
+				'placeholder'    => 'First name:',
 				'autofocus'      => true,
-			    'autocapitalize' => 'words'
+			    'autocapitalize' => 'words',
+                'required'       => true,
 			],
 			'options' => [
 				'label' => 'Forename:',
@@ -42,8 +43,9 @@ class User extends Form
 			'name' => 'lastname',
 			'type'  => 'text',
 			'attributes' => [
-				'placeholder'    => 'Surname:',
-			    'autocapitalize' => 'words'
+				'placeholder'    => 'Last name:',
+			    'autocapitalize' => 'words',
+                'required'       => true,
 			],
 			'options' => [
 				'label' => 'Surname:',
@@ -54,7 +56,8 @@ class User extends Form
 			'name' => 'email',
 			'type'  => 'email',
 			'attributes' => [
-				'placeholder' => 'Email:',
+				'placeholder'   => 'Email address',
+                'required'      => true
 			],
 			'options' => [
 				'label' => 'Email:',
@@ -66,7 +69,8 @@ class User extends Form
 			'type' => 'password',
 			'attributes' => [
 				'id'			=> 'password',
-				'placeholder' 	=> 'Password:',
+				'placeholder' 	=> 'Password',
+                'required'      => true,
 			],
 			'options' => [
 				'label' => 'Password:',
@@ -77,7 +81,8 @@ class User extends Form
 		    'name' => 'passwd-confirm',
 		    'type' => 'password',
 		    'attributes' => [
-		        'placeholder' 	=> 'Repeat Password:',
+		        'placeholder' 	=> 'Confirm password',
+                'required'      => true,
 		    ],
 		    'options' => [
 		        'label' => 'Confirm Password:',
@@ -87,9 +92,6 @@ class User extends Form
 		$this->add([
 			'name' => 'role',
 			'type'  => 'UthandoUserRoleList',
-			'attributes' => [
-				'placeholder' => 'Role:',
-			],
 			'options' => [
 				'label' => 'Role:',
 			],
