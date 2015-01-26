@@ -131,11 +131,16 @@ class User extends AbstractMapperService
     /**
      * @param array|ModelInterface $data
      * @return int
+     * @throws UthandoUserException
+     * @throws \UthandoCommon\Service\ServiceException
      * @deprecated moving to event listener
      */
     public function save($data)
-    {	
+    {
+        $model = null;
+
         if ($data instanceof UserModel) {
+            $model = $data;
             $data = $this->getMapper()->extract($data);
         }
 
@@ -145,7 +150,18 @@ class User extends AbstractMapperService
     		unset($data['passwd']);
     	}
     
- 		return parent::save($data);
+ 		$result = parent::save($data);
+
+        /* @var $auth \Zend\Authentication\AuthenticationService */
+        $auth = $this->getService('Zend\Authentication\AuthenticationService');
+        $identity = $auth->getIdentity();
+
+        // if user has updated this details write the update model to session
+        if ($result && $model instanceof UserModel && $model->getUserId() === $identity->getUserId()) {
+            $auth->getStorage()->write($model);
+        }
+
+        return $result;
     }
 
     /**
@@ -159,7 +175,7 @@ class User extends AbstractMapperService
         $id = (int) $id;
 
         /* @var $auth \Zend\Authentication\AuthenticationService */
-        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $auth = $this->getService('Zend\Authentication\AuthenticationService');
         $identity = $auth->getIdentity();
 
         // sanity check to see if we are deleting ourselves!

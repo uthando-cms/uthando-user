@@ -11,13 +11,14 @@
 namespace UthandoUser\Service;
 
 use UthandoUser\Model\User as UserModel;
-use UthandoUser\Service\User;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 use UthandoUser\Authentication\Adapter as AuthAdapter;
 
 /**
  * Class Authentication
+ *
  * @package UthandoUser\Service
+ * @method UserModel getIdentity()
  */
 class Authentication extends ZendAuthenticationService
 {
@@ -45,7 +46,7 @@ class Authentication extends ZendAuthenticationService
      * Set the user mapper
      * 
      * @param User $service
-     * @return \UthandoUser\Model\Authentication
+     * @return \UthandoUser\Service\Authentication
      */
     public function setUserService(User $service)
     {
@@ -86,8 +87,7 @@ class Authentication extends ZendAuthenticationService
     	if (!$result->isValid()) {
     		return false;
     	}
-    	
-    	/* @var $user UserModel */
+
     	$user = $result->getIdentity();
     	
     	if (in_array('update password', $result->getMessages())) {
