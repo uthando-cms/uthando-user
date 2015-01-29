@@ -161,9 +161,9 @@ class UserController extends AbstractActionController
 	
 	public function loginAction()
 	{
-		return new ViewModel([
-			'loginForm' => $this->getUserService()->getForm()
-		]);
+		return [
+			//'loginForm' => $this->getUserService()->getForm()
+		];
 	}
 	
 	public function logoutAction()
@@ -185,8 +185,18 @@ class UserController extends AbstractActionController
 	
 		// Validate
 		$post = $this->params()->fromPost();
-		$form = $this->getUserService()->getForm(null, $post, true);
-		$form->setValidationGroup('passwd', 'email');
+		/* @var $form \UthandoUser\Form\Login */
+		$form = $this->getServiceLocator()
+			->get('FormElementManager')
+			->get('UthandoUserLogin');
+
+		$inputFilter = $this->getServiceLocator()
+			->get('InputFilterManager')
+			->get('UthandoUser');
+		$form->setInputFilter($inputFilter);
+
+		$form->setData($post);
+		$form->setValidationGroup('passwd', 'email', 'rememberme');
 	
 		$viewModel = new ViewModel();
 	
@@ -197,6 +207,8 @@ class UserController extends AbstractActionController
 		}
 	
 		$data = $form->getData();
+
+		/* @var $auth \UthandoUser\Service\Authentication */
 		$auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
 	
 		if (false === $auth->doAuthentication($data['email'], $data['passwd'])) {
@@ -206,6 +218,10 @@ class UserController extends AbstractActionController
 			);
 	
 			return $viewModel->setVariables(['form' => $form]); // re-render the login form
+		}
+
+		if ($data['rememberme'] == 1) {
+			$auth->getStorage()->rememberMe(1);
 		}
 
         $returnTo = $this->params()->fromPost('returnTo', null);

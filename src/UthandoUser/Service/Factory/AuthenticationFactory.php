@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service\Factory;
 
 use UthandoUser\Service\Authentication;
@@ -23,12 +24,14 @@ class AuthenticationFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $sm)
     {
         $service = $sm->get('UthandoUser\Service\User');
+        $storage = $sm->get('UthandoUser\Authentication\Storage');
         $config = $sm->get('config');
         
         $auth = new Authentication();
         
         $auth->setUserService($service);
         $auth->setOptions($config['uthando_user']['auth']);
+        $auth->setStorage($storage);
         
         return $auth;
     }

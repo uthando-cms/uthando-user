@@ -38,9 +38,10 @@ class User extends AbstractDbMapper
      * @param string $email
      * @param null|string $ignore
      * @param bool $emptyPassword
+     * @param bool $activeOnly
      * @return array|\ArrayObject|null|object
      */
-    public function getUserByEmail($email, $ignore=null, $emptyPassword = true)
+    public function getUserByEmail($email, $ignore=null, $emptyPassword=true, $activeOnly=false)
     {
         if ($emptyPassword) {
             /* @var $hydrator \UthandoUser\Hydrator\User */
@@ -53,6 +54,10 @@ class User extends AbstractDbMapper
         
         if ($ignore) {
         	$select->where->notEqualTo('email', $ignore);
+        }
+
+        if ($activeOnly) {
+            $select->where->equalTo('active', 1);
         }
         
         $rowSet = $this->fetchResult($select);

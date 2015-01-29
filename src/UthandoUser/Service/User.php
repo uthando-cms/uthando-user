@@ -31,12 +31,12 @@ class User extends AbstractMapperService
      * @param bool $emptyPassword
      * @return mixed
      */
-    public function getUserByEmail($email, $ignore=null, $emptyPassword = true)
+    public function getUserByEmail($email, $ignore=null, $emptyPassword=true, $activeOnly=false)
     {
     	$email = (string) $email;
         /* @var $mapper \UthandoUser\Mapper\User */
         $mapper = $this->getMapper();
-    	return $mapper->getUserByEmail($email, $ignore, $emptyPassword);
+    	return $mapper->getUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
     }
 
     /**

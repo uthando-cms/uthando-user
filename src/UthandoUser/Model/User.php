@@ -52,6 +52,11 @@ class User implements RoleInterface, ModelInterface
 	 */
 	protected $role;
 
+	/**
+	 * @var int
+	 */
+	protected $active = 0;
+
     /**
      * @return string
      */
@@ -148,6 +153,24 @@ class User implements RoleInterface, ModelInterface
 	public function getRoleId()
 	{
 	    return $this->getRole();
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getActive()
+	{
+		return $this->active;
+	}
+
+	/**
+	 * @param int $active
+	 * @return $this
+	 */
+	public function setActive($active)
+	{
+		$this->active = $active;
+		return $this;
 	}
 
     /**

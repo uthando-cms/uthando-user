@@ -2,6 +2,7 @@
 
 return [
     'invokables' => [
+        'UthandoUser\Authentication\Storage'                => 'UthandoUser\Authentication\Storage',
         'UthandoUser\Service\User'                          => 'UthandoUser\Service\User'
     ],
     'factories' => [

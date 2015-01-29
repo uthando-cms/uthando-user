@@ -19,6 +19,7 @@ use UthandoUser\Authentication\Adapter as AuthAdapter;
  *
  * @package UthandoUser\Service
  * @method UserModel getIdentity()
+ * @method \UthandoUser\Authentication\Storage getStorage()
  */
 class Authentication extends ZendAuthenticationService
 {
@@ -73,7 +74,7 @@ class Authentication extends ZendAuthenticationService
      */
     public function doAuthentication($email, $password)
     {
-        $user = $this->userService->getUserByEmail($email, null, false);
+        $user = $this->userService->getUserByEmail($email, null, false, true);
         
         if (!$user) {
             return false;
@@ -108,6 +109,7 @@ class Authentication extends ZendAuthenticationService
      */
     public function clear()
     {
+        $this->getStorage()->forgetMe();
     	$this->clearIdentity();
     }
     

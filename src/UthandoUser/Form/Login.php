@@ -30,14 +30,22 @@ class Login extends User
             ->remove('role')
             ->remove('dateCreated')
             ->remove('dateModified');
+
+        $this->add([
+            'name' => 'rememberme',
+            'type' => 'checkbox',
+            'options' => [
+                'label' => 'Remember Me:',
+            ],
+        ]);
     }
 
-    public function getInputFilter()
+    /*public function getInputFilter()
     {
         $inputFilter = new UserInputFilter();
         $inputFilter->remove('firstname')
             ->remove('lastname')
             ->remove('passwd-confirm');
         return $inputFilter;
-    }
+    }*/
 } 
