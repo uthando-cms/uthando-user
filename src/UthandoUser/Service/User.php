@@ -102,6 +102,16 @@ class User extends AbstractMapperService
 		    $this->getEventManager()->trigger('user.edit', $this, $post);
 		}
 		
+		// move this to the post edit event
+		/* @var $auth \Zend\Authentication\AuthenticationService */
+		$auth = $this->getService('Zend\Authentication\AuthenticationService');
+		$identity = $auth->getIdentity();
+		
+		// if user has updated this details write the update model to session
+		if ($saved && $model instanceof UserModel && $model->getUserId() === $identity->getUserId()) {
+		    $auth->getStorage()->write($model);
+		}
+		
 		return $saved;
     }
 
@@ -151,15 +161,6 @@ class User extends AbstractMapperService
     	}
     
  		$result = parent::save($data);
-
-        /* @var $auth \Zend\Authentication\AuthenticationService */
-        $auth = $this->getService('Zend\Authentication\AuthenticationService');
-        $identity = $auth->getIdentity();
-
-        // if user has updated this details write the update model to session
-        if ($result && $model instanceof UserModel && $model->getUserId() === $identity->getUserId()) {
-            $auth->getStorage()->write($model);
-        }
 
         return $result;
     }

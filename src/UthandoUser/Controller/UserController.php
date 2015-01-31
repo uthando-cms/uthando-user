@@ -17,6 +17,7 @@ use Zend\View\Model\ViewModel;
 /**
  * Class UserController
  * @package UthandoUser\Controller
+ * @method \Zend\Session\Container sessionContainer()
  */
 class UserController extends AbstractActionController
 {
@@ -56,14 +57,14 @@ class UserController extends AbstractActionController
         				'Thank you, you have successfully registered with us.'
         			);
         			
-        			// log user in
-        			$this->getServiceLocator()
-        			     ->get('Zend\Authentication\AuthenticationService')
-        			     ->doAuthentication($post);
+        			// add return to session.
+        			if ($post['returnTo']) {
+        			    $this->sessionContainer(get_class($this))->offsetSet('returnTo', $post['returnTo']);
+        			}
         			
-        			$return = ($post['returnTo']) ? $post['returnTo'] : 'user/thank-you';
-        			
-        			return $this->redirect()->toRoute($return);
+        			return $this->redirect()->toRoute('user', [
+        			    'action' => 'thank-you',
+        			]);
         			
         		} else {
         			$this->flashMessenger()->addErrorMessage(
@@ -76,6 +77,16 @@ class UserController extends AbstractActionController
         return new ViewModel(array(
         	'registerForm' => $this->getUserService()->getForm(),
         ));
+	}
+	
+	public function activeAccountAction()
+	{
+	    
+	}
+
+	public function forgotPasswordAction()
+	{
+
 	}
 	
 	public function passwordAction()

@@ -14,7 +14,9 @@ return [
                     'privileges'	=> [
                         'allow' => [
                             'controllers' => [
-                                'UthandoUser\Controller\User' => ['action' => ['register', 'thank-you', 'login', 'authenticate']],
+                                'UthandoUser\Controller\User' => ['action' => [
+                                    'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
+                                ]],
                             ],
                         ],
                     ],
@@ -25,7 +27,9 @@ return [
                     'privileges'    => [
                         'deny' => [
                             'controllers' => [
-                                'UthandoUser\Controller\User' => ['action' => ['register', 'thank-you', 'login', 'authenticate']],
+                                'UthandoUser\Controller\User' => ['action' => [
+                                    'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
+                                ]],
                             ],
                         ],
                         'allow' => [

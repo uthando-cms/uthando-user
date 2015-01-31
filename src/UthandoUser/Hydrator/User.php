@@ -54,7 +54,7 @@ class User extends AbstractHydrator
 			'role'			=> $object->getRole(),
 			'dateCreated'	=> $this->extractValue('dateCreated', $object->getDateCreated()),
 			'dateModified'	=> $this->extractValue('dateModified', $object->getDateModified()),
-			'active'		=> $this->getActive(),
+			'active'		=> $object->getActive(),
 		];
 	}
 }

@@ -11,7 +11,7 @@
 
 namespace UthandoUser\Form;
 
-use UthandoUser\InputFilter\User as UserInputFilter;
+//use UthandoUser\InputFilter\User as UserInputFilter;
 
 /**
  * Class Login
@@ -35,7 +35,10 @@ class Login extends User
             'name' => 'rememberme',
             'type' => 'checkbox',
             'options' => [
-                'label' => 'Remember Me:',
+                'label'                 => 'Remember Me:',
+                'use_hidden_element'    => true,
+                'checked_value'         => 1,
+                'unchecked_value'       => 0,
             ],
         ]);
     }
