@@ -55,7 +55,7 @@ class User implements RoleInterface, ModelInterface
 	/**
 	 * @var int
 	 */
-	protected $active = 0;
+	protected $active = false;
 
     /**
      * @return string

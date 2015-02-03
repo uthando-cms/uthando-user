@@ -31,6 +31,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'filters'    => [
                 ['name'    => 'StripTags'],
                 ['name'    => 'StringTrim'],
+                ['name' => 'UthandoUcwords'],
             ],
             'validators' => [
                 ['name' => 'Alpha', 'options' => [
@@ -50,6 +51,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'filters'    => [
                 ['name'    => 'StripTags'],
                 ['name'    => 'StringTrim'],
+                ['name' => 'UthandoUcwords'],
             ],
             'validators' => [
                 ['name' => 'Alpha', 'options' => [
@@ -98,6 +100,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 	        'filters'    => [
 	            ['name'    => 'StripTags'],
 	            ['name'    => 'StringTrim'],
+	            ['name'    => 'StringToLower']
 	        ],
 	        'validators' => [
 	            ['name' => 'EmailAddress', 'options' => [

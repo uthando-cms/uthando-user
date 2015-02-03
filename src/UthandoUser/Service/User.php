@@ -29,7 +29,7 @@ class User extends AbstractMapperService
      * @param $email
      * @param null $ignore
      * @param bool $emptyPassword
-     * @return mixed
+     * @return UserModel|null
      */
     public function getUserByEmail($email, $ignore=null, $emptyPassword=true, $activeOnly=false)
     {

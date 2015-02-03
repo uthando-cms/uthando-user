@@ -28,7 +28,31 @@ class UserController extends AbstractActionController
 	
 	public function thankYouAction()
 	{
-		return new ViewModel();
+	    $container = $this->sessionContainer(get_class($this));
+	    $email = $container->offsetGet('email');
+	    $returnTo = $container->offsetGet('returnTo');
+	    $user = $this->getUserService()->getUserByEmail($email);
+	    
+	    $emailView = new ViewModel([
+	        'user' => $user,
+	    ]);
+	    $emailView->setTemplate('uthando-user/email/verify');
+	    
+	    $this->getEventManager()->trigger('mail.send', $this, [
+            'recipient'        => [
+                'name'      => $user->getFullName(),
+                'address'   => $user->getEmail(),
+            ],
+            'layout'           => 'uthando-user/email/layout',
+	        'body'             => $emailView,
+            'subject'          => 'Verify Account',
+            'transport'        => 'default',
+        ]);
+	    
+		return [
+		    'user'        => $user,
+		    'returnTo'    => $returnTo,
+		];
 	}
 	
 	public function registerAction()
@@ -57,10 +81,29 @@ class UserController extends AbstractActionController
         				'Thank you, you have successfully registered with us.'
         			);
         			
-        			// add return to session.
-        			if ($post['returnTo']) {
-        			    $this->sessionContainer(get_class($this))->offsetSet('returnTo', $post['returnTo']);
-        			}
+        			// add return and email to session.
+                    $this->sessionContainer(get_class($this))
+                        ->exchangeArray([
+                            'email' => $post['email'],
+                            'returnTo' => $post['returnTo'],
+                        ]);
+                        
+                    $user = $this->getUserService()->getById($result);
+                    $emailView = new ViewModel([
+                        'user' => $user,
+                    ]);
+                    $emailView->setTemplate('uthando-user/email/register');
+                        
+                    $this->getEventManager()->trigger('mail.send', $this, [
+                        'recipient'        => [
+                            'name'      => $user->getFullName(),
+                            'address'   => $user->getEmail(),
+                        ],
+                        'layout'           => 'uthando-user/email/layout',
+                        'body'             => $emailView,
+                        'subject'          => 'Verify Account',
+                        'transport'        => 'default',
+                    ]);
         			
         			return $this->redirect()->toRoute('user', [
         			    'action' => 'thank-you',
