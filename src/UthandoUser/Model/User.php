@@ -15,6 +15,7 @@ use UthandoCommon\Model\DateModifiedTrait;
 use UthandoCommon\Model\ModelInterface;
 use UthandoCommon\Model\Model;
 use Zend\Permissions\Acl\Role\RoleInterface;
+use Zend\Math\Rand;
 
 /**
  * Class User
@@ -26,6 +27,8 @@ class User implements RoleInterface, ModelInterface
         UserIdTrait,
         DateCreatedTrait,
         DateModifiedTrait;
+    
+    const PASSWORD_LENGTH = 16;
 	
 	/**
 	 * @var string
@@ -127,6 +130,14 @@ class User implements RoleInterface, ModelInterface
 	{
 		$this->passwd = $passwd;
 		return $this;
+	}
+	
+	public function generatePassword()
+	{
+	    $this->setPasswd(Rand::getString(
+	        self::PASSWORD_LENGTH,
+	        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?!@£$%&*()<>?-+='
+        ));
 	}
 
     /**

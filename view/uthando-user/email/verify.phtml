@@ -3,8 +3,9 @@
 <br/>
 Please click on the following link to verify your email address
 <br/>
-<?php $link = $this->serverUrl() . $this->url('user/verify-email', [
-    'userId' => $this->user->getEmail() ,
+<?php $link = $this->serverUrl() . $this->url('registration', [
+    'action' => 'verify-email',
+    'email' => $this->registrationRecord->getUser()->getEmail() ,
     'token' => $this->registrationRecord->getToken(),
 ]); ?>
 <a href="<?=$link;?>"><?=$link;?></a>

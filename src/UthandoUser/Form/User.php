@@ -117,4 +117,20 @@ class User extends Form
 		    'type' => 'hidden',
 		]);
 	}
+	
+	public function addCaptcha()
+	{
+	    $this->add([
+	        'name' => 'captcha',
+	        'type' => 'UthandoCommonCaptcha',
+	        'attributes' => [
+	            'placeholder' => 'Type letters and number here',
+	            'required' => true,
+	            'class' => 'form-control',
+	        ],
+	        'options' => [
+	            'label' => 'Please verify you are human.'
+	        ],
+	    ]);
+	}
 }

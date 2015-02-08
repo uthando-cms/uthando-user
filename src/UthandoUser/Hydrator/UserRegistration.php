@@ -37,10 +37,11 @@ class UserRegistration extends AbstractHydrator
     public function extract($object)
     {
         return [
-            'userId'        => $object->getUser(),
-            'token'         => $object->getToken(),
-            'requestTime'   => $this->extractValue('requestTime', $object->getRequestTime()),
-            'responded'     => $this->extractValue('responded', $object->getResponded()),
+            'userRegistrationId'    => $object->getUserRegistrationId(),
+            'userId'                => $object->getUserId(),
+            'token'                 => $object->getToken(),
+            'requestTime'           => $this->extractValue('requestTime', $object->getRequestTime()),
+            'responded'             => $this->extractValue('responded', $object->getResponded()),
         ];
     }
 }

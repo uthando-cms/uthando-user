@@ -13,6 +13,7 @@ namespace UthandoUser\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
+use UthandoCommon\Controller\ServiceTrait;
 
 /**
  * Class UserController
@@ -20,39 +21,29 @@ use Zend\View\Model\ViewModel;
  * @method \Zend\Session\Container sessionContainer()
  */
 class UserController extends AbstractActionController
-{
+{   
+    use ServiceTrait;
+    
 	/**
 	 * @var \UthandoUser\Service\User
 	 */
 	protected $userService;
 	
+	public function __construct()
+	{
+	    $this->serviceName = 'UthandoUser';
+	}
+	
 	public function thankYouAction()
 	{
 	    $container = $this->sessionContainer(get_class($this));
 	    $email = $container->offsetGet('email');
-	    $returnTo = $container->offsetGet('returnTo');
-	    $user = $this->getUserService()->getUserByEmail($email);
 	    
-	    $emailView = new ViewModel([
-	        'user' => $user,
-	    ]);
-	    $emailView->setTemplate('uthando-user/email/verify');
+	    /* @var $service \UthandoUser\Service\UserRegistration */
+	    $service = $this->getService('UthandoUserRegistration');
+	    $service->sendVerificationEmail($email);
 	    
-	    $this->getEventManager()->trigger('mail.send', $this, [
-            'recipient'        => [
-                'name'      => $user->getFullName(),
-                'address'   => $user->getEmail(),
-            ],
-            'layout'           => 'uthando-user/email/layout',
-	        'body'             => $emailView,
-            'subject'          => 'Verify Account',
-            'transport'        => 'default',
-        ]);
-	    
-		return [
-		    'user'        => $user,
-		    'returnTo'    => $returnTo,
-		];
+	    return [];
 	}
 	
 	public function registerAction()
@@ -87,23 +78,6 @@ class UserController extends AbstractActionController
                             'email' => $post['email'],
                             'returnTo' => $post['returnTo'],
                         ]);
-                        
-                    $user = $this->getUserService()->getById($result);
-                    $emailView = new ViewModel([
-                        'user' => $user,
-                    ]);
-                    $emailView->setTemplate('uthando-user/email/register');
-                        
-                    $this->getEventManager()->trigger('mail.send', $this, [
-                        'recipient'        => [
-                            'name'      => $user->getFullName(),
-                            'address'   => $user->getEmail(),
-                        ],
-                        'layout'           => 'uthando-user/email/layout',
-                        'body'             => $emailView,
-                        'subject'          => 'Verify Account',
-                        'transport'        => 'default',
-                    ]);
         			
         			return $this->redirect()->toRoute('user', [
         			    'action' => 'thank-you',
@@ -121,15 +95,47 @@ class UserController extends AbstractActionController
         	'registerForm' => $this->getUserService()->getForm(),
         ));
 	}
-	
-	public function activeAccountAction()
-	{
-	    
-	}
 
 	public function forgotPasswordAction()
 	{
-
+	    $request = $this->getRequest();
+	    
+	    if ($request->isPost()) {
+	        $data = $this->params()->fromPost();
+	         
+	        $result = $this->getUserService()->resetPassword($data);
+	         
+	        if ($result instanceof Form) {
+	            $this->flashMessenger()->addErrorMessage(
+	                'There were one or more issues with your submission. Please correct them as indicated below.'
+	            );
+	             
+	            return [
+	                'form' => $result,
+	            ];
+	        } else {
+	            if ($result) {
+	                $this->flashMessenger()->addSuccessMessage(
+	                    'Your new password has been saved and will be emailed to you.'
+	                );
+	            } else {
+	                $this->flashMessenger()->addErrorMessage(
+	                    'We could not change password due to database error.'
+	                );
+	            }
+	            
+	            /*return $this->redirect()->toRoute('user', [
+	                'action' => 'forgot-password',
+	            ]);*/
+	        }
+	    }
+	    
+	    $form = $this->getUserService()->getForm();
+	    $form->addCaptcha();
+	     
+	    return [
+	        'form' => $form,
+	    ];
 	}
 	
 	public function passwordAction()
@@ -274,11 +280,12 @@ class UserController extends AbstractActionController
 			return $viewModel->setVariables(['form' => $form]); // re-render the login form
 		}
 
-		if ($data['rememberme'] == 1) {
+		if (isset($data['rememberme']) && $data['rememberme'] == 1) {
 			$auth->getStorage()->rememberMe(1);
 		}
-
-        $returnTo = $this->params()->fromPost('returnTo', null);
+		
+		$container = $this->sessionContainer(get_class($this));
+		$returnTo = ($container->offsetGet('returnTo')) ?: $this->params()->fromPost('returnTo', null);
 
 		$return = ($returnTo) ? $returnTo : 'home';
 	
@@ -289,13 +296,8 @@ class UserController extends AbstractActionController
 	 * @return \UthandoUser\Service\User
 	 */
 	protected function getUserService()
-	{
-		if (!$this->userService) {
-			$sl = $this->getServiceLocator();
-			$this->userService = $sl->get('UthandoUser\Service\User');
-		}
-		
-		return $this->userService;
+	{	
+		return $this->getService();
 	}
 }
 

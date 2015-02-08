@@ -2,6 +2,7 @@
 
 return [
     'invokables' => [
-        'UthandoUser'   => 'UthandoUser\Hydrator\User',
+        'UthandoUser'               => 'UthandoUser\Hydrator\User',
+        'UthandoUserRegistration'   => 'UthandoUser\Hydrator\UserRegistration',
     ],
 ];

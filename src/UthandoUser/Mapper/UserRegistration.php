@@ -19,5 +19,5 @@ use UthandoCommon\Mapper\AbstractDbMapper;
 class UserRegistration extends AbstractDbMapper
 {
     protected $table = 'userRegistration';
-    protected $primary = 'userId';
+    protected $primary = 'userRegistrationId';
 }

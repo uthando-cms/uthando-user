@@ -21,10 +21,14 @@ use Zend\Math\Rand;
 class UserRegistration implements ModelInterface
 {
     use Model,
-        UserIdTrait,
         UserTrait;
     
     const REQUEST_KEY_LENGTH = 16;
+    
+    /**
+     * @var int
+     */
+    protected $userRegistrationId;
 
     /**
      * @var string
@@ -41,6 +45,24 @@ class UserRegistration implements ModelInterface
      */
     protected $responded = false;
     
+    /**
+     * @return number $userRegistrationId
+     */
+    public function getUserRegistrationId()
+    {
+        return $this->userRegistrationId;
+    }
+
+    /**
+     * @param number $userRegistrationId
+     * @return $this
+     */
+    public function setUserRegistrationId($userRegistrationId)
+    {
+        $this->userRegistrationId = $userRegistrationId;
+        return $this;
+    }
+
     /**
      * @return string $token
      */

@@ -17,6 +17,9 @@ return [
                                 'UthandoUser\Controller\User' => ['action' => [
                                     'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
                                 ]],
+                                'UthandoUser\Controller\Registration' => ['action' => [
+                                    'verify-email',
+                                ]],
                             ],
                         ],
                     ],
@@ -29,6 +32,9 @@ return [
                             'controllers' => [
                                 'UthandoUser\Controller\User' => ['action' => [
                                     'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
+                                ]],
+                                'UthandoUser\Controller\Registration' => ['action' => [
+                                    'verify-email',
                                 ]],
                             ],
                         ],
@@ -52,6 +58,7 @@ return [
             ],
             'resources' => [
                 'UthandoUser\Controller\Admin',
+                'UthandoUser\Controller\Registration',
                 'UthandoUser\Controller\User',
             ],
         ],
@@ -69,6 +76,24 @@ return [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'User',
                         'action'        => 'login',
+                        'force-ssl'     => 'ssl'
+                    ],
+                ],
+                'may_terminate' => true,
+            ],
+            'registration' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/registration[/[:action]/[:token]/[:email]]',
+                    'constraints' => [
+                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'token'     => '[a-zA-Z0-9]*',
+                    ],
+                    'defaults' => [
+                        '__NAMESPACE__' => 'UthandoUser\Controller',
+                        'controller'    => 'Registration',
+                        'token'         => '',
+                        'email'         => '',
                         'force-ssl'     => 'ssl'
                     ],
                 ],

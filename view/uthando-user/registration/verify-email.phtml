@@ -1,0 +1,11 @@
+
+<?php if ($this->result):?>
+    <h2>Email Verification Passed</h2>
+    <p>You can now login in with the password and email address you signed up with.</p>
+    <a href="<?=$this->url('user', [
+        'action' => 'login',
+    ]);?>" class="btn btn-primary"></a>
+<?php else:?>
+    <h2>Email Verification Failed.</h2>
+    <p>Please contact support for help.</p>
+<?php endif;?>

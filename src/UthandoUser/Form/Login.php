@@ -42,13 +42,4 @@ class Login extends User
             ],
         ]);
     }
-
-    /*public function getInputFilter()
-    {
-        $inputFilter = new UserInputFilter();
-        $inputFilter->remove('firstname')
-            ->remove('lastname')
-            ->remove('passwd-confirm');
-        return $inputFilter;
-    }*/
 } 

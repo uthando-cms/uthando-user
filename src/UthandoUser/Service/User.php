@@ -16,6 +16,9 @@ use UthandoCommon\Model\ModelInterface;
 use UthandoUser\UthandoUserException;
 use UthandoUser\Model\User as UserModel;
 use Zend\Crypt\Password\PasswordInterface;
+use Zend\View\Model\ViewModel;
+use Zend\EventManager\Event;
+use Zend\Math\Rand;
 
 /**
  * Class User
@@ -23,7 +26,26 @@ use Zend\Crypt\Password\PasswordInterface;
  */
 class User extends AbstractMapperService
 {   
+    /**
+     * @var string
+     */
 	protected $serviceAlias = 'UthandoUser';
+	
+	/**
+	 * @var bool
+	 */
+	protected $useCache = false;
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see \UthandoCommon\Service\AbstractService::attachEvents()
+	 */
+	public function attachEvents()
+	{
+	    $this->getEventManager()->attach([
+	        'post.insert'
+        ], [$this, 'sendEmail']);
+	}
 
     /**
      * @param $email
@@ -37,6 +59,34 @@ class User extends AbstractMapperService
         /* @var $mapper \UthandoUser\Mapper\User */
         $mapper = $this->getMapper();
     	return $mapper->getUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
+    }
+    
+    /**
+     * @param Event $e
+     */
+    public function sendEmail(Event $e)
+    {
+        $user = $e->getParam('model', null);
+        
+        if ($user instanceof UserModel) {
+            
+            $emailView = new ViewModel([
+                'user' => $user,
+            ]);
+            
+            $emailView->setTemplate('uthando-user/email/register');
+            
+            $this->getEventManager()->trigger('mail.send', $this, [
+                'recipient'        => [
+                    'name'      => $user->getFullName(),
+                    'address'   => $user->getEmail(),
+                ],
+                'layout'           => 'uthando-user/email/layout',
+                'body'             => $emailView,
+                'subject'          => 'Account Registration',
+                'transport'        => 'default',
+            ]);
+        }
     }
 
     /**
@@ -133,8 +183,49 @@ class User extends AbstractMapperService
         return parent::edit($user, $post, $form);
     }
     
-    public function resetPassword()
-    {
+    public function resetPassword(array $post)
+    {   
+        $email = (isset($post['email'])) ? $post['email'] : null;
+        $user = $this->getUserByEmail($email);
+        $form = $this->getForm(null, $post, true);
+        $form->addCaptcha();
+        $form->setValidationGroup([
+            'email', 'captcha', 'security'
+        ]);
+        
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addEmailRecordExists();
+        
+        if (!$form->isValid()) {
+            return $form;
+        }
+        
+        $user->generatePassword();
+        
+        $result = $this->save($user);
+        
+        if ($result) {
+        
+            $emailView = new ViewModel([
+                'user' => $user,
+            ]);
+            
+            $emailView->setTemplate('uthando-user/email/reset-password');
+             
+            $this->getEventManager()->trigger('mail.send', $this, [
+                'recipient'        => [
+                    'name'      => $user->getFullName(),
+                    'address'   => $user->getEmail(),
+                ],
+                'layout'           => 'uthando-user/email/layout',
+                'body'             => $emailView,
+                'subject'          => 'Reset Password',
+                'transport'        => 'default',
+            ]);
+        }
+        
+        return $result;
         
     }
 
@@ -193,7 +284,7 @@ class User extends AbstractMapperService
      * @throws \UthandoUser\UthandoUserException
      */
     public function createPassword($password)
-    {
+    {   
         $authOptions = $this->getConfig('uthando_user');
 
         if (!class_exists($authOptions['auth']['credentialTreatment'])) {

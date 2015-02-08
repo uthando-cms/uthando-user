@@ -130,4 +130,23 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 	    
 	    return $this;
 	}
+	
+	public function addEmailRecordExists($exclude = null)
+	{
+	    $exclude = (!$exclude) ?: [
+	        'field' => 'email',
+	        'value' => $exclude,
+	    ];
+	
+	    $this->get('email')
+	    ->getValidatorChain()
+	    ->attachByName('Zend\Validator\Db\RecordExists', [
+	        'table'     => 'user',
+	        'field'     => 'email',
+	        'adapter'   => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+	        'exclude'   => $exclude,
+	    ]);
+	     
+	    return $this;
+	}
 }

@@ -2,6 +2,7 @@
 
 return [
     'invokables' => [
-        'UthandoUser'   => 'UthandoUser\Mapper\User',
+        'UthandoUser'               => 'UthandoUser\Mapper\User',
+        'UthandoUserRegistration'   => 'UthandoUser\Mapper\UserRegistration',
     ],
 ];
