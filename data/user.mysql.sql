@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `userRegistration` (
-    `userId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `userId` int(10) unsigned NOT NULL,
     `token` varchar(16) NOT NULL,
     `requestTime` datetime NOT NULL,
     `responded` tinyint(4) NOT NULL DEFAULT 0,

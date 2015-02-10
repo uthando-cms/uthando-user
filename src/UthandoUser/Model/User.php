@@ -136,7 +136,7 @@ class User implements RoleInterface, ModelInterface
 	{
 	    $this->setPasswd(Rand::getString(
 	        self::PASSWORD_LENGTH,
-	        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789?!@£$%&*()<>?-+='
+	        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         ));
 	}
 
@@ -198,5 +198,10 @@ class User implements RoleInterface, ModelInterface
     public function getLastNameFirst()
     {
     	return $this->getLastname() . ', ' . $this->getFirstname();
+    }
+    
+    public function isActive()
+    {
+        return (true === $this->getActive()) ? 'yes' : 'no'; 
     }
 }

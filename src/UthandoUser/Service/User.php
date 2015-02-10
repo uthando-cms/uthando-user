@@ -18,7 +18,6 @@ use UthandoUser\Model\User as UserModel;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\View\Model\ViewModel;
 use Zend\EventManager\Event;
-use Zend\Math\Rand;
 
 /**
  * Class User
@@ -144,7 +143,7 @@ class User extends AbstractMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists($email);
     	
-    	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId');
+    	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId', 'active');
 		
 		$saved = parent::edit($model, $post, $form);
 		
@@ -183,8 +182,8 @@ class User extends AbstractMapperService
         return parent::edit($user, $post, $form);
     }
     
-    public function resetPassword(array $post)
-    {   
+    public function forgotPassword(array $post)
+    {
         $email = (isset($post['email'])) ? $post['email'] : null;
         $user = $this->getUserByEmail($email);
         $form = $this->getForm(null, $post, true);
@@ -201,6 +200,11 @@ class User extends AbstractMapperService
             return $form;
         }
         
+        return $this->resetPassword($user);
+    }
+    
+    public function resetPassword(UserModel $user)
+    {   
         $user->generatePassword();
         
         $result = $this->save($user);

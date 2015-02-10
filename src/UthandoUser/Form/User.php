@@ -98,6 +98,17 @@ class User extends Form
 		]);
 		
 		$this->add([
+		    'name' => 'active',
+		    'type' => 'checkbox',
+		    'options' => [
+		        'label' => 'Active:',
+		        'use_hidden_element'  => true,
+		        'checked_value'       => 1,
+		        'unchecked_value'     => 0
+		    ],
+		]);
+		
+		$this->add([
 			'name' => 'dateCreated',
 			'type' => 'hidden',
 		]);

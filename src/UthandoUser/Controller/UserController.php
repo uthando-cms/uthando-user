@@ -103,7 +103,7 @@ class UserController extends AbstractActionController
 	    if ($request->isPost()) {
 	        $data = $this->params()->fromPost();
 	         
-	        $result = $this->getUserService()->resetPassword($data);
+	        $result = $this->getUserService()->forgotPassword($data);
 	         
 	        if ($result instanceof Form) {
 	            $this->flashMessenger()->addErrorMessage(

@@ -1,15 +1,26 @@
 <?php $this->headTitle('Edit User') ?>
 
-<?=$this->partial('uthando-admin/partial/add-edit-form', [
-	'form' 			=> $this->form,
-	'formName'		=> 'User',
-    'postUrl'		=> $this->url('admin/user/edit', [
-        'id'    => $this->model->getUserId(),
-    ]),
-    'cancelUrl'     => $this->url('admin/user'),
-	'formElements'	=> [
-		'firstname', 'lastname', 'email', 'role',
-        'passwd', 'passwd-confirm',
-        'userId', 'security',
-    ],
-]); ?>
+<div class="row">
+    <a class="btn btn-default" href="<?=$this->url('admin/user/edit', [
+        'action' => 'reset-password',
+        'id'     => $this->model->getUserId(),
+    ]);?>">Reset Password</a>
+</div>
+
+<hr>
+
+<div class="row">
+    <?=$this->partial('uthando-admin/partial/add-edit-form', [
+    	'form' 			=> $this->form,
+    	'formName'		=> 'User',
+        'postUrl'		=> $this->url('admin/user/edit', [
+            'id'    => $this->model->getUserId(),
+        ]),
+        'cancelUrl'     => $this->url('admin/user'),
+    	'formElements'	=> [
+    	    'active',
+    		'firstname', 'lastname', 'email', 'role',
+            'userId', 'security',
+        ],
+    ]); ?>
+</div>
