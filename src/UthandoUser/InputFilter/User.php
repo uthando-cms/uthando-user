@@ -34,9 +34,6 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ['name' => 'UthandoUcwords'],
             ],
             'validators' => [
-                ['name' => 'Alpha', 'options' => [
-                    'allowWhiteSpace' => true,
-                ]],
                 ['name'    => 'StringLength', 'options' => [
                     'encoding' => 'UTF-8',
                     'min'      => 2,
@@ -54,9 +51,6 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ['name' => 'UthandoUcwords'],
             ],
             'validators' => [
-                ['name' => 'Alpha', 'options' => [
-                    'allowWhiteSpace' => true,
-                ]],
                 ['name'    => 'StringLength', 'options' => [
                     'encoding' => 'UTF-8',
                     'min'      => 2,
