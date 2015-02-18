@@ -42,7 +42,7 @@ class User extends AbstractMapperService
 	public function attachEvents()
 	{
 	    $this->getEventManager()->attach([
-	        'post.insert'
+	        'post.add'
         ], [$this, 'sendEmail']);
 	}
 
@@ -65,7 +65,8 @@ class User extends AbstractMapperService
      */
     public function sendEmail(Event $e)
     {
-        $user = $e->getParam('model', null);
+        $userId = $e->getParam('saved', null);
+        $user = $this->getById($userId);
         
         if ($user instanceof UserModel) {
             
