@@ -19,7 +19,7 @@ use UthandoUser\Model\User;
  */
 class AdminController extends AbstractCrudController
 {
-    protected $searchDefaultParams = ['sort' => 'lastname'];
+    protected $controllerSearchOverrides = ['sort' => 'lastname'];
     protected $serviceName = 'UthandoUser';
     protected $route = 'admin/user';
     
