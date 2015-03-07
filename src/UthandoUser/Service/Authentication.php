@@ -68,13 +68,14 @@ class Authentication extends ZendAuthenticationService
     /**
      * Authenticate a user
      *
-     * @param  string $email
+     * @param  string $identity
      * @param string $password
      * @return boolean
      */
-    public function doAuthentication($email, $password)
+    public function doAuthentication($identity, $password)
     {
-        $user = $this->userService->getUserByEmail($email, null, false, true);
+        $authMethod = $this->options['AuthenticateMethod'];
+        $user = $this->userService->$authMethod($identity, null, false, true);
         
         if (!$user) {
             return false;

@@ -2,9 +2,10 @@
 return [
 	'uthando_user' => [
 		'auth' => [
-			'credentialTreatment'          => 'Zend\Crypt\Password\Bcrypt',
-		    'useFallbackTreatment'         => false,
-		    'fallbackCredentialTreatment'  => 'UthandoUser\Crypt\Password\Md5',
+		    'AuthenticateMethod'          => 'getUserByEmail',
+			'credentialTreatment'         => 'Zend\Crypt\Password\Bcrypt',
+		    'useFallbackTreatment'        => false,
+		    'fallbackCredentialTreatment' => 'UthandoUser\Crypt\Password\Md5',
 		],
 		'acl' => [
             'roles' => [

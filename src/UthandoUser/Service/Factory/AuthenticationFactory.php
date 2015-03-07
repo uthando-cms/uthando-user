@@ -23,7 +23,7 @@ class AuthenticationFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $sm)
     {
-        $service = $sm->get('UthandoUser\Service\User');
+        $service = $sm->get('UthandoServiceManager')->get('UthandoUser');
         $storage = $sm->get('UthandoUser\Authentication\Storage');
         $config = $sm->get('config');
         

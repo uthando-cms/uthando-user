@@ -33,7 +33,8 @@ class UserList extends Select implements ServiceLocatorAwareInterface
     {
         $users = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoUser\Service\User')
+            ->get('UthandoServiceManager')
+            ->get('UthandoUser')
             ->fetchAll();
 
         $userOptions = [];
