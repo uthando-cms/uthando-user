@@ -21,7 +21,7 @@ class Storage extends Session
 {
     /**
      * @param int $rememberMe
-     * @param int $time
+     * @param int $time default 14 days
      */
     public function rememberMe($rememberMe = 0, $time = 1209600)
     {

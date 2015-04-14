@@ -34,11 +34,6 @@ class Authentication extends ZendAuthenticationService
     protected $userService;
     
     /**
-     * @var ZendAuthenticationService
-     */
-    protected $auth;
-    
-    /**
      * Auth options
      */
     protected $options;
