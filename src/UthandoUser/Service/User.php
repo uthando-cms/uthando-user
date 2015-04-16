@@ -144,7 +144,7 @@ class User extends AbstractMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists($email);
     	
-    	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId', 'active');
+    	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId', 'active', 'role');
 		
 		$saved = parent::edit($model, $post, $form);
 		
