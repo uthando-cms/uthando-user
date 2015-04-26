@@ -27,7 +27,8 @@ class Register extends User
         $this->remove('userId')
             ->remove('role')
             ->remove('dateCreated')
-            ->remove('dateModified');
+            ->remove('dateModified')
+            ->remove('active');
     }
 
     /**

@@ -96,11 +96,13 @@ class User extends AbstractMapperService
      * @deprecated moving to event listener
      */
     public function add(array $post, Form $form = null)
-    {
+    {   
         $form = $this->getForm($this->getMapper()->getModel(), $post, true, true);
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists();
+        
+        $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm']);
         
         $saved = parent::add($post, $form);
         
@@ -144,7 +146,7 @@ class User extends AbstractMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists($email);
     	
-    	$form->setValidationGroup('firstname', 'lastname', 'email', 'userId', 'active', 'role');
+    	$form->setValidationGroup(['firstname', 'lastname', 'email', 'userId', 'active', 'role']);
 		
 		$saved = parent::edit($model, $post, $form);
 		
