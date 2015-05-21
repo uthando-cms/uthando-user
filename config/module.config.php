@@ -64,6 +64,76 @@ return [
             ],
         ],
 	],
+    'controllers' => [
+        'invokables' => [
+            'UthandoUser\Controller\Admin'          => 'UthandoUser\Controller\AdminController',
+            'UthandoUser\Controller\Registration'   => 'UthandoUser\Controller\RegistrationController',
+            'UthandoUser\Controller\User'           => 'UthandoUser\Controller\UserController'
+        ],
+    ],
+    'controller_plugins' => [
+        'invokables' => [
+            'IsAllowed' => 'UthandoUser\Controller\Plugin\IsAllowed'
+        ],
+    ],
+    'form_elements' => [
+        'invokables' => [
+            'UthandoUserLogin'      => 'UthandoUser\Form\Login',
+            'UthandoUserRegister'   => 'UthandoUser\Form\Register',
+            'UthandoUser'           => 'UthandoUser\Form\User',
+            'UthandoUserSearch'     => 'UthandoUser\Form\UserSearch',
+
+            'UthandoUserRoleList'   => 'UthandoUser\Form\Element\RoleList',
+            'UthandoUserList'       => 'UthandoUser\Form\Element\UserList',
+        ],
+    ],
+    'hydrators' => [
+        'invokables' => [
+            'UthandoUser'               => 'UthandoUser\Hydrator\User',
+            'UthandoUserRegistration'   => 'UthandoUser\Hydrator\UserRegistration',
+        ],
+    ],
+    'input_filters' => [
+        'invokables' => [
+            'UthandoUser' => 'UthandoUser\InputFilter\User',
+        ],
+    ],
+    'service_manager' => [
+        'invokables' => [
+            'UthandoUser\Authentication\Storage' => 'UthandoUser\Authentication\Storage',
+        ],
+        'factories' => [
+            'Zend\Authentication\AuthenticationService' => 'UthandoUser\Service\Factory\AuthenticationFactory',
+            'UthandoUser\Service\Acl'                   => 'UthandoUser\Service\Factory\AclFactory',
+            'UthandoUser\Navigation'                    => 'UthandoUser\Service\Factory\UserNavigationFactory'
+        ],
+    ],
+    'uthando_mappers' => [
+        'invokables' => [
+            'UthandoUser'               => 'UthandoUser\Mapper\User',
+            'UthandoUserRegistration'   => 'UthandoUser\Mapper\UserRegistration',
+        ],
+    ],
+    'uthando_models' => [
+        'invokables' => [
+            'UthandoUser'               => 'UthandoUser\Model\User',
+            'UthandoUserRegistration'   => 'UthandoUser\Model\UserRegistration',
+        ],
+    ],
+    'uthando_services' => [
+        'invokables' => [
+            'UthandoUser'               => 'UthandoUser\Service\User',
+            'UthandoUserRegistration'   => 'UthandoUser\Service\UserRegistration',
+        ],
+    ],
+    'view_helpers' => [
+        'invokables' => [
+            'IsAllowed' => 'UthandoUser\View\IsAllowed',
+        ],
+    ],
+    'view_manager' => [
+        'template_map' => include __DIR__  .'/../template_map.php',
+    ],
     'router' => [
         'routes' => [
             'user' => [
@@ -210,7 +280,4 @@ return [
 	        ],
         ],
 	],
-    'view_manager' => [
-    	'template_map' => include __DIR__  .'/../template_map.php',
-    ],
 ];
