@@ -50,7 +50,8 @@ class User extends AbstractMapperService
      * @param $email
      * @param null $ignore
      * @param bool $emptyPassword
-     * @return UserModel|null
+     * @param bool $activeOnly
+     * @return null|UserModel
      */
     public function getUserByEmail($email, $ignore=null, $emptyPassword=true, $activeOnly=false)
     {
@@ -104,13 +105,7 @@ class User extends AbstractMapperService
         
         $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm']);
         
-        $saved = parent::add($post, $form);
-        
-        if (!$saved instanceof Form && $saved) {
-            $this->getEventManager()->trigger('user.add', $this, $post);
-        }
-        
-        return $saved;
+        return parent::add($post, $form);
     }
 
     /**
@@ -125,6 +120,7 @@ class User extends AbstractMapperService
      */
     public function edit(ModelInterface $model, array $post, Form $form = null)
     {
+
         if (!$model instanceof UserModel) {
             throw new UthandoUserException('$model must be an instance of UthandoUser\Model\User, ' . get_class($model) . ' given.');
         }
@@ -132,7 +128,7 @@ class User extends AbstractMapperService
     	if (!isset($post['role'])) {
     		$post['role'] = $model->getRole();
     	}
-    	
+
     	$model->setDateModified();
     	
     	$form  = $this->getForm($model, $post, true, true);
@@ -149,10 +145,6 @@ class User extends AbstractMapperService
     	$form->setValidationGroup(['firstname', 'lastname', 'email', 'userId', 'active', 'role']);
 		
 		$saved = parent::edit($model, $post, $form);
-		
-		if (!$saved instanceof Form && $saved) {
-		    $this->getEventManager()->trigger('user.edit', $this, $post);
-		}
 		
 		// move this to the post edit event
 		/* @var $auth \Zend\Authentication\AuthenticationService */
@@ -189,6 +181,7 @@ class User extends AbstractMapperService
     {
         $email = (isset($post['email'])) ? $post['email'] : null;
         $user = $this->getUserByEmail($email);
+        /* @var $form \UthandoUser\Form\User */
         $form = $this->getForm(null, $post, true);
         $form->addCaptcha();
         $form->setValidationGroup([
@@ -245,10 +238,7 @@ class User extends AbstractMapperService
      */
     public function save($data)
     {
-        $model = null;
-
         if ($data instanceof UserModel) {
-            $model = $data;
             $data = $this->getMapper()->extract($data);
         }
 

@@ -11,6 +11,7 @@
 namespace UthandoUser\InputFilter;
 
 use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Validator\Hostname;
@@ -18,6 +19,7 @@ use Zend\Validator\Hostname;
 /**
  * Class User
  * @package UthandoUser\InputFilter
+ * @method InputFilterPluginManager getServiceLocator()
  */
 class User extends InputFilter implements ServiceLocatorAwareInterface
 {
