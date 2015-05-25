@@ -174,7 +174,9 @@ class User extends AbstractMapperService
             return $form;
         }
         
-        return parent::edit($user, $post, $form);
+        $saved = $this->save($form->getData());
+
+        return $saved;
     }
     
     public function forgotPassword(array $post)
