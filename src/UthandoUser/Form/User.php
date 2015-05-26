@@ -10,6 +10,7 @@
  */
 namespace UthandoUser\Form;
 
+use TwbBundle\Form\View\Helper\TwbBundleForm;
 use Zend\Form\Form;
 
 /**
@@ -36,6 +37,11 @@ class User extends Form
 			],
 			'options' => [
 				'label' => 'Forename:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 			],
 		]);
 		
@@ -49,6 +55,11 @@ class User extends Form
 			],
 			'options' => [
 				'label' => 'Surname:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 			],
 		]);
 		
@@ -61,6 +72,11 @@ class User extends Form
 			],
 			'options' => [
 				'label' => 'Email:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 			],
 		]);
 		
@@ -74,6 +90,11 @@ class User extends Form
 			],
 			'options' => [
 				'label' => 'Password:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 			],
 		]);
 		
@@ -86,6 +107,11 @@ class User extends Form
 		    ],
 		    'options' => [
 		        'label' => 'Confirm Password:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 		    ],
 		]);
 		
@@ -94,6 +120,11 @@ class User extends Form
 			'type'  => 'UthandoUserRoleList',
 			'options' => [
 				'label' => 'Role:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8',
+                'label_attributes' => [
+                    'class' => 'col-md-4',
+                ],
 			],
 		]);
 		
@@ -104,7 +135,9 @@ class User extends Form
 		        'label' => 'Active:',
 		        'use_hidden_element'  => true,
 		        'checked_value'       => 1,
-		        'unchecked_value'     => 0
+		        'unchecked_value'     => 0,
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8 col-md-offset-4',
 		    ],
 		]);
 		
