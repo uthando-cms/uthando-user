@@ -277,7 +277,7 @@ class UserController extends AbstractActionController
 				'Login failed, Please try again.'
 			);
 	
-			return $viewModel->setVariables(['form' => $form]); // re-render the login form
+			return $viewModel->setVariables(['loginForm' => $form]); // re-render the login form
 		}
 
 		if (isset($data['rememberme']) && $data['rememberme'] == 1) {
