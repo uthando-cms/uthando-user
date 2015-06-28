@@ -15,6 +15,7 @@ use Zend\Form\Form;
 
 /**
  * Class User
+ *
  * @package UthandoUser\Form
  */
 class User extends Form

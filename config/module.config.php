@@ -1,8 +1,14 @@
 <?php
 return [
 	'uthando_user' => [
+        'user_options' => [
+            'loginMinPasswordLength' => 6,
+            'loginMaxPasswordLength' => 16,
+            'registerMinPasswordLength' => 8,
+            'registerMaxPasswordLength' => 16
+        ],
 		'auth' => [
-		    'AuthenticateMethod'          => 'getUserByEmail',
+		    'authenticateMethod'          => 'getUserByEmail',
 			'credentialTreatment'         => 'Zend\Crypt\Password\Bcrypt',
 		    'useFallbackTreatment'        => false,
 		    'fallbackCredentialTreatment' => 'UthandoUser\Crypt\Password\Md5',
@@ -52,7 +58,9 @@ return [
                     'privileges'    => [
                         'allow' => [
                             'controllers' => [
-                                'UthandoUser\Controller\Admin' => ['action' => 'all']],
+                                'UthandoUser\Controller\Admin' => ['action' => 'all'],
+                                'UthandoUser\Controller\Settings' => ['action' => 'all'],
+                            ],
                         ],
                     ],
                 ],
@@ -60,6 +68,7 @@ return [
             'resources' => [
                 'UthandoUser\Controller\Admin',
                 'UthandoUser\Controller\Registration',
+                'UthandoUser\Controller\Settings',
                 'UthandoUser\Controller\User',
             ],
         ],
@@ -68,7 +77,8 @@ return [
         'invokables' => [
             'UthandoUser\Controller\Admin'          => 'UthandoUser\Controller\AdminController',
             'UthandoUser\Controller\Registration'   => 'UthandoUser\Controller\RegistrationController',
-            'UthandoUser\Controller\User'           => 'UthandoUser\Controller\UserController'
+            'UthandoUser\Controller\Settings'       => 'UthandoUser\Controller\Settings',
+            'UthandoUser\Controller\User'           => 'UthandoUser\Controller\UserController',
         ],
     ],
     'controller_plugins' => [
@@ -78,13 +88,17 @@ return [
     ],
     'form_elements' => [
         'invokables' => [
-            'UthandoUserLogin'      => 'UthandoUser\Form\Login',
-            'UthandoUserRegister'   => 'UthandoUser\Form\Register',
-            'UthandoUser'           => 'UthandoUser\Form\User',
-            'UthandoUserSearch'     => 'UthandoUser\Form\UserSearch',
+            'UthandoUserLogin'          => 'UthandoUser\Form\Login',
+            'UthandoUserRegister'       => 'UthandoUser\Form\Register',
+            'UthandoUser'               => 'UthandoUser\Form\User',
+            'UthandoUserSearch'         => 'UthandoUser\Form\UserSearch',
 
-            'UthandoUserRoleList'   => 'UthandoUser\Form\Element\RoleList',
-            'UthandoUserList'       => 'UthandoUser\Form\Element\UserList',
+            'UthandoUserRoleList'       => 'UthandoUser\Form\Element\RoleList',
+            'UthandoUserList'           => 'UthandoUser\Form\Element\UserList',
+
+            'UthandoUserAuthFieldSet'   => 'UthandoUser\Form\Settings\AuthFieldSet',
+            'UthandoUserSettings'       => 'UthandoUser\Form\Settings\Settings',
+            'UthandoUserFieldSet'       => 'UthandoUser\Form\Settings\UserFieldSet',
         ],
     ],
     'hydrators' => [
@@ -105,7 +119,9 @@ return [
         'factories' => [
             'Zend\Authentication\AuthenticationService' => 'UthandoUser\Service\Factory\AuthenticationFactory',
             'UthandoUser\Service\Acl'                   => 'UthandoUser\Service\Factory\AclFactory',
-            'UthandoUser\Navigation'                    => 'UthandoUser\Service\Factory\UserNavigationFactory'
+            'UthandoUser\Navigation'                    => 'UthandoUser\Service\Factory\UserNavigationFactory',
+            'UthandoUser\Options\Auth'                  => 'UthandoUser\Service\Factory\AuthOptionsFactory',
+            'UthandoUser\Options\User'                  => 'UthandoUser\Service\Factory\UserOptionsFactory',
         ],
     ],
     'uthando_mappers' => [
@@ -213,6 +229,21 @@ return [
         							],
         						],
         					],
+                            'settings' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route' => '/settings[/:action]',
+                                    'constraints' => [
+                                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    ],
+                                    'defaults' => [
+                                        'controller' => 'Settings',
+                                        'action' => 'index',
+                                        'force-ssl' => 'ssl'
+                                    ]
+                                ],
+                                'may_terminate' => true,
+                            ],
         				],
         			],
         		],
@@ -251,6 +282,12 @@ return [
                                 'action'    => 'add',
                                 'route'     => 'admin/user/edit',
                                 'resource'  => 'menu:admin'
+                            ],
+                            'user-settings' => [
+                                'label' => 'Settings',
+                                'action' => 'index',
+                                'route' => 'admin/user/settings',
+                                'resource' => 'menu:admin',
                             ],
                         ],
                         'route'     => 'admin/user',

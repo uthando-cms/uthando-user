@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service;
 
 use UthandoCommon\Service\AbstractMapperService;
@@ -21,6 +22,7 @@ use Zend\EventManager\Event;
 
 /**
  * Class User
+ *
  * @package UthandoUser\Service
  */
 class User extends AbstractMapperService
@@ -102,6 +104,7 @@ class User extends AbstractMapperService
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists();
+        $inputFilter->addPasswordLength('register');
         
         $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm']);
         
@@ -169,6 +172,9 @@ class User extends AbstractMapperService
         $form  = $this->getForm($user, $post, true, true);
         
         $form->setValidationGroup('passwd', 'passwd-confirm');
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addPasswordLength('register');
         
         if (!$form->isValid()) {
             return $form;

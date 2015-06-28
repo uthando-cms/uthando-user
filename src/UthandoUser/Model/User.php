@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Model;
 
 use UthandoCommon\Model\DateCreatedTrait;
@@ -19,6 +20,7 @@ use Zend\Math\Rand;
 
 /**
  * Class User
+ *
  * @package UthandoUser\Model
  */
 class User implements RoleInterface, ModelInterface

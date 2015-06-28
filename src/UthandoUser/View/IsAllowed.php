@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\View;
 
 use UthandoCommon\View\AbstractViewHelper;
@@ -15,6 +16,7 @@ use UthandoUser\Controller\Plugin\IsAllowed as PluginIsAllowed;
 
 /**
  * Class IsAllowed
+ *
  * @package UthandoUser\View
  */
 class IsAllowed extends AbstractViewHelper

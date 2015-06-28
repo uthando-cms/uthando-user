@@ -8,12 +8,14 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
 
 /**
  * Class UserRegistration
+ *
  * @package UthandoUser\Mapper
  */
 class UserRegistration extends AbstractDbMapper

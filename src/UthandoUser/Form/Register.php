@@ -16,6 +16,7 @@ use Zend\InputFilter\InputFilterInterface;
 
 /**
  * Class Register
+ *
  * @package UthandoUser\Form
  */
 class Register extends User

@@ -17,6 +17,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
  * Class AuthenticationFactory
+ *
  * @package UthandoUser\Service\Factory
  */
 class AuthenticationFactory implements FactoryInterface
@@ -25,12 +26,12 @@ class AuthenticationFactory implements FactoryInterface
     {
         $service = $sm->get('UthandoServiceManager')->get('UthandoUser');
         $storage = $sm->get('UthandoUser\Authentication\Storage');
-        $config = $sm->get('config');
+        $options = $sm->get('UthandoUser\Options\Auth');
         
         $auth = new Authentication();
         
         $auth->setUserService($service);
-        $auth->setOptions($config['uthando_user']['auth']);
+        $auth->setOptions($options);
         $auth->setStorage($storage);
         
         return $auth;

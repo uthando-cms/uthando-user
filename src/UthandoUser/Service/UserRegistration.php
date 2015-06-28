@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service;
 
 use UthandoCommon\Service\AbstractRelationalMapperService;
@@ -15,6 +16,7 @@ use Zend\View\Model\ViewModel;
 
 /**
  * Class UserController
+ *
  * @package UthandoUser\Controller
  * @method \Zend\Session\Container sessionContainer()
  */

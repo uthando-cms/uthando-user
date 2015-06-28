@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -250,9 +251,12 @@ class UserController extends AbstractActionController
 			->get('FormElementManager')
 			->get('UthandoUserLogin');
 
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
 		$inputFilter = $this->getServiceLocator()
 			->get('InputFilterManager')
 			->get('UthandoUser');
+        $inputFilter->addPasswordLength('login');
+
 		$form->setInputFilter($inputFilter);
 
 		$form->setData($post);

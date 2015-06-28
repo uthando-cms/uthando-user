@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Authentication;
 
 use UthandoUser\Model\User as UserModel;
@@ -16,6 +17,7 @@ use Zend\Authentication\Result as AuthenticationResult;
 
 /**
  * Class Adapter
+ *
  * @package UthandoUser\Authentication
  */
 class Adapter extends AbstractAdapter

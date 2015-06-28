@@ -8,12 +8,14 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service;
 
 use Zend\Permissions\Acl\AclInterface;
 
 /**
  * Interface AclAwareInterface
+ *
  * @package UthandoUser\Service
  */
 interface AclAwareInterface

@@ -11,10 +11,9 @@
 
 namespace UthandoUser\Form;
 
-//use UthandoUser\InputFilter\User as UserInputFilter;
-
 /**
  * Class Login
+ *
  * @package UthandoUser\Form
  */
 class Login extends User

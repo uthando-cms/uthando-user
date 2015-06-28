@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Controller\Plugin;
 
 use UthandoUser\Model\User;
@@ -18,6 +19,7 @@ use Zend\Permissions\Acl\Role\RoleInterface;
 
 /**
  * Class IsAllowed
+ *
  * @package UthandoUser\Controller\Plugin
  */
 class IsAllowed extends AbstractPlugin
@@ -76,8 +78,9 @@ class IsAllowed extends AbstractPlugin
     /**
      * Set the identity of the current request
      *
-     * @param array null|User|Role $identity
-     * @return \UthandoUser\Controller\Plugin\Acl
+     * @param $identity
+     * @return Acl
+     * @throws \Exception
      */
     public function setIdentity($identity)
     { 
@@ -109,6 +112,10 @@ class IsAllowed extends AbstractPlugin
 
     /**
      * Proxy to the isAllowed method
+     *
+     * @param null $resource
+     * @param null $privilege
+     * @return bool
      */
     public function __invoke($resource = null, $privilege = null)
     {

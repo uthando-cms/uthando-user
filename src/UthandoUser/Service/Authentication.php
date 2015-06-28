@@ -8,11 +8,13 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service;
 
-use UthandoUser\Model\User as UserModel;
-use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 use UthandoUser\Authentication\Adapter as AuthAdapter;
+use UthandoUser\Model\User as UserModel;
+use UthandoUser\Options\AuthOptions;
+use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 
 /**
  * Class Authentication
@@ -34,7 +36,7 @@ class Authentication extends ZendAuthenticationService
     protected $userService;
     
     /**
-     * Auth options
+     * @var AuthOptions
      */
     protected $options;
     
@@ -53,9 +55,9 @@ class Authentication extends ZendAuthenticationService
     /**
      * Sets the auth options
      * 
-     * @param array $options
+     * @param AuthOptions $options
      */
-    public function setOptions(array $options)
+    public function setOptions(AuthOptions $options)
     {
     	$this->options = $options;
     }
@@ -69,7 +71,7 @@ class Authentication extends ZendAuthenticationService
      */
     public function doAuthentication($identity, $password)
     {
-        $authMethod = $this->options['AuthenticateMethod'];
+        $authMethod = $this->options->getAuthenticateMethod();
         $user = $this->userService->$authMethod($identity, null, false, true);
         
         if (!$user) {
@@ -135,11 +137,11 @@ class Authentication extends ZendAuthenticationService
     		$this->setAuthAdapter($authAdapter);
     		$this->authAdapter->setIdentity($user);
     		$this->authAdapter->setCredential($password);
-    		$this->authAdapter->setCredentialTreatment($this->options['credentialTreatment']);
+    		$this->authAdapter->setCredentialTreatment($this->options->getCredentialTreatment());
     		
-    		if ($this->options['useFallbackTreatment']) {
-    		    $this->authAdapter->setUseFallback($this->options['useFallbackTreatment']);
-    		    $this->authAdapter->setFallbackCredentialTreatment($this->options['fallbackCredentialTreatment']);
+    		if ($this->options->isUseFallbackTreatment()) {
+    		    $this->authAdapter->setUseFallback($this->options->isUseFallbackTreatment());
+    		    $this->authAdapter->setFallbackCredentialTreatment($this->options->getFallbackCredentialTreatment());
     		}
     	}
     

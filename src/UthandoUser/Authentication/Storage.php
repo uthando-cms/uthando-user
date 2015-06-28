@@ -15,6 +15,7 @@ use Zend\Authentication\Storage\Session;
 
 /**
  * Class Storage
+ *
  * @package UthandoUser\Authentication
  */
 class Storage extends Session

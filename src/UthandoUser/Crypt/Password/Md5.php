@@ -8,12 +8,14 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Crypt\Password;
 
 use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class Md5
+ *
  * @package UthandoUser\Crypt\Password
  */
 class Md5 implements PasswordInterface

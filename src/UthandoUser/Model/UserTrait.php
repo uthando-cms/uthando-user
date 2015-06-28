@@ -13,6 +13,7 @@ namespace UthandoUser\Model;
 
 /**
  * Class UserTrait
+ *
  * @package UthandoUser\Model
  */
 trait UserTrait

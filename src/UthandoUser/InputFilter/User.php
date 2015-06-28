@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\InputFilter;
 
 use Zend\InputFilter\InputFilter;
@@ -18,6 +19,7 @@ use Zend\Validator\Hostname;
 
 /**
  * Class User
+ * 
  * @package UthandoUser\InputFilter
  * @method InputFilterPluginManager getServiceLocator()
  */
@@ -68,12 +70,12 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
             ],
-            'validators' => [
+            /*'validators' => [
                 ['name' => 'StringLength', 'options' => [
                     'min'       => 8,
                     'encoding'  => 'UTF-8',
                 ]],
-            ],
+            ],*/
         ]);
 
         $this->add([
@@ -106,6 +108,32 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 	        ],
 	    ]);
 	}
+
+    /**
+     * @param string $type
+     * @return $this
+     */
+    public function addPasswordLength($type)
+    {
+        $type = (string) ucfirst($type);
+
+        $options = $this->getServiceLocator()
+            ->getServiceLocator()
+            ->get('UthandoUser\Options\User');
+
+        $minMethod = 'get' . $type . 'MinPasswordLength';
+        $maxMethod = 'get' . $type . 'MaxPasswordLength';
+
+        $this->get('passwd')
+            ->getValidatorChain()
+            ->attachByName('StringLength', [
+                'min'       => $options->$minMethod(),
+                'max'       => $options->$maxMethod(),
+                'encoding'  => 'UTF-8',
+            ]);
+
+        return $this;
+    }
 	
 	public function addEmailNoRecordExists($exclude = null)
 	{

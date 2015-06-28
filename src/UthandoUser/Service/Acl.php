@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Service;
 
 use Zend\Permissions\Acl\Acl as ZendAcl;
@@ -16,6 +17,7 @@ use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 
 /**
  * Class Acl
+ *
  * @package UthandoUser\Service
  */
 class Acl extends ZendAcl

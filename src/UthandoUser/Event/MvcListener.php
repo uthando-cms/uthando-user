@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser\Event;
 
 use Zend\EventManager\EventManagerInterface;
@@ -17,6 +18,7 @@ use Zend\Mvc\MvcEvent;
 
 /**
  * Class MvcListener
+ *
  * @package UthandoUser\Event
  */
 class MvcListener implements ListenerAggregateInterface
@@ -64,7 +66,7 @@ class MvcListener implements ListenerAggregateInterface
     	$hasIdentity    = $plugin->getIdentity();
 
     	if (!$plugin->isAllowed($controller, $action)) {
-    	    
+
     		$router = $event->getRouter();
     		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
     		 
