@@ -10,7 +10,6 @@
 
 namespace UthandoUser\Controller;
 
-use UthandoCommon\Controller\ServiceTrait;
 use Zend\Config\Writer\PhpArray;
 use Zend\Http\Response;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -22,8 +21,6 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 class Settings extends AbstractActionController
 {
-    use ServiceTrait;
-
     public function indexAction()
     {
         $form = $this->getServiceLocator()

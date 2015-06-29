@@ -36,7 +36,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
             'name' => 'loginMinPasswordLength',
             'type' => 'number',
             'options' => [
-                'label' => 'Login Min Password length',
+                'label' => 'Login Min Password Length',
                 'column-size' => 'md-6',
                 'label_attributes' => [
                     'class' => 'col-md-6',
@@ -48,7 +48,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
             'name' => 'loginMaxPasswordLength',
             'type' => 'number',
             'options' => [
-                'label' => 'Login Max Password length',
+                'label' => 'Login Max Password Length',
                 'column-size' => 'md-6',
                 'label_attributes' => [
                     'class' => 'col-md-6',
@@ -60,7 +60,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
             'name' => 'registerMinPasswordLength',
             'type' => 'number',
             'options' => [
-                'label' => 'Register Min Password length',
+                'label' => 'Register Min Password Length',
                 'column-size' => 'md-6',
                 'label_attributes' => [
                     'class' => 'col-md-6',
@@ -72,7 +72,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
             'name' => 'registerMaxPasswordLength',
             'type' => 'number',
             'options' => [
-                'label' => 'Register Max Password length',
+                'label' => 'Register Max Password Length',
                 'column-size' => 'md-6',
                 'label_attributes' => [
                     'class' => 'col-md-6',
