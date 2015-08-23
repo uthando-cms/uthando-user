@@ -246,6 +246,12 @@ class UserController extends AbstractActionController
 	
 		// Validate
 		$post = $this->params()->fromPost();
+
+        //if remember me is not in post then set it to zero.
+        if (!isset($post['rememberme'])) {
+            $post['rememberme'] = 0;
+        }
+
 		/* @var $form \UthandoUser\Form\Login */
 		$form = $this->getServiceLocator()
 			->get('FormElementManager')
