@@ -266,34 +266,30 @@ return [
             ],
         ],
 		'admin' => [
-			'modules' => [
+            'user' => [
+                'label' => 'User',
                 'pages' => [
-                    'user' => [
-                        'label' => 'User',
-                        'pages' => [
-                            'list' => [
-                                'label'     => 'List All Users',
-                                'action'    => 'index',
-                                'route'     => 'admin/user',
-                                'resource'  => 'menu:admin'
-                            ],
-                            'add' => [
-                                'label'     => 'Add New User',
-                                'action'    => 'add',
-                                'route'     => 'admin/user/edit',
-                                'resource'  => 'menu:admin'
-                            ],
-                            'user-settings' => [
-                                'label' => 'Settings',
-                                'action' => 'index',
-                                'route' => 'admin/user/settings',
-                                'resource' => 'menu:admin',
-                            ],
-                        ],
+                    'list' => [
+                        'label'     => 'List All Users',
+                        'action'    => 'index',
                         'route'     => 'admin/user',
                         'resource'  => 'menu:admin'
                     ],
+                    'add' => [
+                        'label'     => 'Add New User',
+                        'action'    => 'add',
+                        'route'     => 'admin/user/edit',
+                        'resource'  => 'menu:admin'
+                    ],
+                    'user-settings' => [
+                        'label' => 'Settings',
+                        'action' => 'index',
+                        'route' => 'admin/user/settings',
+                        'resource' => 'menu:admin',
+                    ],
                 ],
+                'route'     => 'admin/user',
+                'resource'  => 'menu:admin'
             ],
 		],
 	    'user' => [
