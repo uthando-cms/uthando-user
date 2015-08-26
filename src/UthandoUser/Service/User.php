@@ -106,7 +106,7 @@ class User extends AbstractMapperService
         $inputFilter->addEmailNoRecordExists();
         $inputFilter->addPasswordLength('register');
         
-        $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm']);
+        $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm', 'role']);
         
         return parent::add($post, $form);
     }
