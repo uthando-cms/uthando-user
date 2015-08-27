@@ -38,7 +38,14 @@ class UserController extends AbstractActionController
 	public function thankYouAction()
 	{
 	    $container = $this->sessionContainer(get_class($this));
+
 	    $email = $container->offsetGet('email');
+
+        if (null === $email) {
+            return $this->redirect()->toRoute('user', [
+                'action' => 'login',
+            ]);
+        }
 	    
 	    /* @var $service \UthandoUser\Service\UserRegistration */
 	    $service = $this->getService('UthandoUserRegistration');
@@ -124,10 +131,6 @@ class UserController extends AbstractActionController
 	                    'We could not change password due to database error.'
 	                );
 	            }
-	            
-	            /*return $this->redirect()->toRoute('user', [
-	                'action' => 'forgot-password',
-	            ]);*/
 	        }
 	    }
 	    
@@ -296,6 +299,9 @@ class UserController extends AbstractActionController
 		
 		$container = $this->sessionContainer(get_class($this));
 		$returnTo = ($container->offsetGet('returnTo')) ?: $this->params()->fromPost('returnTo', null);
+
+        // clear session varibles now we have redirected.
+        $container->getManager()->getStorage()->clear(get_class($this));
 
 		$return = ($returnTo) ? $returnTo : 'home';
 	

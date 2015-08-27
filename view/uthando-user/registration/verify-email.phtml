@@ -4,8 +4,8 @@
     <p>You can now login in with the password and email address you signed up with.</p>
     <a href="<?=$this->url('user', [
         'action' => 'login',
-    ]);?>" class="btn btn-primary"></a>
+    ]);?>" class="btn btn-primary">Login</a>
 <?php else:?>
     <h2>Email Verification Failed.</h2>
-    <p>Please contact support for help.</p>
+    <p>Please contact support on <?=$this->contact('deails.phone');?> for help.</p>
 <?php endif;?>

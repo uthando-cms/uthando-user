@@ -23,7 +23,8 @@
 	    "uthando-cms/uthando-common" : "1.*",
 	    "uthando-cms/uthando-navigation" : "1.*",
 	    "uthando-cms/uthando-admin" : "1.*",
-        "uthando-cms/uthando-session-manager": "1.*"
+        "uthando-cms/uthando-session-manager": "1.*",
+        "uthando-cms/uthando-contact": "1.*"
     },
     "require-dev" : {
     	"zendframework/zendframework" : "2.*"

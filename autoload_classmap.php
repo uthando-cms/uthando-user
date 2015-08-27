@@ -10,6 +10,7 @@ return array(
     'UthandoUser\Controller\Settings'                   => __DIR__ . '/src/UthandoUser/Controller/Settings.php',
     'UthandoUser\Controller\UserController'             => __DIR__ . '/src/UthandoUser/Controller/UserController.php',
     'UthandoUser\Crypt\Password\Md5'                    => __DIR__ . '/src/UthandoUser/Crypt/Password/Md5.php',
+    'UthandoUser\Crypt\Password\Password'               => __DIR__ . '/src/UthandoUser/Crypt/Password/Password.php',
     'UthandoUser\Event\MvcListener'                     => __DIR__ . '/src/UthandoUser/Event/MvcListener.php',
     'UthandoUser\Form\Element\AbstractResourceList'     => __DIR__ . '/src/UthandoUser/Form/Element/AbstractResourceList.php',
     'UthandoUser\Form\Element\RoleList'                 => __DIR__ . '/src/UthandoUser/Form/Element/RoleList.php',
