@@ -69,7 +69,7 @@ class MvcListener implements ListenerAggregateInterface
 
     		$router = $event->getRouter();
     		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
-    		 
+
     		$response = $event->getResponse();
     		$response->setStatusCode(302);
     		//redirect to login route...
