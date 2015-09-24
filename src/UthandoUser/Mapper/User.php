@@ -26,9 +26,10 @@ class User extends AbstractDbMapper
 
     /**
      * @param int $id
+     * @param null $col
      * @return array|\UthandoUser\Model\User
      */
-	public function getById($id)
+	public function getById($id, $col = null)
 	{
         /* @var $hydrator \UthandoUser\Hydrator\User */
         $hydrator = $this->getResultSet()->getHydrator();
