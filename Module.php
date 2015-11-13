@@ -8,34 +8,48 @@
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE.txt
  */
+
 namespace UthandoUser;
 
-use Zend\Mvc\MvcEvent;
+use UthandoCommon\Config\{ConfigInterface, ConfigTrait};
 use UthandoUser\Event\MvcListener;
+use Zend\Mvc\MvcEvent;
 
 /**
  * Class Module
+ *
  * @package UthandoUser
  */
-class Module
+class Module implements ConfigInterface
 {
-	public function onBootstrap(MvcEvent $event)
-	{
-		$eventManager = $event->getApplication()->getEventManager();
-		$eventManager->attach(new MvcListener());
-	}
-	
+    use ConfigTrait;
+
+    /**
+     * @param MvcEvent $event
+     */
+    public function onBootstrap(MvcEvent $event)
+    {
+        $eventManager = $event->getApplication()->getEventManager();
+        $eventManager->attach(new MvcListener());
+    }
+
+    /**
+     * @return array
+     */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
-    
+
+    /**
+     * @return array
+     */
     public function getAutoloaderConfig()
     {
-    	return [
-    		'Zend\Loader\ClassMapAutoloader' => [
-    			__DIR__ . '/autoload_classmap.php'
-    		],
-    	];
+        return [
+            'Zend\Loader\ClassMapAutoloader' => [
+                __DIR__ . '/autoload_classmap.php'
+            ],
+        ];
     }
 }
