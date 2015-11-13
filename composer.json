@@ -24,7 +24,8 @@
     "zendframework/zend-crypt": "2.*",
     "zendframework/zend-permissions-acl": "2.*",
     "zendframework/zend-form": "2.*",
-    "uthando-cms/uthando-common": "2.*"
+    "uthando-cms/uthando-common": "2.*",
+    "uthando-cms/uthando-mail": "2.*"
   },
   "autoload": {
     "psr-0": {
