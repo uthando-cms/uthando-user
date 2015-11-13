@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Authentication;
@@ -26,17 +26,17 @@ class Adapter extends AbstractAdapter
      * @var UserModel
      */
     protected $identity;
-    
+
     /**
      * @var string
      */
     protected $credentialTreatment;
-    
+
     /**
      * @var string
      */
     protected $fallbackCredentialTreatment;
-    
+
     /**
      * @var bool
      */
@@ -48,19 +48,19 @@ class Adapter extends AbstractAdapter
     public function authenticate()
     {
         $messages = [];
-        
+
         if ($this->verifyPassword(false)) {
-            $code       = AuthenticationResult::SUCCESS;
+            $code = AuthenticationResult::SUCCESS;
             $messages[] = 'Authentication successful.';
         } elseif ($this->getUseFallback() && $this->verifyPassword(true)) {
-            $code       = AuthenticationResult::SUCCESS;
+            $code = AuthenticationResult::SUCCESS;
             $messages[] = 'Authentication successful.';
             $messages[] = 'update password';
         } else {
-            $code       = AuthenticationResult::FAILURE;
+            $code = AuthenticationResult::FAILURE;
             $messages[] = 'Authentication failed.';
         }
-        
+
         return new AuthenticationResult(
             $code,
             $this->getIdentity(),
@@ -79,7 +79,7 @@ class Adapter extends AbstractAdapter
         } else {
             $class = new $this->fallbackCredentialTreatment;
         }
-        
+
         try {
             $verified = $class->verify(
                 $this->getCredential(),
@@ -88,8 +88,26 @@ class Adapter extends AbstractAdapter
         } catch (\Exception $e) {
             $verified = false;
         }
-    
-        return  $verified;
+
+        return $verified;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getUseFallback()
+    {
+        return $this->useFallback;
+    }
+
+    /**
+     * @param $useFallback
+     * @return $this
+     */
+    public function setUseFallback($useFallback)
+    {
+        $this->useFallback = (bool)$useFallback;
+        return $this;
     }
 
     /**
@@ -125,24 +143,6 @@ class Adapter extends AbstractAdapter
     public function setFallbackCredentialTreatment($fallbackCredentialTreatment)
     {
         $this->fallbackCredentialTreatment = $fallbackCredentialTreatment;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getUseFallback()
-    {
-        return $this->useFallback;
-    }
-
-    /**
-     * @param $useFallback
-     * @return $this
-     */
-    public function setUseFallback($useFallback)
-    {
-        $this->useFallback = (bool) $useFallback;
         return $this;
     }
 }

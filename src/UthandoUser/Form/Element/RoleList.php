@@ -1,12 +1,12 @@
 <?php
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
- * 
+ *
  * @package   UthandoUser\Form\Element
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Form\Element;
@@ -39,7 +39,7 @@ class RoleList extends Select implements ServiceLocatorAwareInterface
         $roles = $config['uthando_user']['acl']['roles'];
         $roleOptions = [];
 
-        foreach($roles as $key => $value) {
+        foreach ($roles as $key => $value) {
             $roleOptions[] = [
                 'label' => $value['label'],
                 'value' => $key,

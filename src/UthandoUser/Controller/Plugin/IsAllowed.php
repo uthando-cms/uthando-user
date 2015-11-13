@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Controller\Plugin;
@@ -42,21 +42,15 @@ class IsAllowed extends AbstractPlugin
     }
 
     /**
-     * Get the current acl
+     * Proxy to the isAllowed method
      *
-     * @return \Zend\Permissions\Acl\Acl
+     * @param null $resource
+     * @param null $privilege
+     * @return bool
      */
-    public function getAcl()
+    public function __invoke($resource = null, $privilege = null)
     {
-        if (!$this->acl) {
-            $acl = $this->getController()
-                ->getServiceLocator()
-                ->get('UthandoUser\Service\Acl');
-            
-            $this->acl = $acl;
-        }
-        
-        return $this->acl;
+        return $this->isAllowed($resource, $privilege);
     }
 
     /**
@@ -76,23 +70,21 @@ class IsAllowed extends AbstractPlugin
     }
 
     /**
-     * Set the identity of the current request
+     * Get the current acl
      *
-     * @param $identity
-     * @return Acl
-     * @throws \Exception
+     * @return \Zend\Permissions\Acl\Acl
      */
-    public function setIdentity($identity)
-    { 
-        if ($identity instanceof User) {
-            $this->identity = $identity;
-        } elseif (null === $identity) {
-            $this->identity = new Role('guest');
-        } elseif (!$identity instanceof RoleInterface) {
-            throw new \Exception('Invalid identity provided');
+    public function getAcl()
+    {
+        if (!$this->acl) {
+            $acl = $this->getController()
+                ->getServiceLocator()
+                ->get('UthandoUser\Service\Acl');
+
+            $this->acl = $acl;
         }
 
-        return $this;
+        return $this->acl;
     }
 
     /**
@@ -111,14 +103,22 @@ class IsAllowed extends AbstractPlugin
     }
 
     /**
-     * Proxy to the isAllowed method
+     * Set the identity of the current request
      *
-     * @param null $resource
-     * @param null $privilege
-     * @return bool
+     * @param $identity
+     * @return Acl
+     * @throws \Exception
      */
-    public function __invoke($resource = null, $privilege = null)
+    public function setIdentity($identity)
     {
-        return $this->isAllowed($resource, $privilege);
+        if ($identity instanceof User) {
+            $this->identity = $identity;
+        } elseif (null === $identity) {
+            $this->identity = new Role('guest');
+        } elseif (!$identity instanceof RoleInterface) {
+            throw new \Exception('Invalid identity provided');
+        }
+
+        return $this;
     }
 }

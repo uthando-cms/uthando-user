@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Form\Element;
@@ -17,6 +17,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class UserList
+ *
  * @package UthandoUser\Form\Element
  */
 class UserList extends Select implements ServiceLocatorAwareInterface
@@ -41,7 +42,7 @@ class UserList extends Select implements ServiceLocatorAwareInterface
         $userOptions = [];
 
         /* @var $user \UthandoUser\Model\User */
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $userOptions[] = [
                 'label' => $user->getFullName(),
                 'value' => $user->getUserId(),

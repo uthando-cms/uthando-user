@@ -5,7 +5,7 @@
  * @package   UthandoUser\Form\Element
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Form\Element;
@@ -45,9 +45,9 @@ abstract class AbstractResourceList extends Select implements ServiceLocatorAwar
         $resources = $config['uthando_user']['acl']['resources'];
 
         $regex = '/^' . $this->resource . ':/';
-        
+
         $resources = preg_grep($regex, $resources);
-        
+
         $this->setValueOptions($this->getResources($resources));
     }
 
@@ -57,13 +57,13 @@ abstract class AbstractResourceList extends Select implements ServiceLocatorAwar
      */
     public function getResources($resources)
     {
-    	$routeArray = [];
-    	
-    	foreach($resources as $val) {
-    		$routeArray[$val] = $val;
-    	}
-    
-    	return $routeArray;
+        $routeArray = [];
+
+        foreach ($resources as $val) {
+            $routeArray[$val] = $val;
+        }
+
+        return $routeArray;
     }
 
     /**

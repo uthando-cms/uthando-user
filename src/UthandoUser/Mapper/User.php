@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Mapper;
@@ -20,22 +20,22 @@ use Zend\Db\Sql\Select;
  * @package UthandoUser\Mapper
  */
 class User extends AbstractDbMapper
-{ 
-	protected $table = 'user';
-	protected $primary = 'userId';
+{
+    protected $table = 'user';
+    protected $primary = 'userId';
 
     /**
      * @param int $id
      * @param null $col
      * @return array|\UthandoUser\Model\User
      */
-	public function getById($id, $col = null)
-	{
+    public function getById($id, $col = null)
+    {
         /* @var $hydrator \UthandoUser\Hydrator\User */
         $hydrator = $this->getResultSet()->getHydrator();
-		$hydrator->emptyPassword();
-		return parent::getById($id);
-	}
+        $hydrator->emptyPassword();
+        return parent::getById($id);
+    }
 
     /**
      * @param string $email
@@ -44,28 +44,28 @@ class User extends AbstractDbMapper
      * @param bool $activeOnly
      * @return array|\ArrayObject|null|object
      */
-    public function getUserByEmail($email, $ignore=null, $emptyPassword=true, $activeOnly=false)
+    public function getUserByEmail($email, $ignore = null, $emptyPassword = true, $activeOnly = false)
     {
         if ($emptyPassword) {
             /* @var $hydrator \UthandoUser\Hydrator\User */
             $hydrator = $this->getResultSet()->getHydrator();
             $hydrator->emptyPassword();
         }
-    	
+
         $select = $this->getSelect()
-        	->where(['email' => $email]);
-        
+            ->where(['email' => $email]);
+
         if ($ignore) {
-        	$select->where->notEqualTo('email', $ignore);
+            $select->where->notEqualTo('email', $ignore);
         }
 
         if ($activeOnly) {
             $select->where->equalTo('active', 1);
         }
-        
+
         $rowSet = $this->fetchResult($select);
         $row = $rowSet->current();
-        
+
         return $row;
     }
 
@@ -76,15 +76,15 @@ class User extends AbstractDbMapper
      * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
      */
     public function search(array $search, $sort, $select = null)
-    {	
-    	if (str_replace('-', '', $sort) == 'name') {
-    		if (strchr($sort,'-')) {
-    			$sort = ['-lastname', '-firstname'];
-    		} else {
-    			$sort = ['lastname', 'firstname'];
-    		}
-    	}
-    
-    	return parent::search($search, $sort, $select);
+    {
+        if (str_replace('-', '', $sort) == 'name') {
+            if (strchr($sort, '-')) {
+                $sort = ['-lastname', '-firstname'];
+            } else {
+                $sort = ['lastname', 'firstname'];
+            }
+        }
+
+        return parent::search($search, $sort, $select);
     }
 }

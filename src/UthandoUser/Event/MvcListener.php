@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Event;
@@ -33,9 +33,9 @@ class MvcListener implements ListenerAggregateInterface
      */
     public function attach(EventManagerInterface $events)
     {
-    	$events = $events->getSharedManager();
+        $events = $events->getSharedManager();
         $this->listeners[] = $events->attach(
-        	'Zend\Mvc\Controller\AbstractActionController',
+            'Zend\Mvc\Controller\AbstractActionController',
             MvcEvent::EVENT_DISPATCH,
             [$this, 'doAuthentication'],
             2
@@ -50,34 +50,34 @@ class MvcListener implements ListenerAggregateInterface
             }
         }
     }
-    
+
     public function doAuthentication(MvcEvent $event)
     {
         if (!$event->getRequest() instanceof Request) {
-    	    return;
+            return;
         }
 
-        $application    = $event->getApplication();
-		$sm             = $application->getServiceManager();
-    	$match          = $event->getRouteMatch();
-    	$controller     = $match->getParam('controller');
-    	$action         = $match->getParam('action');
-    	$plugin         = $sm->get('ControllerPluginManager')->get('IsAllowed');
-    	$hasIdentity    = $plugin->getIdentity();
+        $application = $event->getApplication();
+        $sm = $application->getServiceManager();
+        $match = $event->getRouteMatch();
+        $controller = $match->getParam('controller');
+        $action = $match->getParam('action');
+        $plugin = $sm->get('ControllerPluginManager')->get('IsAllowed');
+        $hasIdentity = $plugin->getIdentity();
 
-    	if (!$plugin->isAllowed($controller, $action)) {
+        if (!$plugin->isAllowed($controller, $action)) {
 
-    		$router = $event->getRouter();
-    		$url    = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
+            $router = $event->getRouter();
+            $url = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
 
-    		$response = $event->getResponse();
-    		$response->setStatusCode(302);
-    		//redirect to login route...
-    		// change with header('location: '.$url); if code below not working 
-    		$response->getHeaders()->addHeaderLine('Location', $url);
-    		$event->stopPropagation();
-    		return $response;
-    	}
-    	return;
+            $response = $event->getResponse();
+            $response->setStatusCode(302);
+            //redirect to login route...
+            // change with header('location: '.$url); if code below not working
+            $response->getHeaders()->addHeaderLine('Location', $url);
+            $event->stopPropagation();
+            return $response;
+        }
+        return;
     }
 }

@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Service;
@@ -29,20 +29,20 @@ class Authentication extends ZendAuthenticationService
      * @var AuthAdapter
      */
     protected $authAdapter;
-    
+
     /**
      * @var User
      */
     protected $userService;
-    
+
     /**
      * @var AuthOptions
      */
     protected $options;
-    
+
     /**
      * Set the user mapper
-     * 
+     *
      * @param User $service
      * @return \UthandoUser\Service\Authentication
      */
@@ -51,17 +51,17 @@ class Authentication extends ZendAuthenticationService
         $this->userService = $service;
         return $this;
     }
-    
+
     /**
      * Sets the auth options
-     * 
+     *
      * @param AuthOptions $options
      */
     public function setOptions(AuthOptions $options)
     {
-    	$this->options = $options;
+        $this->options = $options;
     }
-    
+
     /**
      * Authenticate a user
      *
@@ -73,54 +73,35 @@ class Authentication extends ZendAuthenticationService
     {
         $authMethod = $this->options->getAuthenticateMethod();
         $user = $this->userService->$authMethod($identity, null, false, true);
-        
+
         if (!$user) {
             return false;
         }
-        
+
         // hash the password and verify.
-        
-    	$adapter    = $this->getAuthAdapter($password, $user);
-    	$result     = $this->authenticate($adapter);
-    
-    	if (!$result->isValid()) {
-    		return false;
-    	}
 
-    	$user = $result->getIdentity();
-    	
-    	if (in_array('update password', $result->getMessages())) {
-    		$user->setPasswd($password);
-    		$user->setDateModified();
-    		$this->userService->save($user);
-    	}
-    	
-    	$user->setPasswd(null);
+        $adapter = $this->getAuthAdapter($password, $user);
+        $result = $this->authenticate($adapter);
 
-    	$this->getStorage()->write($user);
-    
-    	return true;
+        if (!$result->isValid()) {
+            return false;
+        }
+
+        $user = $result->getIdentity();
+
+        if (in_array('update password', $result->getMessages())) {
+            $user->setPasswd($password);
+            $user->setDateModified();
+            $this->userService->save($user);
+        }
+
+        $user->setPasswd(null);
+
+        $this->getStorage()->write($user);
+
+        return true;
     }
-    
-    /**
-     * Clear any authentication data
-     */
-    public function clear()
-    {
-        $this->getStorage()->forgetMe();
-    	$this->clearIdentity();
-    }
-    
-    /**
-     * Set the auth adapter.
-     *
-     * @param AuthAdapter $adapter
-     */
-    public function setAuthAdapter(AuthAdapter $adapter)
-    {
-    	$this->authAdapter = $adapter;
-    }
-    
+
     /**
      * Get and configure the auth adapter
      *
@@ -130,21 +111,40 @@ class Authentication extends ZendAuthenticationService
      */
     public function getAuthAdapter($password, UserModel $user)
     {
-    	if (null === $this->authAdapter) {
-    	    
-    		$authAdapter = new AuthAdapter();
-            
-    		$this->setAuthAdapter($authAdapter);
-    		$this->authAdapter->setIdentity($user);
-    		$this->authAdapter->setCredential($password);
-    		$this->authAdapter->setCredentialTreatment($this->options->getCredentialTreatment());
-    		
-    		if ($this->options->isUseFallbackTreatment()) {
-    		    $this->authAdapter->setUseFallback($this->options->isUseFallbackTreatment());
-    		    $this->authAdapter->setFallbackCredentialTreatment($this->options->getFallbackCredentialTreatment());
-    		}
-    	}
-    
-    	return $this->authAdapter;
+        if (null === $this->authAdapter) {
+
+            $authAdapter = new AuthAdapter();
+
+            $this->setAuthAdapter($authAdapter);
+            $this->authAdapter->setIdentity($user);
+            $this->authAdapter->setCredential($password);
+            $this->authAdapter->setCredentialTreatment($this->options->getCredentialTreatment());
+
+            if ($this->options->isUseFallbackTreatment()) {
+                $this->authAdapter->setUseFallback($this->options->isUseFallbackTreatment());
+                $this->authAdapter->setFallbackCredentialTreatment($this->options->getFallbackCredentialTreatment());
+            }
+        }
+
+        return $this->authAdapter;
+    }
+
+    /**
+     * Set the auth adapter.
+     *
+     * @param AuthAdapter $adapter
+     */
+    public function setAuthAdapter(AuthAdapter $adapter)
+    {
+        $this->authAdapter = $adapter;
+    }
+
+    /**
+     * Clear any authentication data
+     */
+    public function clear()
+    {
+        $this->getStorage()->forgetMe();
+        $this->clearIdentity();
     }
 }

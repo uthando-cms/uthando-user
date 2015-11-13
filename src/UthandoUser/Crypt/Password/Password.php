@@ -5,7 +5,7 @@
  * @package   UthandoUser\Crypt\Password
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Crypt\Password;
@@ -79,26 +79,6 @@ class Password implements PasswordInterface
     }
 
     /**
-     * @return array
-     */
-    public function getOptions()
-    {
-        return [
-            'salt' => $this->getSalt(),
-            'cost' => $this->getCost(),
-        ];
-    }
-
-    /**
-     * @param string $password
-     * @return bool|string
-     */
-    public function create($password)
-    {
-        return password_hash($password, $this->getAglo(), $this->getOptions());
-    }
-
-    /**
      * Verify if a password is correct against a hash value.
      *
      * @param string $password
@@ -112,12 +92,30 @@ class Password implements PasswordInterface
         if (true === $verify && $this->isRehashIfNeeded() && $this->needsRehash($hash)) {
             $newHash = $this->create($password);
             $verify = [
-                'verify'    => true,
-                'hash'      => $newHash,
+                'verify' => true,
+                'hash' => $newHash,
             ];
         }
 
         return $verify;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isRehashIfNeeded()
+    {
+        return $this->rehashIfNeeded;
+    }
+
+    /**
+     * @param boolean $rehashIfNeeded
+     * @return $this
+     */
+    public function setRehashIfNeeded($rehashIfNeeded)
+    {
+        $this->rehashIfNeeded = $rehashIfNeeded;
+        return $this;
     }
 
     /**
@@ -132,15 +130,40 @@ class Password implements PasswordInterface
     }
 
     /**
-     * Get the hash info.
-     *
-     * @param $hash
-     * @return array
-     * @see http://php.net/manual/en/function.password-get-info.php
+     * @return string
      */
-    public function getInfo($hash)
+    public function getAglo()
     {
-        return password_get_info($hash);
+        return $this->aglo;
+    }
+
+    /**
+     * @param string $aglo
+     * @return $this
+     * @throws InvalidArgumentException
+     */
+    public function setAglo($aglo)
+    {
+        if (is_int($aglo)) {
+            throw new InvalidArgumentException(
+                'The aglo must be algorithm constant denoting the algorithm to use when hashing the password
+                see http://php.net/manual/en/password.constants.php'
+            );
+        }
+
+        $this->aglo = $aglo;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return [
+            'salt' => $this->getSalt(),
+            'cost' => $this->getCost(),
+        ];
     }
 
     /**
@@ -187,46 +210,23 @@ class Password implements PasswordInterface
     }
 
     /**
-     * @return string
+     * @param string $password
+     * @return bool|string
      */
-    public function getAglo()
+    public function create($password)
     {
-        return $this->aglo;
+        return password_hash($password, $this->getAglo(), $this->getOptions());
     }
 
     /**
-     * @param string $aglo
-     * @return $this
-     * @throws InvalidArgumentException
+     * Get the hash info.
+     *
+     * @param $hash
+     * @return array
+     * @see http://php.net/manual/en/function.password-get-info.php
      */
-    public function setAglo($aglo)
+    public function getInfo($hash)
     {
-        if (is_int($aglo)) {
-            throw new InvalidArgumentException(
-                'The aglo must be algorithm constant denoting the algorithm to use when hashing the password
-                see http://php.net/manual/en/password.constants.php'
-            );
-        }
-
-        $this->aglo = $aglo;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isRehashIfNeeded()
-    {
-        return $this->rehashIfNeeded;
-    }
-
-    /**
-     * @param boolean $rehashIfNeeded
-     * @return $this
-     */
-    public function setRehashIfNeeded($rehashIfNeeded)
-    {
-        $this->rehashIfNeeded = $rehashIfNeeded;
-        return $this;
+        return password_get_info($hash);
     }
 }

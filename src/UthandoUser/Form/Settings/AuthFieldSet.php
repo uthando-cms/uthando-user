@@ -5,7 +5,7 @@
  * @package   UthandoUser\Form\Settings
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Form\Settings;
@@ -57,14 +57,14 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name'			=> 'useFallbackTreatment',
-            'type'			=> 'checkbox',
-            'options'		=> [
-                'label'			=> 'Use Fallback Treatment',
+            'name' => 'useFallbackTreatment',
+            'type' => 'checkbox',
+            'options' => [
+                'label' => 'Use Fallback Treatment',
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
-                'required' 		=> false,
+                'required' => false,
                 'column-size' => 'sm-6 col-sm-offset-6',
             ],
         ]);

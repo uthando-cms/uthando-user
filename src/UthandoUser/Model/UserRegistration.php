@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\Model;
@@ -24,9 +24,9 @@ class UserRegistration implements ModelInterface
 {
     use Model,
         UserTrait;
-    
+
     const REQUEST_KEY_LENGTH = 16;
-    
+
     /**
      * @var int
      */
@@ -36,17 +36,17 @@ class UserRegistration implements ModelInterface
      * @var string
      */
     protected $token;
-    
+
     /**
      * @var \DateTime
      */
     protected $requestTime;
-    
+
     /**
      * @var bool
      */
     protected $responded = false;
-    
+
     /**
      * @return number $userRegistrationId
      */
@@ -82,7 +82,7 @@ class UserRegistration implements ModelInterface
         $this->token = $token;
         return $this;
     }
-    
+
     /**
      * generate a fresh token
      */
@@ -90,7 +90,7 @@ class UserRegistration implements ModelInterface
     {
         $this->setToken(Rand::getString(
             self::REQUEST_KEY_LENGTH,
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'    
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
         ));
     }
 

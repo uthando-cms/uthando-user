@@ -6,7 +6,7 @@
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link      https://github.com/uthando-cms for the canonical source repository
  * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
- * @license   see LICENSE.txt
+ * @license   see LICENSE
  */
 
 namespace UthandoUser\View;
@@ -25,7 +25,7 @@ class IsAllowed extends AbstractViewHelper
      * @var PluginIsAllowed
      */
     protected $pluginIsAllowed;
-    
+
     /**
      * Returns the acl plugin instance
      *
@@ -35,12 +35,12 @@ class IsAllowed extends AbstractViewHelper
     {
         return $this->isAllowed($resource, $privilege);
     }
-    
+
     /**
      * Proxy the acl plugin controller
      *
      * @param  string $method
-     * @param  array  $argv
+     * @param  array $argv
      * @return mixed
      */
     public function __call($method, $argv)
@@ -48,7 +48,7 @@ class IsAllowed extends AbstractViewHelper
         $acl = $this->getPluginIsAllowed();
         return call_user_func_array([$acl, $method], $argv);
     }
-    
+
     /**
      * Retrieve the acl plugin
      *
@@ -59,16 +59,15 @@ class IsAllowed extends AbstractViewHelper
         if ($this->pluginIsAllowed) {
             return $this->pluginIsAllowed;
         }
-        
+
         $acl = $this->getServiceLocator()
             ->getServiceLocator()
             ->get('UthandoUser\Service\Acl');
         $identity = $this->view->plugin('identity');
-    
+
         $this->pluginIsAllowed = new PluginIsAllowed($acl);
         $this->pluginIsAllowed->setIdentity($identity());
-    
+
         return $this->pluginIsAllowed;
     }
 }
-
