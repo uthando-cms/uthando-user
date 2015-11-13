@@ -18,4 +18,5 @@ script:
 
 after_script:
   - cd ../
+  - cp -R ../../vendor ./vendor
   - php vendor/bin/test-reporter --coverage-report=build/logs/clover.xml
