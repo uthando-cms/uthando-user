@@ -14,7 +14,7 @@ namespace UthandoUser\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
-use UthandoCommon\Controller\ServiceTrait;
+use UthandoCommon\Service\ServiceTrait;
 
 /**
  * Class UserController

@@ -10,7 +10,7 @@
 
 namespace UthandoUser\Controller;
 
-use UthandoCommon\Service\SettingsTrait;
+use UthandoCommon\Controller\SettingsTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
