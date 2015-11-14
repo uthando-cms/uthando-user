@@ -12,7 +12,7 @@
 namespace UthandoUser\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
-use UthandoCommon\Controller\ServiceTrait;
+use UthandoCommon\Service\ServiceTrait;
 
 /**
  * Class RegistrationController
