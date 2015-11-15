@@ -79,10 +79,23 @@ return [
     ],
     'router' => [
         'routes' => [
+            'login' => [
+                'type'    => 'Literal',
+                'options' => [
+                    'route'    => '/login',
+                    'defaults' => [
+                        '__NAMESPACE__' => 'UthandoUser\Controller',
+                        'controller'    => 'User',
+                        'action'        => 'login',
+                        'force-ssl'     => 'ssl'
+                    ],
+                ],
+                'may_terminate' => true,
+            ],
             'user' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/user[/[:action]]',
+                    'route'    => '/user/[:action]',
                     'constraints' => [
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
             		],
