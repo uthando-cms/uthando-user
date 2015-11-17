@@ -30,7 +30,7 @@ class User implements RoleInterface, ModelInterface
         DateCreatedTrait,
         DateModifiedTrait;
 
-    const PASSWORD_LENGTH = 16;
+    const PASSWORD_LENGTH = 12;
 
     /**
      * @var string
@@ -100,10 +100,15 @@ class User implements RoleInterface, ModelInterface
 
     public function generatePassword()
     {
-        $this->setPasswd(Rand::getString(
+        $password = Rand::getString(
             self::PASSWORD_LENGTH,
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        ));
+            'ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz123456789'
+        );
+
+        $password = str_split($password, 3);
+        $password = implode('-', $password);
+
+        $this->setPasswd($password);
     }
 
     /**
