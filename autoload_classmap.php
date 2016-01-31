@@ -15,6 +15,7 @@ return array(
     'UthandoUser\Form\Element\AbstractResourceList'     => __DIR__ . '/src/UthandoUser/Form/Element/AbstractResourceList.php',
     'UthandoUser\Form\Element\RoleList'                 => __DIR__ . '/src/UthandoUser/Form/Element/RoleList.php',
     'UthandoUser\Form\Element\UserList'                 => __DIR__ . '/src/UthandoUser/Form/Element/UserList.php',
+    'UthandoUser\Form\ForgotPassword'                   => __DIR__ . '/src/UthandoUser/Form/ForgotPassword.php',
     'UthandoUser\Form\Login'                            => __DIR__ . '/src/UthandoUser/Form/Login.php',
     'UthandoUser\Form\Register'                         => __DIR__ . '/src/UthandoUser/Form/Register.php',
     'UthandoUser\Form\Settings\AuthFieldSet'            => __DIR__ . '/src/UthandoUser/Form/Settings/AuthFieldSet.php',
@@ -46,4 +47,7 @@ return array(
     'UthandoUser\Service\UserRegistration'              => __DIR__ . '/src/UthandoUser/Service/UserRegistration.php',
     'UthandoUser\UthandoUserException'                  => __DIR__ . '/src/UthandoUser/UthandoUserException.php',
     'UthandoUser\View\IsAllowed'                        => __DIR__ . '/src/UthandoUser/View/IsAllowed.php',
+    'UthandoUserTest\Bootstrap'                         => __DIR__ . '/test/Bootstrap.php',
+    'UthandoUserTest\Framework\ApplicationTestCase'     => __DIR__ . '/test/UthandoUserTest/Framework/ApplicationTestCase.php',
+    'UthandoUserTest\Framework\TestCase'                => __DIR__ . '/test/UthandoUserTest/Framework/TestCase.php',
 );

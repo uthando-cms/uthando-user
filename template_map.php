@@ -13,7 +13,6 @@ return array(
     'uthando-user/settings/index'            => __DIR__ . '/view/uthando-user/settings/index.phtml',
     'uthando-user/user/edit'                 => __DIR__ . '/view/uthando-user/user/edit.phtml',
     'uthando-user/user/forgot-password'      => __DIR__ . '/view/uthando-user/user/forgot-password.phtml',
-    'uthando-user/user/login-form'           => __DIR__ . '/view/uthando-user/user/login-form.phtml',
     'uthando-user/user/login'                => __DIR__ . '/view/uthando-user/user/login.phtml',
     'uthando-user/user/password'             => __DIR__ . '/view/uthando-user/user/password.phtml',
     'uthando-user/user/register'             => __DIR__ . '/view/uthando-user/user/register.phtml',

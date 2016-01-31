@@ -63,12 +63,14 @@ class UserController extends AbstractActionController
             $post = $this->params()->fromPost();
             $post['role'] = 'registered';
 
-            $result = $this->getUserService()->add($post);
+            $result = $this->getUserService()->register($post);
 
             if ($result instanceof Form) {
-                $this->flashMessenger()->addInfoMessage(
+                $this->flashMessenger()->addErrorMessage(
                     'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
+
+                \FB::info($result->getMessages());
 
                 return new ViewModel([
                     'registerForm' => $result
@@ -99,8 +101,11 @@ class UserController extends AbstractActionController
             }
         }
 
+        $form = $this->getService('FormElementManager')
+            ->get('UthandoUserRegister');
+
         return new ViewModel(array(
-            'registerForm' => $this->getUserService()->getForm(),
+            'registerForm' => $form,
         ));
     }
 
@@ -142,8 +147,8 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getUserService()->getForm();
-        $form->addCaptcha();
+        $form = $this->getService('FormElementManager')
+            ->get('UthandoUserForgotPassword');
 
         return [
             'form' => $form,
@@ -233,8 +238,11 @@ class UserController extends AbstractActionController
 
     public function loginAction()
     {
+        $form = $this->getService('FormElementManager')
+            ->get('UthandoUserLogin');
+
         return [
-            //'loginForm' => $this->getUserService()->getForm()
+            'loginForm' => $form
         ];
     }
 
@@ -277,13 +285,16 @@ class UserController extends AbstractActionController
         $form->setInputFilter($inputFilter);
 
         $form->setData($post);
-        $form->setValidationGroup('passwd', 'email', 'rememberme');
 
         $viewModel = new ViewModel();
 
         $viewModel->setTemplate('uthando-user/user/login');
 
         if (!$form->isValid()) {
+            $this->flashMessenger()->addErrorMessage(
+                'There were one or more issues with your submission. Please correct them as indicated below.'
+            );
+
             return $viewModel->setVariables(['loginForm' => $form]); // re-render the login form
         }
 

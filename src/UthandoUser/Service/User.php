@@ -77,23 +77,21 @@ class User extends AbstractMapperService
         }
     }
 
-    /**
-     * @param array $post
-     * @param Form $form
-     * @return int|Form
-     * @deprecated moving to event listener
-     */
-    public function add(array $post, Form $form = null)
+    public function register(array $post)
     {
-        $form = $this->getForm($this->getMapper()->getModel(), $post, true, true);
+        /* @var $form \UthandoUser\Form\ForgotPassword */
+        $form = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('UthandoUserRegister');
+
         /* @var $inputFilter \UthandoUser\InputFilter\User */
-        $inputFilter = $form->getInputFilter();
-        $inputFilter->addEmailNoRecordExists();
+        $inputFilter = $this->getInputFilter();
+        $inputFilter->addEmailRecordExists();
         $inputFilter->addPasswordLength('register');
 
-        $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm', 'role']);
+        $form->setInputFilter($inputFilter);
 
-        return parent::add($post, $form);
+        return $this->add($post, $form);
     }
 
     /**
@@ -219,20 +217,26 @@ class User extends AbstractMapperService
         return $password;
     }
 
+    /**
+     * @param array $post
+     * @return int|\UthandoUser\Form\ForgotPassword
+     */
     public function forgotPassword(array $post)
     {
         $email = (isset($post['email'])) ? $post['email'] : null;
         $user = $this->getUserByEmail($email);
-        /* @var $form \UthandoUser\Form\User */
-        $form = $this->getForm(null, $post, true);
-        $form->addCaptcha();
-        $form->setValidationGroup([
-            'email', 'captcha', 'security'
-        ]);
+        /* @var $form \UthandoUser\Form\ForgotPassword */
+        $form = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('UthandoUserForgotPassword');
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
-        $inputFilter = $form->getInputFilter();
+        $inputFilter = $this->getInputFilter();
         $inputFilter->addEmailRecordExists();
+
+        $form->setInputFilter($inputFilter);
+
+        $form->setData($post);
 
         if (!$form->isValid()) {
             return $form;
@@ -256,6 +260,10 @@ class User extends AbstractMapperService
         return $mapper->getUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
     }
 
+    /**
+     * @param UserModel $user
+     * @return int
+     */
     public function resetPassword(UserModel $user)
     {
         $user->generatePassword();

@@ -35,7 +35,6 @@ class User extends Form
                 'placeholder' => 'First name:',
                 'autofocus' => true,
                 'autocapitalize' => 'words',
-                'required' => true,
             ],
             'options' => [
                 'label' => 'Forename:',
@@ -53,7 +52,6 @@ class User extends Form
             'attributes' => [
                 'placeholder' => 'Last name:',
                 'autocapitalize' => 'words',
-                'required' => true,
             ],
             'options' => [
                 'label' => 'Surname:',
@@ -70,7 +68,6 @@ class User extends Form
             'type' => 'email',
             'attributes' => [
                 'placeholder' => 'Email address',
-                'required' => true
             ],
             'options' => [
                 'label' => 'Email:',
@@ -88,7 +85,6 @@ class User extends Form
             'attributes' => [
                 'id' => 'password',
                 'placeholder' => 'Password',
-                'required' => true,
             ],
             'options' => [
                 'label' => 'Password:',
@@ -105,7 +101,6 @@ class User extends Form
             'type' => 'password',
             'attributes' => [
                 'placeholder' => 'Confirm password',
-                'required' => true,
             ],
             'options' => [
                 'label' => 'Confirm Password:',
@@ -171,11 +166,14 @@ class User extends Form
             'type' => 'UthandoCommonCaptcha',
             'attributes' => [
                 'placeholder' => 'Type letters and number here',
-                'required' => true,
-                'class' => 'form-control',
             ],
             'options' => [
-                'label' => 'Please verify you are human.'
+                'label' => 'Please verify you are human.',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8 col-md-offset-4',
+                'label_attributes' => [
+                    'class' => 'col-md-8 col-md-offset-4',
+                ],
             ],
         ]);
     }

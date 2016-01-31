@@ -1,6 +1,26 @@
 <?php $this->headTitle('Log In') ?>
 
-<?=$this->partial('uthando-user/user/login-form', [
-    'form' => $this->loginForm,
-    'legend' => 'Use Form To Log In:'
+<?php $this->loginForm->setAttributes([
+    'method' => 'post',
+    'action' => $this->url('user', [
+        'action' => 'authenticate'
+    ]),
 ]); ?>
+
+<div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                Login
+                <span class="pull-right">
+                    <a href="<?=$this->url('user', [
+                        'action' => 'forgot-password'
+                    ]);?>">Forgot Passord</a>
+                </span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <?=$this->form($this->loginForm);?>
+        </div>
+    </div>
+</div>

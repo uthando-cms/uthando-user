@@ -11,6 +11,7 @@
 
 namespace UthandoUser\Form;
 
+use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoUser\InputFilter\User as UserInputFilter;
 use Zend\InputFilter\InputFilterInterface;
 
@@ -30,14 +31,15 @@ class Register extends User
             ->remove('dateCreated')
             ->remove('dateModified')
             ->remove('active');
-    }
 
-    /**
-     * @return null|UserInputFilter|InputFilterInterface
-     */
-    public function getInputFilter()
-    {
-        $inputFilter = new UserInputFilter();
-        return $inputFilter;
+        $this->add([
+            'name' => 'submit',
+            'type' => 'submit',
+            'options' => [
+                'label' => 'Register',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'md-8 col-md-offset-4',
+            ]
+        ]);
     }
 }
