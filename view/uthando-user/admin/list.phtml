@@ -2,7 +2,7 @@
 
 <?php if (count($this->models) > 0): ?>
 
-
+<div class="table-responsive">
     <table class="table table-hover table-bordered table-condensed sortable-table admin-table">
         <thead>
         <tr>
@@ -41,13 +41,13 @@
         <?php endforeach; ?>
         </tbody>
     </table>
-
-    <?= $this->paginationControl(
-        $this->models,
-        'Elastic',
-        'application/partial/paginate',
-        ['route' => 'admin/user/page']
-    ); ?>
+</div>
+<?= $this->paginationControl(
+    $this->models,
+    'Elastic',
+    'application/partial/paginate',
+    ['route' => 'admin/user/page']
+); ?>
 
 <?php else: ?>
     <h4><?=$this->translate('No users where returned by search.');?></h4>
