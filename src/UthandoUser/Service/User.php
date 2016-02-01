@@ -24,6 +24,7 @@ use Zend\EventManager\Event;
  * Class User
  *
  * @package UthandoUser\Service
+ * @method \UthandoUser\Model\User getModel($model = null)
  */
 class User extends AbstractMapperService
 {
@@ -84,9 +85,15 @@ class User extends AbstractMapperService
             ->get('FormElementManager')
             ->get('UthandoUserRegister');
 
+        $model = $this->getModel();
+        $model->setRole('registered');
+
+        $form->setHydrator($this->getHydrator());
+        $form->bind($model);
+
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getInputFilter();
-        $inputFilter->addEmailRecordExists();
+        $inputFilter->addEmailNoRecordExists();
         $inputFilter->addPasswordLength('register');
 
         $form->setInputFilter($inputFilter);

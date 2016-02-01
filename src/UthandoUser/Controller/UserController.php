@@ -11,6 +11,7 @@
 
 namespace UthandoUser\Controller;
 
+use UthandoUser\Model\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
@@ -69,8 +70,6 @@ class UserController extends AbstractActionController
                 $this->flashMessenger()->addErrorMessage(
                     'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
-
-                \FB::info($result->getMessages());
 
                 return new ViewModel([
                     'registerForm' => $result
@@ -204,9 +203,11 @@ class UserController extends AbstractActionController
 
             if ($result instanceof Form) {
 
-                $this->flashMessenger()->addInfoMessage(
+                $this->flashMessenger()->addErrorMessage(
                     'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
+
+                \FB::info($result->getMessages());
 
                 return new ViewModel([
                     'form' => $result,
@@ -229,7 +230,10 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getUserService()->getForm($user);
+        /* @var \UthandoUser\Form\UserEdit $form */
+        $form = $this->getService('FormElementManager')
+            ->get('UthandoUserEdit');
+        $form->bind($user);
 
         return new ViewModel([
             'form' => $form
@@ -272,17 +276,16 @@ class UserController extends AbstractActionController
         }
 
         /* @var $form \UthandoUser\Form\Login */
-        $form = $this->getServiceLocator()
-            ->get('FormElementManager')
+        $form = $this->getService('FormElementManager')
             ->get('UthandoUserLogin');
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
-        $inputFilter = $this->getServiceLocator()
-            ->get('InputFilterManager')
+        $inputFilter = $this->getService('InputFilterManager')
             ->get('UthandoUser');
         $inputFilter->addPasswordLength('login');
 
         $form->setInputFilter($inputFilter);
+        $form->setValidationGroup(['email', 'passwd']);
 
         $form->setData($post);
 
@@ -305,12 +308,24 @@ class UserController extends AbstractActionController
 
         if (false === $auth->doAuthentication($data['email'], $data['passwd'])) {
 
-            $this->flashMessenger()->addErrorMessage(
-                'Login failed, Please try again.'
-            );
+            // check if user has regisitered but not activated their account
+            $user = $this->getUserService()->getUserByEmail($data['email'], null, true, false);
+            if ($user instanceof User && false === $user->getActive()) {
+                $this->flashMessenger()->addErrorMessage(
+                    'You have not activated you account.'
+                );
+            } else {
+                $this->flashMessenger()->addErrorMessage(
+                    'Login failed, Please try again.'
+                );
+            }
 
             return $viewModel->setVariables(['loginForm' => $form]); // re-render the login form
         }
+
+        $this->flashMessenger()->addSuccessMessage(
+            'You have successfully logged in.'
+        );
 
         if (isset($data['rememberme']) && $data['rememberme'] == 1) {
             $auth->getStorage()->rememberMe(1);

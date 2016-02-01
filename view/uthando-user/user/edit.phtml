@@ -1,7 +1,19 @@
 <?php $this->headTitle('Edit User Details') ?>
 
-<?=$this->partial('uthando-user/user/user-form', [
-	'form' => $this->form,
-	'formAction' => 'edit',
-    'legend' => 'Edit User Form:'
+<?php $this->form->setAttributes([
+	'method' => 'post',
+	'action' => $this->url('user', [
+		'action' => 'edit'
+	]),
 ]); ?>
+
+<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Edit Profile</h3>
+		</div>
+		<div class="panel-body">
+			<?=$this->form($this->form);?>
+		</div>
+	</div>
+</div>
