@@ -1,5 +1,25 @@
 <?php $this->headtitle('User Settings');?>
+<?php $this->layout()->pageTitle = $this->translate('User Settings');?>
 
-<?=$this->form($this->form);?>
+<?php $this->form->setAttributes([
+    'method' => 'post',
+    'id' => 'form-user',
+    'action' => $this->url('admin/user/settings'),
+]); ?>
 
-<div class="clearfix"></div>
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left"><i class="fa fa-cog"></i> <?=$this->translate('User Settings');?></h3>
+        <div class="button-group pull-right">
+            <button type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Save');?>" class="btn btn-primary btn-sm">
+                <i class="fa fa-save"></i>
+            </button>
+            <a href="<?=$this->url('admin/user');?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Cancel');?>" class="btn btn-default btn-sm">
+                <i class="fa fa-reply"></i>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <?=$this->form($this->form);?>
+    </div>
+</div>

@@ -26,6 +26,7 @@ class ForgotPassword extends BaseUser
         $this->remove('userId')
             ->remove('firstname')
             ->remove('lastname')
+            ->remove('show-password')
             ->remove('passwd')
             ->remove('passwd-confirm')
             ->remove('role')

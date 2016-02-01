@@ -37,9 +37,9 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
             'type' => 'text',
             'options' => [
                 'label' => 'Authenticate Method',
-                'column-size' => 'md-6',
+                'column-size' => 'sm-6',
                 'label_attributes' => [
-                    'class' => 'col-md-6',
+                    'class' => 'col-sm-6',
                 ],
             ],
         ]);
@@ -49,9 +49,9 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
             'type' => 'text',
             'options' => [
                 'label' => 'Credential Treatment',
-                'column-size' => 'md-6',
+                'column-size' => 'sm-6',
                 'label_attributes' => [
-                    'class' => 'col-md-6',
+                    'class' => 'col-sm-6',
                 ],
             ],
         ]);
@@ -74,9 +74,9 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
             'type' => 'text',
             'options' => [
                 'label' => 'Fallback Credential Treatment',
-                'column-size' => 'md-6',
+                'column-size' => 'sm-6',
                 'label_attributes' => [
-                    'class' => 'col-md-6',
+                    'class' => 'col-sm-6',
                 ],
             ],
         ]);

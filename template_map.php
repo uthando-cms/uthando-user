@@ -17,5 +17,4 @@ return array(
     'uthando-user/user/password'             => __DIR__ . '/view/uthando-user/user/password.phtml',
     'uthando-user/user/register'             => __DIR__ . '/view/uthando-user/user/register.phtml',
     'uthando-user/user/thank-you'            => __DIR__ . '/view/uthando-user/user/thank-you.phtml',
-    'uthando-user/user/user-form'            => __DIR__ . '/view/uthando-user/user/user-form.phtml',
 );

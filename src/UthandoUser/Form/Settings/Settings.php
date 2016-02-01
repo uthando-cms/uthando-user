@@ -25,7 +25,7 @@ class Settings extends Form
             'type' => 'UthandoUserFieldSet',
             'name' => 'user_options',
             'attributes' => [
-                'class' => 'col-md-6',
+                'class' => 'col-sm-6',
             ],
             'options' => [
                 'label' => 'User Options',
@@ -36,23 +36,10 @@ class Settings extends Form
             'type' => 'UthandoUserAuthFieldSet',
             'name' => 'auth',
             'attributes' => [
-                'class' => 'col-md-6',
+                'class' => 'col-sm-6',
             ],
             'options' => [
                 'label' => 'Authentication Options',
-            ],
-        ]);
-
-        $this->add([
-            'name' => 'button-submit',
-            'type' => 'button',
-            'attributes' => [
-                'type' => 'submit',
-                'class' => 'btn-primary'
-            ],
-            'options' => [
-                'label' => 'Save',
-                'column-size' => 'md-10 col-md-offset-2'
             ],
         ]);
     }
