@@ -1,55 +1,55 @@
 <?php $this->headTitle('Users') ?>
 
 <?php if (count($this->models) > 0): ?>
-<div class="panel panel-default">
-    <table class="table table-hover table-bordered table-condensed sortable-table">
-    	<thead>
-    		<tr>
-    			<th data-field="userId">User Id</th>
-    			<th data-field="name">Name</th>
-    			<th data-field="email">Email</th>
-    			<th data-field="role">Role</th>
-    			<th data-field="active">Active</th>
-    			<th data-field="dateCreated">Date Created</th>
-    			<th data-field="dateModified">Date Modified</th>
-    			<th>Actions</th>
-    		</tr>
-    	</thead>
-    	
-    	<tbody>
-    	   <?php /* @var $row \UthandoUser\Model\User */ ?>
-    		<?php foreach($this->models as $row): ?>
-    		<?php $class = ($row->getActive()) ? '' : 'danger';?>
-    		<tr class="<?=$class;?>">
-    			<td><?=$this->escapeHtml($row->getUserId()); ?></td>
-    			<td><?=$this->escapeHtml($row->getLastNameFirst()); ?></td>
-    			<td><?=$this->escapeHtml($row->getEmail()); ?></td>
-    			<td><?=$this->escapeHtml($row->getRole()); ?></td>
-    			<td><?=$this->escapeHtml($row->isActive()); ?></td>
-    			<td><?=$this->escapeHtml($this->formatDate($row->getDateCreated())); ?></td>
-    			<td><?=$this->escapeHtml($this->formatDate($row->getDateModified())); ?></td>
-    			<td>
-    				<?=$this->partial('uthando-admin/partial/edit-actions', [
-                    	'pk'		=> 'userId',
-                    	'id'		=> $row->getUserId(),
-    		    		'tableName'	=> 'user',
-                    	'route'		=> 'admin/user/edit',
-    		    	]);?>
-    			</td>
-    		</tr>
-    		<?php endforeach; ?>
-    	</tbody>
-    </table>
-</div>
 
-<?=$this->paginationControl(
-    $this->models,
-    'Elastic',
-    'application/partial/paginate',
-	['route' => 'admin/user/page']
-); ?>
+
+    <table class="table table-hover table-bordered table-condensed sortable-table admin-table">
+        <thead>
+        <tr>
+            <th data-field="userId"><?=$this->translate('User Id');?></th>
+            <th data-field="name"><?=$this->translate('Name');?></th>
+            <th data-field="email"><?=$this->translate('Email');?></th>
+            <th data-field="role"><?=$this->translate('Role');?></th>
+            <th data-field="active"><?=$this->translate('Active');?></th>
+            <th data-field="dateCreated"><?=$this->translate('Date Created');?></th>
+            <th data-field="dateModified"><?=$this->translate('Date Modified');?></th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <?php /* @var $row \UthandoUser\Model\User */ ?>
+        <?php foreach ($this->models as $row): ?>
+            <?php $class = ($row->getActive()) ? '' : 'danger'; ?>
+            <tr class="<?= $class; ?>">
+                <td><?= $this->escapeHtml($row->getUserId()); ?></td>
+                <td><?= $this->escapeHtml($row->getLastNameFirst()); ?></td>
+                <td><?= $this->escapeHtml($row->getEmail()); ?></td>
+                <td><?= $this->escapeHtml($row->getRole()); ?></td>
+                <td><?= $this->escapeHtml($row->isActive()); ?></td>
+                <td><?= $this->escapeHtml($this->formatDate($row->getDateCreated())); ?></td>
+                <td><?= $this->escapeHtml($this->formatDate($row->getDateModified())); ?></td>
+                <td>
+                    <?= $this->partial('uthando-admin/partial/edit-actions', [
+                        'pk' => 'userId',
+                        'id' => $row->getUserId(),
+                        'tableName' => 'user',
+                        'route' => 'admin/user/edit',
+                    ]); ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?= $this->paginationControl(
+        $this->models,
+        'Elastic',
+        'application/partial/paginate',
+        ['route' => 'admin/user/page']
+    ); ?>
 
 <?php else: ?>
-<h4>No users where returned by search.</h4>
+    <h4><?=$this->translate('No users where returned by search.');?></h4>
 <?php endif; ?>
 

@@ -8,6 +8,7 @@ use Zend\ServiceManager\ServiceManager;
 
 error_reporting(E_ALL | E_STRICT);
 chdir(__DIR__);
+ini_set('date.timezone', 'Europe/London');
 
 /**
  * Test bootstrap, for setting up autoloading
@@ -21,20 +22,7 @@ class Bootstrap
         static::initAutoloader();
 
         // use ModuleManager to load this module and it's dependencies
-        $config = array(
-            'module_listener_options' => array(
-                'module_paths' => [
-                    './module',
-                    './devmodules',
-                    './vendor',
-                ],
-            ),
-            'modules' => array(
-                'Application',
-                'UthandoCommon',
-                'UthandoUser',
-            ),
-        );
+        $config = include __DIR__ . '/TestConfig.php';
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);

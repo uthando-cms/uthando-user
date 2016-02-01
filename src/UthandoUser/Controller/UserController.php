@@ -180,8 +180,11 @@ class UserController extends AbstractActionController
             );
         }
 
+        $form = $this->getService('FormElementManager')
+            ->get('UthandoUserPassword');
+
         return [
-            'form' => $this->getUserService()->getForm(),
+            'form' => $form,
         ];
     }
 
@@ -195,7 +198,7 @@ class UserController extends AbstractActionController
             $params = $this->params()->fromPost();
 
             if ($params['userId'] === $user->getUserId()) {
-                $result = $this->getUserService()->edit($user, $params);
+                $result = $this->getUserService()->editUser($user, $params);
             } else {
                 // Redirect to user
                 return $this->redirect()->toRoute('user');
@@ -206,8 +209,6 @@ class UserController extends AbstractActionController
                 $this->flashMessenger()->addErrorMessage(
                     'There were one or more issues with your submission. Please correct them as indicated below.'
                 );
-
-                \FB::info($result->getMessages());
 
                 return new ViewModel([
                     'form' => $result,
@@ -230,7 +231,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        /* @var \UthandoUser\Form\UserEdit $form */
+        /* @var \UthandoUser\Form\BaseUserEdit $form */
         $form = $this->getService('FormElementManager')
             ->get('UthandoUserEdit');
         $form->bind($user);

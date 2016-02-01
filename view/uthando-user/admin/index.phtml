@@ -1,18 +1,32 @@
+<?php $this->headTitle('Users') ?>
+<?php $this->layout()->pageTitle = $this->translate('Users');?>
 
-<?=$this->partial('uthando-admin/partial/search', [
-	'name'			=> 'user',
-	'searchInputs'	=> [
-		'Email' => 'email',
-        'User'  => 'firstname-lastname',
-	],
-]);?>
-
-<div id="table-user">
-	<?=$this->partial('uthando-user/admin/list', [
-	    'models' => $this->models
-	]); ?>
+<div class="panel panel-default">
+    <div class="panel-heading clearfix">
+        <h3 class="panel-title pull-left"><i class="fa fa-list"></i> <?=$this->translate('User List');?></h3>
+        <div class="button-group pull-right">
+            <a href="<?=$this->url('admin/user/edit', [
+                'action' => 'add'
+            ]);?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Add User');?>" class="btn btn-primary btn-sm">
+                <i class="fa fa-plus"></i>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
+        <?=$this->partial('uthando-admin/partial/search', [
+            'name'			=> 'user',
+            'searchInputs'	=> [
+                'Email' => 'email',
+                'User'  => 'firstname-lastname',
+            ],
+        ]);?>
+    </div>
+    <div id="table-user" class="panel-table">
+        <?=$this->partial('uthando-user/admin/list', [
+            'models' => $this->models
+        ]); ?>
+    </div>
 </div>
-
 
 <?php $this->inlineScript()->captureStart(); ?>
 $(document).ready(function(){

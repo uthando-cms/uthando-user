@@ -17,13 +17,14 @@ use TwbBundle\Form\View\Helper\TwbBundleForm;
  *
  * @package UthandoUser\Form
  */
-class UserEdit extends User
+class UserEdit extends BaseUser
 {
     public function init()
     {
         parent::init();
 
         $this->remove('role')
+            ->remove('show-password')
             ->remove('passwd')
             ->remove('passwd-confirm')
             ->remove('dateCreated')
@@ -36,7 +37,7 @@ class UserEdit extends User
             'options' => [
                 'label' => 'Update Profile',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
-                'column-size' => 'md-8 col-md-offset-4',
+                'column-size' => 'sm-10 col-sm-offset-2',
             ]
         ]);
     }

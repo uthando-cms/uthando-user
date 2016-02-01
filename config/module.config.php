@@ -17,6 +17,7 @@ return [
         'invokables' => [
             'UthandoUserEdit'           => 'UthandoUser\Form\UserEdit',
             'UthandoUserForgotPassword' => 'UthandoUser\Form\ForgotPassword',
+            'UthandoUserPassword'       => 'UthandoUser\Form\Password',
             'UthandoUserLogin'          => 'UthandoUser\Form\Login',
             'UthandoUserRegister'       => 'UthandoUser\Form\Register',
             'UthandoUser'               => 'UthandoUser\Form\User',

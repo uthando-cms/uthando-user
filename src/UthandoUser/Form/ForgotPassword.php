@@ -17,7 +17,7 @@ use TwbBundle\Form\View\Helper\TwbBundleForm;
  *
  * @package UthandoUser\Form
  */
-class ForgotPassword extends User
+class ForgotPassword extends BaseUser
 {
     public function init()
     {
@@ -41,7 +41,7 @@ class ForgotPassword extends User
             'options' => [
                 'label' => 'Reset Password',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
-                'column-size' => 'md-8 col-md-offset-4',
+                'column-size' => 'sm-10 col-sm-offset-2',
             ]
         ]);
 

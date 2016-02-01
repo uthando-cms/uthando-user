@@ -4,7 +4,7 @@ return [
     'navigation' => [
         'default' => [
             'login' => [
-                'label'     => 'Sing In',
+                'label'     => 'Sign In',
                 'action'    => 'login',
                 'route'     => 'user',
                 'resource'  => 'menu:guest',
@@ -21,13 +21,20 @@ return [
                 'label' => 'User',
                 'pages' => [
                     'list' => [
-                        'label'     => 'List All Users',
+                        'label'     => 'List Users',
                         'action'    => 'index',
                         'route'     => 'admin/user',
                         'resource'  => 'menu:admin'
                     ],
+                    'edit' => [
+                        'label'     => 'Edit User',
+                        'action'    => 'edit',
+                        'visible'   => false,
+                        'route'     => 'admin/user/edit',
+                        'resource'  => 'menu:admin'
+                    ],
                     'add' => [
-                        'label'     => 'Add New User',
+                        'label'     => 'Add User',
                         'action'    => 'add',
                         'route'     => 'admin/user/edit',
                         'resource'  => 'menu:admin'

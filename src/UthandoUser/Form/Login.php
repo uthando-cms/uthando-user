@@ -18,7 +18,7 @@ use TwbBundle\Form\View\Helper\TwbBundleForm;
  *
  * @package UthandoUser\Form
  */
-class Login extends User
+class Login extends BaseUser
 {
     public function init()
     {
@@ -42,7 +42,7 @@ class Login extends User
                 'checked_value' => 1,
                 'unchecked_value' => 0,
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
-                'column-size' => 'md-8 col-md-offset-4',
+                'column-size' => 'sm-10 col-sm-offset-2',
             ],
         ]);
 
@@ -52,7 +52,7 @@ class Login extends User
             'options' => [
                 'label' => 'Login',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
-                'column-size' => 'md-8 col-md-offset-4',
+                'column-size' => 'sm-10 col-sm-offset-2',
             ]
         ]);
     }

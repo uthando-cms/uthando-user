@@ -4,29 +4,29 @@
  *
  * @package   UthandoUser\Form
  * @author    Shaun Freeman <shaun@shaunfreeman.co.uk>
- * @link      https://github.com/uthando-cms for the canonical source repository
- * @copyright Copyright (c) 2014 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @copyright Copyright (c) 2016 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license   see LICENSE
  */
 
 namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
-use UthandoUser\InputFilter\User as UserInputFilter;
-use Zend\InputFilter\InputFilterInterface;
 
 /**
- * Class Register
+ * Class Password
  *
  * @package UthandoUser\Form
  */
-class Register extends BaseUser
+class Password extends BaseUser
 {
     public function init()
     {
         parent::init();
 
         $this->remove('userId')
+            ->remove('firstname')
+            ->remove('lastname')
+            ->remove('email')
             ->remove('role')
             ->remove('dateCreated')
             ->remove('dateModified')
@@ -36,7 +36,7 @@ class Register extends BaseUser
             'name' => 'submit',
             'type' => 'submit',
             'options' => [
-                'label' => 'Register',
+                'label' => 'Change Password',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
                 'column-size' => 'sm-10 col-sm-offset-2',
             ]
