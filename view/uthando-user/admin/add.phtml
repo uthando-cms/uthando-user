@@ -1,6 +1,15 @@
 <?php $this->headTitle('Add User') ?>
 <?php $this->layout()->pageTitle = $this->translate('Add User');?>
 
+<?php $this->placeholder('header-buttons')->captureStart();?>
+<button type="submit" form="form-user" data-toggle="tooltip" title="Save" class="btn btn-primary">
+    <i class="fa fa-save"></i>
+</button>
+<a href="<?=$this->url('admin/user');?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Cancel');?>" class="btn btn-default">
+    <i class="fa fa-reply"></i>
+</a>
+<?php $this->placeholder('header-buttons')->captureEnd();?>
+
 <?php $this->form->setAttributes([
 	'method' => 'post',
     'id' => 'form-user',
@@ -10,16 +19,8 @@
 ]); ?>
 
 <div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <h3 class="panel-title pull-left"><i class="fa fa-pencil"></i> <?=$this->translate('Add User');?></h3>
-        <div class="button-group pull-right">
-            <button type="submit" form="form-user" data-toggle="tooltip" title="Save" class="btn btn-primary btn-sm">
-                <i class="fa fa-save"></i>
-            </button>
-            <a href="<?=$this->url('admin/user');?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Cancel');?>" class="btn btn-default btn-sm">
-                <i class="fa fa-reply"></i>
-            </a>
-        </div>
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?=$this->translate('Add User');?></h3>
     </div>
     <div class="panel-body">
         <?=$this->form($this->form);?>

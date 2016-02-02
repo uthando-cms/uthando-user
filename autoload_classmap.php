@@ -25,7 +25,6 @@ return array(
     'UthandoUser\Form\Settings\UserFieldSet'            => __DIR__ . '/src/UthandoUser/Form/Settings/UserFieldSet.php',
     'UthandoUser\Form\User'                             => __DIR__ . '/src/UthandoUser/Form/User.php',
     'UthandoUser\Form\UserEdit'                         => __DIR__ . '/src/UthandoUser/Form/UserEdit.php',
-    'UthandoUser\Form\UserSearch'                       => __DIR__ . '/src/UthandoUser/Form/UserSearch.php',
     'UthandoUser\Hydrator\User'                         => __DIR__ . '/src/UthandoUser/Hydrator/User.php',
     'UthandoUser\Hydrator\UserRegistration'             => __DIR__ . '/src/UthandoUser/Hydrator/UserRegistration.php',
     'UthandoUser\InputFilter\User'                      => __DIR__ . '/src/UthandoUser/InputFilter/User.php',

@@ -19,6 +19,9 @@ return [
         'admin' => [
             'user' => [
                 'label' => 'Users',
+                'params' => [
+                    'icon' => 'fa-users',
+                ],
                 'pages' => [
                     'list' => [
                         'label'     => 'List Users',

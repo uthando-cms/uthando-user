@@ -1,16 +1,17 @@
 <?php $this->headTitle('Users') ?>
 <?php $this->layout()->pageTitle = $this->translate('Users');?>
 
+<?php $this->placeholder('header-buttons')->captureStart();?>
+<a href="<?=$this->url('admin/user/edit', [
+    'action' => 'add'
+]);?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Add User');?>" class="btn btn-primary">
+    <i class="fa fa-plus"></i>
+</a>
+<?php $this->placeholder('header-buttons')->captureEnd();?>
+
 <div class="panel panel-default">
-    <div class="panel-heading clearfix">
-        <h3 class="panel-title pull-left"><i class="fa fa-list"></i> <?=$this->translate('User List');?></h3>
-        <div class="button-group pull-right">
-            <a href="<?=$this->url('admin/user/edit', [
-                'action' => 'add'
-            ]);?>" type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Add User');?>" class="btn btn-primary btn-sm">
-                <i class="fa fa-plus"></i>
-            </a>
-        </div>
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?=$this->translate('User List');?></h3>
     </div>
     <div class="panel-body">
         <?=$this->partial('uthando-admin/partial/search', [
