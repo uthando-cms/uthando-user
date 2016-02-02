@@ -24,6 +24,16 @@ class AdminController extends AbstractCrudController
     protected $serviceName = 'UthandoUser';
     protected $route = 'admin/user';
 
+    public function addAction()
+    {
+        $this->getService()
+            ->setFormOptions([
+                'include_password' => true,
+            ]);
+
+        return parent::addAction();
+    }
+
     public function resetPasswordAction()
     {
         $userId = $this->params()->fromRoute('id', null);

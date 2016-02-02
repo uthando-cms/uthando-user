@@ -16,12 +16,12 @@
         <?=$this->partial('uthando-admin/partial/search', [
             'name'			=> 'user',
             'searchInputs'	=> [
-                'Email' => 'email',
-                'User'  => 'firstname-lastname',
+                $this->translate('Email') => 'email',
+                $this->translate('User') => 'firstname-lastname',
             ],
         ]);?>
     </div>
-    <div id="table-user" class="panel-table">
+    <div id="table-user" class="admin-table">
         <?=$this->partial('uthando-user/admin/list', [
             'models' => $this->models
         ]); ?>

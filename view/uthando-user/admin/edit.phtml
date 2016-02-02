@@ -16,7 +16,7 @@
             <a class="btn btn-default btn-sm" href="<?=$this->url('admin/user/edit', [
                 'action' => 'reset-password',
                 'id'     => $this->model->getUserId(),
-            ]);?>"><?=$this->translate('Reset Password');?></a>
+            ]);?>" data-toggle="tooltip" title="<?=$this->translate('Reset Password');?>"><?=$this->translate('Reset Password');?></a>
             <button type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Save');?>" class="btn btn-primary btn-sm">
                 <i class="fa fa-save"></i>
             </button>

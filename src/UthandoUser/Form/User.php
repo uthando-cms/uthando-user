@@ -22,8 +22,12 @@ class User extends BaseUser
     {
         parent::init();
 
-        $this->remove('passwd')
-            ->remove('passwd-confirm')
-            ->remove('show-password');
+        if (!$this->getOption('include_password')) {
+            $this->remove('passwd')
+                ->remove('passwd-confirm')
+                ->remove('show-password');
+        }
+
+
     }
 }

@@ -18,7 +18,7 @@ return [
         ],
         'admin' => [
             'user' => [
-                'label' => 'User',
+                'label' => 'Users',
                 'pages' => [
                     'list' => [
                         'label'     => 'List Users',
