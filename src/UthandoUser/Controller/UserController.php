@@ -286,7 +286,7 @@ class UserController extends AbstractActionController
         $inputFilter->addPasswordLength('login');
 
         $form->setInputFilter($inputFilter);
-        $form->setValidationGroup(['email', 'passwd']);
+        $form->setValidationGroup(['email', 'passwd', 'rememberme']);
 
         $form->setData($post);
 

@@ -37,7 +37,7 @@ class Login extends BaseUser
             'name' => 'rememberme',
             'type' => 'checkbox',
             'options' => [
-                'label' => 'Remember Me:',
+                'label' => 'Remember Me',
                 'use_hidden_element' => true,
                 'checked_value' => 1,
                 'unchecked_value' => 0,
