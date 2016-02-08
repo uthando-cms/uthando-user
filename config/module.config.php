@@ -1,79 +1,86 @@
 <?php
+
+use UthandoUser\Controller;
+use UthandoUser\Form;
+use UthandoUser\Hydrator;
+use UthandoUser\InputFilter;
+use UthandoUser\Service;
+
 return [
     'controllers' => [
         'invokables' => [
-            'UthandoUser\Controller\Admin'          => 'UthandoUser\Controller\AdminController',
-            'UthandoUser\Controller\Registration'   => 'UthandoUser\Controller\RegistrationController',
-            'UthandoUser\Controller\Settings'       => 'UthandoUser\Controller\Settings',
-            'UthandoUser\Controller\User'           => 'UthandoUser\Controller\UserController',
+            Controller\AdminController::class       => Controller\AdminController::class,
+            'UthandoUser\Controller\Registration'   => Controller\RegistrationController::class,
+            'UthandoUser\Controller\Settings'       => Controller\Settings::class,
+            'UthandoUser\Controller\User'           => Controller\UserController::class,
         ],
     ],
     'controller_plugins' => [
         'invokables' => [
-            'IsAllowed' => 'UthandoUser\Controller\Plugin\IsAllowed'
+            'IsAllowed' => Controller\Plugin\IsAllowed::class,
         ],
     ],
     'form_elements' => [
         'invokables' => [
-            'UthandoUserEdit'           => 'UthandoUser\Form\UserEdit',
-            'UthandoUserForgotPassword' => 'UthandoUser\Form\ForgotPassword',
-            'UthandoUserPassword'       => 'UthandoUser\Form\Password',
-            'UthandoUserLogin'          => 'UthandoUser\Form\Login',
-            'UthandoUserRegister'       => 'UthandoUser\Form\Register',
-            'UthandoUser'               => 'UthandoUser\Form\User',
+            'UthandoUserEdit'           => Form\UserEdit::class,
+            'UthandoUserForgotPassword' => Form\ForgotPassword::class,
+            'UthandoUserPassword'       => Form\Password::class,
+            'UthandoUserLogin'          => Form\Login::class,
+            'UthandoUserRegister'       => Form\Register::class,
+            'UthandoUser'               => Form\User::class,
 
-            'UthandoUserRoleList'       => 'UthandoUser\Form\Element\RoleList',
-            'UthandoUserList'           => 'UthandoUser\Form\Element\UserList',
+            'UthandoUserRoleList'       => Form\Element\RoleList::class,
+            'UthandoUserList'           => Form\Element\UserList::class,
 
-            'UthandoUserAuthFieldSet'   => 'UthandoUser\Form\Settings\AuthFieldSet',
-            'UthandoUserSettings'       => 'UthandoUser\Form\Settings\Settings',
-            'UthandoUserFieldSet'       => 'UthandoUser\Form\Settings\UserFieldSet',
+            'UthandoUserAuthFieldSet'   => Form\Settings\AuthFieldSet::class,
+            'UthandoUserSettings'       => Form\Settings\Settings::class,
+            'UthandoUserFieldSet'       => Form\Settings\UserFieldSet::class,
         ],
     ],
     'hydrators' => [
         'invokables' => [
-            'UthandoUser'               => 'UthandoUser\Hydrator\User',
-            'UthandoUserRegistration'   => 'UthandoUser\Hydrator\UserRegistration',
+            'UthandoUser'               => Hydrator\User::class,
+            'UthandoUserRegistration'   => Hydrator\UserRegistration::class,
         ],
     ],
     'input_filters' => [
         'invokables' => [
-            'UthandoUser' => 'UthandoUser\InputFilter\User',
+            'UthandoUser' => InputFilter\User::class,
         ],
     ],
     'service_manager' => [
         'invokables' => [
-            'UthandoUser\Authentication\Storage' => 'UthandoUser\Authentication\Storage',
+            'UthandoUser\Authentication\Storage' => UthandoUser\Authentication\Storage::class,
         ],
         'factories' => [
-            'Zend\Authentication\AuthenticationService' => 'UthandoUser\Service\Factory\AuthenticationFactory',
-            'UthandoUser\Service\Acl'                   => 'UthandoUser\Service\Factory\AclFactory',
-            'UthandoUser\Navigation'                    => 'UthandoUser\Service\Factory\UserNavigationFactory',
-            'UthandoUser\Options\Auth'                  => 'UthandoUser\Service\Factory\AuthOptionsFactory',
-            'UthandoUser\Options\User'                  => 'UthandoUser\Service\Factory\UserOptionsFactory',
+            Zend\Authentication\AuthenticationService::class    => Service\Factory\AuthenticationFactory::class,
+            UthandoUser\Service\Acl::class                      => Service\Factory\AclFactory::class,
+            'UthandoUser\Navigation'                            => Service\Factory\UserNavigationFactory::class,
+            'UthandoUser\Options\Auth'                          => Service\Factory\AuthOptionsFactory::class,
+            'UthandoUser\Options\User'                          => Service\Factory\UserOptionsFactory::class,
         ],
     ],
     'uthando_mappers' => [
         'invokables' => [
-            'UthandoUser'               => 'UthandoUser\Mapper\User',
-            'UthandoUserRegistration'   => 'UthandoUser\Mapper\UserRegistration',
+            'UthandoUser'               => UthandoUser\Mapper\User::class,
+            'UthandoUserRegistration'   => UthandoUser\Mapper\UserRegistration::class,
         ],
     ],
     'uthando_models' => [
         'invokables' => [
-            'UthandoUser'               => 'UthandoUser\Model\User',
-            'UthandoUserRegistration'   => 'UthandoUser\Model\UserRegistration',
+            'UthandoUser'               => UthandoUser\Model\User::class,
+            'UthandoUserRegistration'   => UthandoUser\Model\UserRegistration::class,
         ],
     ],
     'uthando_services' => [
         'invokables' => [
-            'UthandoUser'               => 'UthandoUser\Service\User',
-            'UthandoUserRegistration'   => 'UthandoUser\Service\UserRegistration',
+            'UthandoUser'               => UthandoUser\Service\User::class,
+            'UthandoUserRegistration'   => UthandoUser\Service\UserRegistration::class,
         ],
     ],
     'view_helpers' => [
         'invokables' => [
-            'IsAllowed' => 'UthandoUser\View\IsAllowed',
+            'IsAllowed' => UthandoUser\View\IsAllowed::class,
         ],
     ],
     'view_manager' => [

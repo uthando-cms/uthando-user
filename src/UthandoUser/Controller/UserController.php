@@ -254,6 +254,7 @@ class UserController extends AbstractActionController
     public function logoutAction()
     {
         $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+
         $auth->clear();
         return $this->redirect()->toRoute('home');
     }

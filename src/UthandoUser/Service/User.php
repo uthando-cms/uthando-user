@@ -19,7 +19,6 @@ use Zend\EventManager\Event;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
 
-
 /**
  * Class User
  *
@@ -128,7 +127,7 @@ class User extends AbstractMapperService
      *
      * @param UserModel $model
      * @param array $post
-     * @return int|\UthandoUser\Form\BaseUserEdit
+     * @return int|\UthandoUser\Form\UserEdit
      * @throws UthandoUserException
      * @throws \UthandoCommon\Service\ServiceException
      */
@@ -140,7 +139,7 @@ class User extends AbstractMapperService
 
         $model->setDateModified();
 
-        /* @var $form \UthandoUser\Form\BaseUserEdit */
+        /* @var $form \UthandoUser\Form\UserEdit */
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('UthandoUserEdit');
