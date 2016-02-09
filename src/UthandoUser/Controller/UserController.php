@@ -339,7 +339,11 @@ class UserController extends AbstractActionController
         // clear session varibles now we have redirected.
         $container->getManager()->getStorage()->clear(get_class($this));
 
-        $return = ($returnTo) ? $returnTo : ('admin' === $auth->getIdentity()->getRole()) ? 'admin' : 'home';
+        $adminRoute = (isset($this->getUserService('config')['uthando_user']['default_admin_route'])) ?
+            $this->getUserService('config')['uthando_user']['default_admin_route'] :
+            'admin';
+
+        $return = ($returnTo) ? $returnTo : ('admin' === $auth->getIdentity()->getRole()) ? $adminRoute : 'home';
 
         return $this->redirect()->toRoute($return);
     }
