@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=7.0",
+    "php": ">=5.5",
     "zendframework/zend-authentication": "2.*",
     "zendframework/zend-crypt": "2.*",
     "zendframework/zend-permissions-acl": "2.*",
