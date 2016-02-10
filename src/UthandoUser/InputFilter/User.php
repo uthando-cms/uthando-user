@@ -107,6 +107,15 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
                 ]],
             ],
         ]);
+
+        $this->add([
+            'name' => 'role',
+            'required' => true,
+            'filters' => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
+            ],
+        ]);
     }
 
     /**
