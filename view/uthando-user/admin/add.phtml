@@ -2,7 +2,7 @@
 <?php $this->layout()->pageTitle = $this->translate('Add User');?>
 
 <?php $this->placeholder('header-buttons')->captureStart();?>
-<button type="submit" form="form-user" data-toggle="tooltip" title="Save" class="btn btn-primary">
+<button type="submit" form="form-user" data-toggle="tooltip" title="<?=$this->translate('Save');?>" class="btn btn-primary">
     <i class="fa fa-save"></i>
 </button>
 <a href="<?=$this->url('admin/user');?>" data-toggle="tooltip" title="<?=$this->translate('Cancel');?>" class="btn btn-default">

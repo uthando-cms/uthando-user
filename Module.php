@@ -11,9 +11,8 @@
 
 namespace UthandoUser;
 
-use UthandoCommon\Config\{
-    ConfigInterface, ConfigTrait
-};
+use UthandoCommon\Config\ConfigInterface;
+use UthandoCommon\Config\ConfigTrait;
 use UthandoUser\Event\MvcListener;
 use Zend\Mvc\MvcEvent;
 
