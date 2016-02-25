@@ -185,14 +185,22 @@ class User extends AbstractMapperService
      */
     public function changePassword(array $post, UserModel $user)
     {
-        $form = $this->prepareForm($user, $post, true, true);
+        /* @var $form \UthandoUser\Form\UserEdit */
+        $form = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('UthandoUserPassword');
 
-        $form->setValidationGroup(['passwd', 'passwd-confirm', 'security']);
         /* @var $inputFilter \UthandoUser\InputFilter\User */
-        $inputFilter = $form->getInputFilter();
+        $inputFilter = $this->getInputFilter();
+
         $inputFilter->addPasswordLength('register');
+
+        $form->setHydrator($this->getHydrator());
+        $form->setInputFilter($inputFilter);
+
         $form->setData($post);
         $form->bind($user);
+        $form->setValidationGroup(['passwd', 'passwd-confirm', 'security']);
 
         if (!$form->isValid()) {
             return $form;
