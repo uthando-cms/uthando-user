@@ -160,7 +160,9 @@ class User extends AbstractMapperService
         $form->setInputFilter($inputFilter);
 
         $form->setData($post);
-        $form->setValidationGroup(['firstname', 'lastname', 'email', 'userId']);
+        $form->setValidationGroup([
+            'firstname', 'lastname', 'email', 'userId', 'security'
+        ]);
 
         if (!$form->isValid()) {
             return $form;
@@ -183,9 +185,9 @@ class User extends AbstractMapperService
      */
     public function changePassword(array $post, UserModel $user)
     {
-        $form = $this->getForm($user, $post, true, true);
+        $form = $this->prepareForm($user, $post, true, true);
 
-        $form->setValidationGroup('passwd', 'passwd-confirm');
+        $form->setValidationGroup(['passwd', 'passwd-confirm', 'security']);
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addPasswordLength('register');
@@ -233,7 +235,9 @@ class User extends AbstractMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists();
         $inputFilter->addPasswordLength('register');
-        $form->setValidationGroup(['firstname', 'lastname', 'email', 'passwd', 'passwd-confirm', 'role']);
+        $form->setValidationGroup([
+            'firstname', 'lastname', 'email', 'passwd', 'passwd-confirm', 'role', 'security',
+        ]);
     }
 
     /**
@@ -258,7 +262,9 @@ class User extends AbstractMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists($email);
 
-        $form->setValidationGroup(['firstname', 'lastname', 'email', 'userId', 'active', 'role']);
+        $form->setValidationGroup([
+            'firstname', 'lastname', 'email', 'userId', 'active', 'role', 'security'
+        ]);
     }
 
     /**
@@ -338,15 +344,19 @@ class User extends AbstractMapperService
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getInputFilter();
-        $inputFilter->addEmailRecordExists();
+        //$inputFilter->addEmailNoRecordExists();
+       $form->setValidationGroup(['email', 'captcha', 'security']);
 
         $form->setInputFilter($inputFilter);
 
         $form->setData($post);
 
+
         if (!$form->isValid()) {
             return $form;
         }
+
+
 
         return $this->resetPassword($user);
     }
