@@ -100,8 +100,8 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getService('FormElementManager')
-            ->get('UthandoUserRegister');
+        $form = $this->getUserService()
+            ->getForm('UthandoUserRegister');
 
         return new ViewModel(array(
             'registerForm' => $form,
@@ -138,6 +138,8 @@ class UserController extends AbstractActionController
                     $this->flashMessenger()->addSuccessMessage(
                         'Your new password has been saved and will be emailed to you.'
                     );
+
+                    return $this->redirect()->toRoute('user');
                 } else {
                     $this->flashMessenger()->addErrorMessage(
                         'We could not change password due to database error.'
@@ -146,8 +148,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getService('FormElementManager')
-            ->get('UthandoUserForgotPassword');
+        $form = $this->getUserService()->getForm('UthandoUserForgotPassword');
 
         return [
             'form' => $form,
@@ -180,8 +181,7 @@ class UserController extends AbstractActionController
             );
         }
 
-        $form = $this->getService('FormElementManager')
-            ->get('UthandoUserPassword');
+        $form = $this->getUserService()->getForm('UthandoUserPassword');
 
         return [
             'form' => $form,
@@ -232,8 +232,7 @@ class UserController extends AbstractActionController
         }
 
         /* @var \UthandoUser\Form\BaseUserEdit $form */
-        $form = $this->getService('FormElementManager')
-            ->get('UthandoUserEdit');
+        $form = $this->getUserService()->getForm('UthandoUserEdit');
         $form->bind($user);
 
         return new ViewModel([
@@ -278,8 +277,7 @@ class UserController extends AbstractActionController
         }
 
         /* @var $form \UthandoUser\Form\Login */
-        $form = $this->getService('FormElementManager')
-            ->get('UthandoUserLogin');
+        $form = $this->getUserService()->getForm('UthandoUserLogin');
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getService('InputFilterManager')

@@ -101,10 +101,8 @@ class User extends AbstractMapperService
      */
     public function register(array $post)
     {
-        /* @var $form \UthandoUser\Form\ForgotPassword */
-        $form = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('UthandoUserRegister');
+        /* @var $form \UthandoUser\Form\Register */
+        $form = $this->getForm('UthandoUserRegister');
 
         $model = $this->getModel();
         $model->setRole('registered');
@@ -140,9 +138,7 @@ class User extends AbstractMapperService
         $model->setDateModified();
 
         /* @var $form \UthandoUser\Form\UserEdit */
-        $form = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('UthandoUserEdit');
+        $form = $this->getForm('UthandoUserEdit');
 
         $form->setHydrator($this->getHydrator());
         $form->bind($model);
@@ -186,9 +182,7 @@ class User extends AbstractMapperService
     public function changePassword(array $post, UserModel $user)
     {
         /* @var $form \UthandoUser\Form\UserEdit */
-        $form = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('UthandoUserPassword');
+        $form = $this->getForm('UthandoUserPassword');
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getInputFilter();
@@ -343,28 +337,23 @@ class User extends AbstractMapperService
      */
     public function forgotPassword(array $post)
     {
-        $email = (isset($post['email'])) ? $post['email'] : null;
-        $user = $this->getUserByEmail($email);
+        $email          = (isset($post['email'])) ? $post['email'] : null;
+        $user           = $this->getUserByEmail($email);
+        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        $inputFilter    = $this->getInputFilter();
         /* @var $form \UthandoUser\Form\ForgotPassword */
-        $form = $this->getServiceLocator()
+        $form           = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('UthandoUserForgotPassword');
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
-        $inputFilter = $this->getInputFilter();
         //$inputFilter->addEmailNoRecordExists();
-       $form->setValidationGroup(['email', 'captcha', 'security']);
-
+        $form->setValidationGroup(['email', 'captcha', 'security']);
         $form->setInputFilter($inputFilter);
-
         $form->setData($post);
-
 
         if (!$form->isValid()) {
             return $form;
         }
-
-
 
         return $this->resetPassword($user);
     }

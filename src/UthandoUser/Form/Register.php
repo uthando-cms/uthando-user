@@ -39,7 +39,7 @@ class Register extends BaseUser
                 'label' => 'Register',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
                 'column-size' => 'sm-10 col-sm-offset-2',
-            ]
-        ]);
+            ],
+        ], ['priority' => -1000]);
     }
 }
