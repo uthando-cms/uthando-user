@@ -19,15 +19,19 @@ return [
         'admin' => [
             'user' => [
                 'label' => 'Users',
+                'action'    => 'index',
+                'route'     => 'admin/user',
+                'resource'  => 'menu:admin',
                 'params' => [
                     'icon' => 'fa-users',
                 ],
                 'pages' => [
-                    'list' => [
-                        'label'     => 'List Users',
-                        'action'    => 'index',
-                        'route'     => 'admin/user',
-                        'resource'  => 'menu:admin'
+                    'user-settings' => [
+                        'label' => 'Settings',
+                        'action' => 'index',
+                        'route' => 'admin/user/settings',
+                        'resource' => 'menu:admin',
+                        'visible' => false,
                     ],
                     'edit' => [
                         'label'     => 'Edit User',
@@ -40,17 +44,11 @@ return [
                         'label'     => 'Add User',
                         'action'    => 'add',
                         'route'     => 'admin/user/edit',
-                        'resource'  => 'menu:admin'
-                    ],
-                    'user-settings' => [
-                        'label' => 'Settings',
-                        'action' => 'index',
-                        'route' => 'admin/user/settings',
-                        'resource' => 'menu:admin',
+                        'resource'  => 'menu:admin',
+                        'visible'   => false,
                     ],
                 ],
-                'route'     => 'admin/user',
-                'resource'  => 'menu:admin'
+
             ],
         ],
         'user' => [

@@ -21,6 +21,16 @@ use Zend\Form\Form;
  */
 class BaseUser extends Form
 {
+    public function __construct($name = null, array $options =[])
+    {
+        if (is_array($name)) {
+            $options = $name;
+            $name = (isset($name['name'])) ? $name['name'] : null;
+        }
+
+        parent::__construct($name, $options);
+    }
+
     public function init()
     {
         $this->add([

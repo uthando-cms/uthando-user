@@ -213,7 +213,7 @@ class User extends AbstractMapperService
      * @param int $saved
      * @param UserModel $model
      */
-    private function updateSession(int $saved, UserModel $model)
+    private function updateSession($saved, UserModel $model)
     {
         /* @var $auth \Zend\Authentication\AuthenticationService */
         $auth = $this->getService('Zend\Authentication\AuthenticationService');
