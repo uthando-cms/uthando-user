@@ -101,9 +101,11 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
             ],
             'useFallbackTreatment' => [
                 'required' => false,
+                'allow_empty' => true,
                 'filters' => [
                     ['name' => 'StripTags'],
                     ['name' => 'StringTrim'],
+                    ['name' => 'Boolean'],
                 ],
             ],
             'fallbackCredentialTreatment' => [

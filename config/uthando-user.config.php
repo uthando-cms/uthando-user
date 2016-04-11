@@ -2,24 +2,12 @@
 
 return [
     'uthando_user' => [
-        'user_options' => [
-            'loginMinPasswordLength' => 6,
-            'loginMaxPasswordLength' => 16,
-            'registerMinPasswordLength' => 8,
-            'registerMaxPasswordLength' => 16
-        ],
-        'auth' => [
-            'authenticateMethod'          => 'getUserByEmail',
-            'credentialTreatment'         => Zend\Crypt\Password\Bcrypt::class,
-            'useFallbackTreatment'        => false,
-            'fallbackCredentialTreatment' => UthandoUser\Crypt\Password\Md5::class,
-        ],
         'acl' => [
             'roles' => [
-                'guest'			=> [
-                    'label'			=> 'Guest',
-                    'parent'		=> null,
-                    'privileges'	=> [
+                'guest' => [
+                    'label' => 'Guest',
+                    'parent' => null,
+                    'privileges' => [
                         'allow' => [
                             'controllers' => [
                                 UthandoUser\Controller\User::class => ['action' => [
@@ -32,10 +20,10 @@ return [
                         ],
                     ],
                 ],
-                'registered'    => [
-                    'label'         => 'User',
-                    'parent'        => 'guest',
-                    'privileges'    => [
+                'registered' => [
+                    'label' => 'User',
+                    'parent' => 'guest',
+                    'privileges' => [
                         'deny' => [
                             'controllers' => [
                                 UthandoUser\Controller\User::class => ['action' => [
@@ -53,10 +41,10 @@ return [
                         ],
                     ],
                 ],
-                'admin'        => [
-                    'label'         => 'Admin',
-                    'parent'        => 'registered',
-                    'privileges'    => [
+                'admin' => [
+                    'label' => 'Admin',
+                    'parent' => 'registered',
+                    'privileges' => [
                         'allow' => [
                             'controllers' => [
                                 UthandoUser\Controller\AdminController::class => ['action' => 'all'],

@@ -1,0 +1,18 @@
+<?php
+
+return [
+    'uthando_user' => [
+        'user_options' => [
+            'loginMinPasswordLength' => 6,
+            'loginMaxPasswordLength' => 16,
+            'registerMinPasswordLength' => 8,
+            'registerMaxPasswordLength' => 16
+        ], 
+        'auth' => [
+            'authenticateMethod'          => 'getUserByEmail',
+            'credentialTreatment'         => Zend\Crypt\Password\Bcrypt::class,
+            'useFallbackTreatment'        => false,
+            'fallbackCredentialTreatment' => UthandoUser\Crypt\Password\Md5::class,
+        ],
+    ],
+];
