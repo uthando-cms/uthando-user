@@ -33,6 +33,13 @@ return [
                         'resource' => 'menu:admin',
                         'visible' => false,
                     ],
+                    'list' => [
+                        'label'     => 'User List',
+                        'action'    => 'index',
+                        'route'     => 'admin/user',
+                        'resource'  => 'menu:admin',
+                        'visible'   => false,
+                    ],
                     'edit' => [
                         'label'     => 'Edit User',
                         'action'    => 'edit',
