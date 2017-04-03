@@ -9,10 +9,11 @@ use UthandoUser\Service;
 return [
     'controllers' => [
         'invokables' => [
-            Controller\AdminController::class       => Controller\AdminController::class,
-            'UthandoUser\Controller\Registration'   => Controller\RegistrationController::class,
-            'UthandoUser\Controller\Settings'       => Controller\Settings::class,
-            'UthandoUser\Controller\User'           => Controller\UserController::class,
+            Controller\AdminController::class           => Controller\AdminController::class,
+            Controller\RegistrationController::class    => Controller\RegistrationController::class,
+            'UthandoUser\Controller\Registration'       => Controller\RegistrationController::class,
+            'UthandoUser\Controller\Settings'           => Controller\Settings::class,
+            'UthandoUser\Controller\User'               => Controller\UserController::class,
         ],
     ],
     'controller_plugins' => [
