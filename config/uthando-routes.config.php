@@ -13,7 +13,6 @@ return [
                                 '__NAMESPACE__' => 'UthandoUser\Controller',
                                 'controller'    => UthandoUser\Controller\AdminController::class,
                                 'action'        => 'index',
-                                'force-ssl'     => 'ssl'
                             ],
                         ],
                         'may_terminate' => true,
@@ -29,7 +28,6 @@ return [
                                     'defaults'      => [
                                         'controller'    => UthandoUser\Controller\AdminController::class,
                                         'action'        => 'edit',
-                                        'force-ssl'     => 'ssl'
                                     ],
                                 ],
                             ],
@@ -44,7 +42,6 @@ return [
                                         'controller'    => UthandoUser\Controller\AdminController::class,
                                         'action'        => 'list',
                                         'page'          => 1,
-                                        'force-ssl'     => 'ssl'
                                     ],
                                 ],
                             ],
@@ -58,7 +55,6 @@ return [
                                     'defaults' => [
                                         'controller'    => UthandoUser\Controller\Settings::class,
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,

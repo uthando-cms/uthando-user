@@ -13,7 +13,7 @@ namespace UthandoUser\Form\Settings;
 use UthandoUser\Options\AuthOptions;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Hydrator\ClassMethods;
 
 /**
  * Class AuthFieldSet
