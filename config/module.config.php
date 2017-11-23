@@ -97,7 +97,6 @@ return [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'User',
                         'action'        => 'login',
-                        'force-ssl'     => 'ssl'
                     ],
                 ],
                 'may_terminate' => true,
@@ -113,7 +112,6 @@ return [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'User',
                         'action'        => 'login',
-                        'force-ssl'     => 'ssl'
                     ],
                 ],
                 'may_terminate' => true,
@@ -123,15 +121,15 @@ return [
                 'options' => [
                     'route'    => '/registration[/[:action]/[:token]/[:email]]',
                     'constraints' => [
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'token'     => '[a-zA-Z0-9]*',
+                        //'email'     => '[a-zA-Z0-9@-_.]*',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoUser\Controller',
                         'controller'    => 'Registration',
                         'token'         => '',
                         'email'         => '',
-                        'force-ssl'     => 'ssl'
                     ],
                 ],
                 'may_terminate' => true,
