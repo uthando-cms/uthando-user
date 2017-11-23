@@ -35,7 +35,7 @@ class User extends AbstractMapperService
     /**
      * @var bool
      */
-    protected $useCache = false;
+    //protected $useCache = false;
 
     /**
      * (non-PHPdoc)
