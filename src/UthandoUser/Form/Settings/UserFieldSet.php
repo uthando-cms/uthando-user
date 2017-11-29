@@ -11,9 +11,13 @@
 namespace UthandoUser\Form\Settings;
 
 use UthandoUser\Option\UserOptions;
+use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
+use Zend\Form\Element\Number;
 use Zend\Form\Fieldset;
+use Zend\Hydrator\ClassMethods;
+use Zend\I18n\Validator\IsInt;
 use Zend\InputFilter\InputFilterProviderInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
 
 /**
  * Class UserFieldSet
@@ -33,8 +37,8 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
     public function init()
     {
         $this->add([
-            'name' => 'loginMinPasswordLength',
-            'type' => 'number',
+            'name' => 'login_min_password_length',
+            'type' => Number::class,
             'options' => [
                 'label' => 'Login Min Password Length',
                 'column-size' => 'sm-6',
@@ -45,8 +49,8 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'loginMaxPasswordLength',
-            'type' => 'number',
+            'name' => 'login_max_password_length',
+            'type' => Number::class,
             'options' => [
                 'label' => 'Login Max Password Length',
                 'column-size' => 'sm-6',
@@ -57,8 +61,8 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'registerMinPasswordLength',
-            'type' => 'number',
+            'name' => 'register_min_password_length',
+            'type' => Number::class,
             'options' => [
                 'label' => 'Register Min Password Length',
                 'column-size' => 'sm-6',
@@ -69,8 +73,8 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'registerMaxPasswordLength',
-            'type' => 'number',
+            'name' => 'register_max_password_length',
+            'type' => Number::class,
             'options' => [
                 'label' => 'Register Max Password Length',
                 'column-size' => 'sm-6',
@@ -81,43 +85,43 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
     }
 
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
-            'loginMinPasswordLength' => [
+            'login_min_password_length' => [
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
                 'validators' => [
-                    ['name' => 'Int'],
+                    ['name' => IsInt::class],
                 ],
             ],
-            'loginMaxPasswordLength' => [
+            'login_max_password_length' => [
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
                 'validators' => [
-                    ['name' => 'Int'],
+                    ['name' => IsInt::class],
                 ],
             ],
-            'registerMinPasswordLength' => [
+            'register_min_password_length' => [
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
                 'validators' => [
-                    ['name' => 'Int'],
+                    ['name' => IsInt::class],
                 ],
             ],
-            'registerMaxPasswordLength' => [
+            'register_max_password_length' => [
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
                 'validators' => [
-                    ['name' => 'Int'],
+                    ['name' => IsInt::class],
                 ],
             ],
         ];

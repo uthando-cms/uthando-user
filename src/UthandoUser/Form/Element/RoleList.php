@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -26,12 +26,12 @@ class RoleList extends Select implements ServiceLocatorAwareInterface
 
     protected $emptyOption = '---Please choose a user role---';
 
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
         return ($this->valueOptions) ?: $this->getRoles();
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $config = $this->getServiceLocator()
             ->getServiceLocator()

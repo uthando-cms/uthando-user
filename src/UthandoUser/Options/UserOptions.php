@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -39,73 +39,45 @@ class UserOptions extends AbstractOptions
      */
     protected $loginMaxPasswordLength;
 
-    /**
-     * @return int
-     */
-    public function getRegisterMinPasswordLength()
+    public function getRegisterMinPasswordLength(): ?int
     {
         return $this->registerMinPasswordLength;
     }
 
-    /**
-     * @param int $registerMinPasswordLength
-     * @return $this
-     */
-    public function setRegisterMinPasswordLength($registerMinPasswordLength)
+    public function setRegisterMinPasswordLength(int $registerMinPasswordLength): UserOptions
     {
         $this->registerMinPasswordLength = $registerMinPasswordLength;
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getRegisterMaxPasswordLength()
+    public function getRegisterMaxPasswordLength(): ?int
     {
         return $this->registerMaxPasswordLength;
     }
 
-    /**
-     * @param int $registerMaxPasswordLength
-     * @return $this
-     */
-    public function setRegisterMaxPasswordLength($registerMaxPasswordLength)
+    public function setRegisterMaxPasswordLength(int $registerMaxPasswordLength): UserOptions
     {
         $this->registerMaxPasswordLength = $registerMaxPasswordLength;
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getLoginMinPasswordLength()
+    public function getLoginMinPasswordLength(): ?int
     {
         return $this->loginMinPasswordLength;
     }
 
-    /**
-     * @param int $loginMinPasswordLength
-     * @return $this
-     */
-    public function setLoginMinPasswordLength($loginMinPasswordLength)
+    public function setLoginMinPasswordLength(int $loginMinPasswordLength): UserOptions
     {
         $this->loginMinPasswordLength = $loginMinPasswordLength;
         return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getLoginMaxPasswordLength()
+    public function getLoginMaxPasswordLength(): ?int
     {
         return $this->loginMaxPasswordLength;
     }
 
-    /**
-     * @param int $loginMaxPasswordLength
-     * @return $this
-     */
-    public function setLoginMaxPasswordLength($loginMaxPasswordLength)
+    public function setLoginMaxPasswordLength(int $loginMaxPasswordLength): UserOptions
     {
         $this->loginMaxPasswordLength = $loginMaxPasswordLength;
         return $this;

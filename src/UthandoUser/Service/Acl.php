@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -46,14 +46,10 @@ class Acl extends ZendAcl
     /**
      * deny rules
      *
-     * @var unknown
+     * @var array
      */
     protected $denyRules = [];
 
-
-    /**
-     * Set up role and resouces for power module.
-     */
     public function __construct(array $config)
     {
         // block all by default.

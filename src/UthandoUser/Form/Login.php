@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -12,6 +12,8 @@
 namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\Submit;
 
 /**
  * Class Login
@@ -35,7 +37,7 @@ class Login extends BaseUser
 
         $this->add([
             'name' => 'rememberme',
-            'type' => 'checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Remember Me',
                 'use_hidden_element' => true,
@@ -48,7 +50,7 @@ class Login extends BaseUser
 
         $this->add([
             'name' => 'submit',
-            'type' => 'submit',
+            'type' => Submit::class,
             'options' => [
                 'label' => 'Login',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,

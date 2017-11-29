@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -20,7 +20,7 @@ use Zend\Crypt\Password\PasswordInterface;
  */
 class Md5 implements PasswordInterface
 {
-    public function verify($password, $hash)
+    public function verify($password, $hash): bool
     {
         $result = $this->create($password);
 
@@ -31,7 +31,7 @@ class Md5 implements PasswordInterface
         return false;
     }
 
-    public function create($password)
+    public function create($password): string
     {
         return md5($password);
     }

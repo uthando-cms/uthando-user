@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -13,6 +13,7 @@ namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoUser\InputFilter\User as UserInputFilter;
+use Zend\Form\Element\Submit;
 use Zend\InputFilter\InputFilterInterface;
 
 /**
@@ -34,7 +35,7 @@ class Register extends BaseUser
 
         $this->add([
             'name' => 'submit',
-            'type' => 'submit',
+            'type' => Submit::class,
             'options' => [
                 'label' => 'Register',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,

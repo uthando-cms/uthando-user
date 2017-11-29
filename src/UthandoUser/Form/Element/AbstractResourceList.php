@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -51,11 +51,7 @@ abstract class AbstractResourceList extends Select implements ServiceLocatorAwar
         $this->setValueOptions($this->getResources($resources));
     }
 
-    /**
-     * @param array $resources
-     * @return array
-     */
-    public function getResources($resources)
+    public function getResources(array $resources): array
     {
         $routeArray = [];
 
@@ -66,19 +62,12 @@ abstract class AbstractResourceList extends Select implements ServiceLocatorAwar
         return $routeArray;
     }
 
-    /**
-     * @return string
-     */
-    public function getResource()
+    public function getResource(): string
     {
         return $this->resource;
     }
 
-    /**
-     * @param string $resource
-     * @return $this
-     */
-    public function setResource($resource)
+    public function setResource(string $resource): AbstractResourceList
     {
         $this->resource = $resource;
         return $this;

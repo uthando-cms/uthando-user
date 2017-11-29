@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -35,7 +35,7 @@ class User extends AbstractHydrator
         return $this;
     }
 
-    public function emptyPassword()
+    public function emptyPassword(): User
     {
         $this->addStrategy('passwd', new EmptyString());
         return $this;
@@ -45,7 +45,7 @@ class User extends AbstractHydrator
      * @param \UthandoUser\Model\User $object
      * @return array
      */
-    public function extract($object)
+    public function extract($object): array
     {
         return [
             'userId' => $object->getUserId(),

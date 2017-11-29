@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,11 +11,21 @@
 
 namespace UthandoUser\InputFilter;
 
+use UthandoCommon\Filter\Ucwords;
+use UthandoUser\Option\UserOptions;
+use Zend\Db\Adapter\Adapter;
+use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\Validator\Db\NoRecordExists;
+use Zend\Validator\Db\RecordExists;
+use Zend\Validator\EmailAddress;
 use Zend\Validator\Hostname;
+use Zend\Validator\Identical;
+use Zend\Validator\StringLength;
 
 /**
  * Class User
@@ -33,12 +43,12 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'firstname',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-                ['name' => 'UthandoUcwords'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => Ucwords::class],
             ],
             'validators' => [
-                ['name' => 'StringLength', 'options' => [
+                ['name' => StringLength::class, 'options' => [
                     'encoding' => 'UTF-8',
                     'min' => 2,
                     'max' => 255,
@@ -50,9 +60,9 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'lastname',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-                ['name' => 'UthandoUcwords'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => Ucwords::class],
             ],
             'validators' => [
                 ['name' => 'StringLength', 'options' => [
@@ -67,26 +77,20 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'passwd',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
-            /*'validators' => [
-                ['name' => 'StringLength', 'options' => [
-                    'min'       => 8,
-                    'encoding'  => 'UTF-8',
-                ]],
-            ],*/
         ]);
 
         $this->add([
             'name' => 'passwd-confirm',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name' => 'Identical', 'options' => [
+                ['name' => Identical::class, 'options' => [
                     'token' => 'passwd',
                 ]],
             ],
@@ -96,11 +100,11 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'email',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name' => 'EmailAddress', 'options' => [
+                ['name' => EmailAddress::class, 'options' => [
                     'allow' => Hostname::ALLOW_DNS,
                     'useMxCheck' => true,
                     'useDeepMxCheck' => true
@@ -112,30 +116,26 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'role',
             'required' => true,
             'filters' => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
         ]);
     }
 
-    /**
-     * @param string $type
-     * @return $this
-     */
-    public function addPasswordLength($type)
+    public function addPasswordLength(string $type): User
     {
-        $type = (string)ucfirst($type);
+        $type = ucfirst($type);
 
         $options = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoUser\Options\User');
+            ->get(UserOptions::class);
 
         $minMethod = 'get' . $type . 'MinPasswordLength';
         $maxMethod = 'get' . $type . 'MaxPasswordLength';
 
         $this->get('passwd')
             ->getValidatorChain()
-            ->attachByName('StringLength', [
+            ->attachByName(StringLength::class, [
                 'min' => $options->$minMethod(),
                 'max' => $options->$maxMethod(),
                 'encoding' => 'UTF-8',
@@ -144,7 +144,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function addEmailNoRecordExists($exclude = null)
+    public function addEmailNoRecordExists($exclude = null): User
     {
         $exclude = (!$exclude) ?: [
             'field' => 'email',
@@ -153,10 +153,10 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 
         $this->get('email')
             ->getValidatorChain()
-            ->attachByName('Zend\Validator\Db\NoRecordExists', [
+            ->attachByName(NoRecordExists::class, [
                 'table' => 'user',
                 'field' => 'email',
-                'adapter' => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'adapter' => $this->getServiceLocator()->getServiceLocator()->get(Adapter::class),
                 'exclude' => $exclude,
             ]);
 
@@ -172,10 +172,10 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 
         $this->get('email')
             ->getValidatorChain()
-            ->attachByName('Zend\Validator\Db\RecordExists', [
+            ->attachByName(RecordExists::class, [
                 'table' => 'user',
                 'field' => 'email',
-                'adapter' => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'adapter' => $this->getServiceLocator()->getServiceLocator()->get(Adapter::class),
                 'exclude' => $exclude,
             ]);
 

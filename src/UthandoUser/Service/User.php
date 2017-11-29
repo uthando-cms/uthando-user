@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,9 +11,15 @@
 
 namespace UthandoUser\Service;
 
+use UthandoUser\Form\ForgotPassword;
+use UthandoUser\Form\Password;
+use UthandoUser\Form\Register;
+use UthandoUser\Form\UserEdit;
 use UthandoUser\Model\User as UserModel;
 use UthandoCommon\Service\AbstractMapperService;
+use UthandoUser\Options\AuthOptions;
 use UthandoUser\UthandoUserException;
+use Zend\Authentication\AuthenticationService;
 use Zend\Crypt\Password\PasswordInterface;
 use Zend\EventManager\Event;
 use Zend\Form\Form;
@@ -41,33 +47,19 @@ class User extends AbstractMapperService
      * (non-PHPdoc)
      * @see \UthandoCommon\Service\AbstractService::attachEvents()
      */
-    public function attachEvents()
+    public function attachEvents(): void
     {
-        $this->getEventManager()->attach([
-            'post.add'
-        ], [$this, 'sendEmail']);
-
-        $this->getEventManager()->attach([
-            'pre.add'
-        ], [$this, 'preAdd']);
-
-        $this->getEventManager()->attach([
-            'pre.edit'
-        ], [$this, 'preEdit']);
-
-        $this->getEventManager()->attach([
-            'post.edit'
-        ], [$this, 'postEdit']);
-
-        $this->getEventManager()->attach([
-            'pre.save'
-        ], [$this, 'preSave']);
+        $this->getEventManager()->attach('post.add', [$this, 'sendEmail']);
+        $this->getEventManager()->attach('pre.add', [$this, 'preAdd']);
+        $this->getEventManager()->attach('pre.edit', [$this, 'preEdit']);
+        $this->getEventManager()->attach('post.edit', [$this, 'postEdit']);
+        $this->getEventManager()->attach('pre.save', [$this, 'preSave']);
     }
 
     /**
      * @param Event $e
      */
-    public function sendEmail(Event $e)
+    public function sendEmail(Event $e): void
     {
         $userId = $e->getParam('saved', null);
         $user = $this->getById($userId);
@@ -101,8 +93,8 @@ class User extends AbstractMapperService
      */
     public function register(array $post)
     {
-        /* @var $form \UthandoUser\Form\Register */
-        $form = $this->getForm('UthandoUserRegister');
+        /* @var $form Register */
+        $form = $this->getForm(Register::class);
 
         $model = $this->getModel();
         $model->setRole('registered');
@@ -125,7 +117,7 @@ class User extends AbstractMapperService
      *
      * @param UserModel $model
      * @param array $post
-     * @return int|\UthandoUser\Form\UserEdit
+     * @return int|UserEdit
      * @throws UthandoUserException
      * @throws \UthandoCommon\Service\ServiceException
      */
@@ -137,8 +129,8 @@ class User extends AbstractMapperService
 
         $model->setDateModified();
 
-        /* @var $form \UthandoUser\Form\UserEdit */
-        $form = $this->getForm('UthandoUserEdit');
+        /* @var $form UserEdit */
+        $form = $this->getForm(UserEdit::class);
 
         $form->setHydrator($this->getHydrator());
         $form->bind($model);
@@ -181,8 +173,8 @@ class User extends AbstractMapperService
      */
     public function changePassword(array $post, UserModel $user)
     {
-        /* @var $form \UthandoUser\Form\UserEdit */
-        $form = $this->getForm('UthandoUserPassword');
+        /* @var $form Password */
+        $form = $this->getForm(Password::class);
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getInputFilter();
@@ -207,16 +199,10 @@ class User extends AbstractMapperService
         return $saved;
     }
 
-    /**
-     * Update the session if user has updated their profile
-     *
-     * @param int $saved
-     * @param UserModel $model
-     */
-    private function updateSession($saved, UserModel $model)
+    private function updateSession(int $saved, UserModel $model): void
     {
-        /* @var $auth \Zend\Authentication\AuthenticationService */
-        $auth = $this->getService('Zend\Authentication\AuthenticationService');
+        /* @var $auth AuthenticationService */
+        $auth = $this->getService(AuthenticationService::class);
         $identity = $auth->getIdentity();
 
         // if user has updated this details write the update model to session
@@ -225,12 +211,7 @@ class User extends AbstractMapperService
         }
     }
 
-    /**
-     * Pre user add checks
-     *
-     * @param Event $e
-     */
-    public function preAdd(Event $e)
+    public function preAdd(Event $e): void
     {
         $form = $e->getParam('form');
         /* @var $inputFilter \UthandoUser\InputFilter\User */
@@ -242,12 +223,7 @@ class User extends AbstractMapperService
         ]);
     }
 
-    /**
-     * prepare data to be updated and saved into database.
-     *
-     * @param Event $e
-     */
-    public function preEdit(Event $e)
+    public function preEdit(Event $e): void
     {
         $model = $e->getParam('model');
         $form = $e->getParam('form');
@@ -269,23 +245,12 @@ class User extends AbstractMapperService
         ]);
     }
 
-    /**
-     * Post edit to update user session
-     *
-     * @param Event $e
-     */
-    public function postEdit(Event $e)
+    public function postEdit(Event $e): void
     {
         $this->updateSession($e->getParam('saved', false), $e->getParam('model'));
     }
 
-    /**
-     * Password pre saving checks
-     *
-     * @param Event $e
-     * @throws UthandoUserException
-     */
-    public function preSave(Event $e)
+    public function preSave(Event $e): void
     {
         $data = $e->getParam('data');
 
@@ -302,22 +267,16 @@ class User extends AbstractMapperService
         $e->setParam('data', $data);
     }
 
-    /**
-     * Create a new password hash
-     *
-     * @param $password
-     * @return string
-     * @throws \UthandoUser\UthandoUserException
-     */
-    public function createPassword($password)
+    public function createPassword(string $password): string
     {
-        $authOptions = $this->getConfig('uthando_user');
+        /* @var $authOptions AuthOptions */
+        $authOptions = $this->getService(AuthOptions::class);
 
-        if (!class_exists($authOptions['auth']['credentialTreatment'])) {
+        if (!class_exists($authOptions->getCredentialTreatment())) {
             throw new UthandoUserException('Credential treatment must be an class name');
         } else {
-            /* @var $crypt PasswordInterface */
-            $crypt = new $authOptions['auth']['credentialTreatment'];
+            $cryptClass = $authOptions->getCredentialTreatment();
+            $crypt      = new $cryptClass;
         }
 
         if (!$crypt instanceof PasswordInterface) {
@@ -329,22 +288,15 @@ class User extends AbstractMapperService
         return $password;
     }
 
-    /**
-     * Set and email new random password for user
-     *
-     * @param array $post
-     * @return int|\UthandoUser\Form\ForgotPassword
-     */
     public function forgotPassword(array $post)
     {
-        $email          = (isset($post['email'])) ? $post['email'] : null;
+        $email          = (isset($post['email'])) ? $post['email'] : '';
         $user           = $this->getUserByEmail($email);
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter    = $this->getInputFilter();
         /* @var $form \UthandoUser\Form\ForgotPassword */
-        $form           = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('UthandoUserForgotPassword');
+        $form           = $this->getService('FormElementManager')
+            ->get(ForgotPassword::class);
 
         //$inputFilter->addEmailNoRecordExists();
         $form->setValidationGroup(['email', 'captcha', 'security']);
@@ -358,30 +310,14 @@ class User extends AbstractMapperService
         return $this->resetPassword($user);
     }
 
-    /**
-     * Get user by their email
-     *
-     * @param $email
-     * @param null $ignore
-     * @param bool $emptyPassword
-     * @param bool $activeOnly
-     * @return null|UserModel
-     */
-    public function getUserByEmail($email, $ignore = null, $emptyPassword = true, $activeOnly = false)
+    public function getUserByEmail(string $email, string $ignore = null, bool $emptyPassword = true, bool $activeOnly = false): ?UserModel
     {
-        $email = (string)$email;
         /* @var $mapper \UthandoUser\Mapper\User */
         $mapper = $this->getMapper();
         return $mapper->getUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
     }
 
-    /**
-     * Reset user password for admin and email user with new random password
-     *
-     * @param UserModel $user
-     * @return int
-     */
-    public function resetPassword(UserModel $user)
+    public function resetPassword(UserModel $user): int
     {
         $user->generatePassword();
 
@@ -411,20 +347,12 @@ class User extends AbstractMapperService
 
     }
 
-    /**
-     * Delete user from database
-     *
-     * @param int $id
-     * @return int
-     * @throws \UthandoUser\UthandoUserException
-     * @deprecated moving to event listener
-     */
-    public function delete($id)
+    public function delete($id): int
     {
         $id = (int)$id;
 
-        /* @var $auth \Zend\Authentication\AuthenticationService */
-        $auth = $this->getService('Zend\Authentication\AuthenticationService');
+        /* @var $auth AuthenticationService */
+        $auth = $this->getService(AuthenticationService::class);
         $identity = $auth->getIdentity();
 
         // sanity check to see if we are deleting ourselves!

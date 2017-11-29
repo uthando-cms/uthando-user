@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -22,7 +22,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class AclFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $sm)
+    public function createService(ServiceLocatorInterface $sm): Acl
     {
         $config = $sm->get('config');
         $config = $config['uthando_user'];

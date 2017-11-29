@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,6 +11,8 @@
 
 namespace UthandoUser\Form\Element;
 
+use UthandoCommon\Service\ServiceManager;
+use UthandoUser\Service\User;
 use Zend\Form\Element\Select;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -26,17 +28,17 @@ class UserList extends Select implements ServiceLocatorAwareInterface
 
     protected $emptyOption = '---Please select a user---';
 
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
         return ($this->valueOptions) ?: $this->getUsers();
     }
 
-    public function getUsers()
+    public function getUsers(): array
     {
         $users = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoServiceManager')
-            ->get('UthandoUser')
+            ->get(ServiceManager::class)
+            ->get(User::class)
             ->fetchAll();
 
         $userOptions = [];

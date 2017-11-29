@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -12,6 +12,15 @@
 namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
+use UthandoCommon\Form\Element\Captcha;
+use UthandoUser\Form\Element\RoleList;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\Csrf;
+use Zend\Form\Element\DateTime;
+use Zend\Form\Element\Email;
+use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Password;
+use Zend\Form\Element\Text;
 use Zend\Form\Form;
 
 /**
@@ -35,7 +44,7 @@ class BaseUser extends Form
     {
         $this->add([
             'name' => 'active',
-            'type' => 'checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Active',
                 'use_hidden_element' => true,
@@ -48,7 +57,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'firstname',
-            'type' => 'text',
+            'type' => Text::class,
             'attributes' => [
                 'placeholder' => 'First name',
                 'autofocus' => true,
@@ -66,7 +75,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'lastname',
-            'type' => 'text',
+            'type' => Text::class,
             'attributes' => [
                 'placeholder' => 'Last name',
                 'autocapitalize' => 'words',
@@ -83,7 +92,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'email',
-            'type' => 'email',
+            'type' => Email::class,
             'attributes' => [
                 'placeholder' => 'Email address',
             ],
@@ -99,7 +108,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'show-password',
-            'type' => 'checkbox',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Show Password',
                 'checked_value' => 1,
@@ -113,7 +122,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'passwd',
-            'type' => 'password',
+            'type' => Password::class,
             'attributes' => [
                 'id' => 'password',
                 'placeholder' => 'Password',
@@ -130,7 +139,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'passwd-confirm',
-            'type' => 'password',
+            'type' => Password::class,
             'attributes' => [
                 'placeholder' => 'Confirm password',
             ],
@@ -146,7 +155,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'role',
-            'type' => 'UthandoUserRoleList',
+            'type' => RoleList::class,
             'options' => [
                 'label' => 'Role',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -159,7 +168,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'dateCreated',
-            'type' => 'DateTime',
+            'type' => DateTime::class,
             'options' => [
                 'label' => 'Date Created',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -176,7 +185,7 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'dateModified',
-            'type' => 'DateTime',
+            'type' => DateTime::class,
             'options' => [
                 'label' => 'Date Modified',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -193,17 +202,17 @@ class BaseUser extends Form
 
         $this->add([
             'name' => 'userId',
-            'type' => 'hidden',
+            'type' => Hidden::class,
         ]);
 
         $this->add([
             'name' => 'security',
-            'type' => 'csrf',
+            'type' => Csrf::class,
         ]);
 
         $this->add([
             'name' => 'returnTo',
-            'type' => 'hidden',
+            'type' => Hidden::class,
         ]);
     }
 
@@ -211,7 +220,7 @@ class BaseUser extends Form
     {
         $this->add([
             'name' => 'captcha',
-            'type' => 'UthandoCommonCaptcha',
+            'type' => Captcha::class,
             'attributes' => [
                 'placeholder' => 'Type letters and number here',
             ],

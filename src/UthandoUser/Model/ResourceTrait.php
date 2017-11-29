@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -26,7 +26,7 @@ trait ResourceTrait
     /**
      * @return string
      */
-    public function getResource()
+    public function getResource(): string
     {
         return $this->resource;
     }
@@ -35,7 +35,7 @@ trait ResourceTrait
      * @param string $resource
      * @return $this
      */
-    public function setResource($resource)
+    public function setResource(string $resource)
     {
         $this->resource = $resource;
         return $this;

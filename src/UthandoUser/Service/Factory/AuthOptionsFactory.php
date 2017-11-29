@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -14,14 +14,9 @@ use UthandoUser\Options\AuthOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-/**
- * Class AuthOptionsFactory
- *
- * @package UthandoUser\Service\Factory
- */
 class AuthOptionsFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function createService(ServiceLocatorInterface $serviceLocator): AuthOptions
     {
         $config = $serviceLocator->get('config');
         $authOptions = (isset($config['uthando_user']['auth'])) ? $config['uthando_user']['auth'] : [];

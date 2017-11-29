@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,9 +11,11 @@
 
 namespace UthandoUser\Event;
 
+use UthandoUser\Controller\Plugin\IsAllowed;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Http\Request;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\MvcEvent;
 
 /**
@@ -35,7 +37,7 @@ class MvcListener implements ListenerAggregateInterface
     {
         $events = $events->getSharedManager();
         $this->listeners[] = $events->attach(
-            'Zend\Mvc\Controller\AbstractActionController',
+            AbstractActionController::class,
             MvcEvent::EVENT_DISPATCH,
             [$this, 'doAuthentication'],
             2
@@ -62,7 +64,7 @@ class MvcListener implements ListenerAggregateInterface
         $match = $event->getRouteMatch();
         $controller = $match->getParam('controller');
         $action = $match->getParam('action');
-        $plugin = $sm->get('ControllerPluginManager')->get('IsAllowed');
+        $plugin = $sm->get('ControllerPluginManager')->get(IsAllowed::class);
         $hasIdentity = $plugin->getIdentity();
 
         if (!$plugin->isAllowed($controller, $action)) {

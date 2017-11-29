@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -13,12 +13,8 @@ namespace UthandoUser\View;
 
 use UthandoCommon\View\AbstractViewHelper;
 use UthandoUser\Controller\Plugin\IsAllowed as PluginIsAllowed;
+use UthandoUser\Service\Acl;
 
-/**
- * Class IsAllowed
- *
- * @package UthandoUser\View
- */
 class IsAllowed extends AbstractViewHelper
 {
     /**
@@ -26,35 +22,18 @@ class IsAllowed extends AbstractViewHelper
      */
     protected $pluginIsAllowed;
 
-    /**
-     * Returns the acl plugin instance
-     *
-     * @return Acl
-     */
-    public function __invoke($resource = null, $privilege = null)
+    public function __invoke($resource = null, $privilege = null): Acl
     {
         return $this->isAllowed($resource, $privilege);
     }
 
-    /**
-     * Proxy the acl plugin controller
-     *
-     * @param  string $method
-     * @param  array $argv
-     * @return mixed
-     */
-    public function __call($method, $argv)
+    public function __call(string $method, array $argv)
     {
         $acl = $this->getPluginIsAllowed();
         return call_user_func_array([$acl, $method], $argv);
     }
 
-    /**
-     * Retrieve the acl plugin
-     *
-     * @return PluginIsAllowed
-     */
-    public function getPluginIsAllowed()
+    public function getPluginIsAllowed(): PluginIsAllowed
     {
         if ($this->pluginIsAllowed) {
             return $this->pluginIsAllowed;
@@ -62,7 +41,7 @@ class IsAllowed extends AbstractViewHelper
 
         $acl = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoUser\Service\Acl');
+            ->get(Acl::class);
         $identity = $this->view->plugin('identity');
 
         $this->pluginIsAllowed = new PluginIsAllowed($acl);

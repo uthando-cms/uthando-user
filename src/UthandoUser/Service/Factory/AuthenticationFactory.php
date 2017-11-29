@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,7 +11,11 @@
 
 namespace UthandoUser\Service\Factory;
 
+use UthandoCommon\Service\ServiceManager;
+use UthandoUser\Authentication\Storage;
+use UthandoUser\Options\AuthOptions;
 use UthandoUser\Service\Authentication;
+use UthandoUser\Service\User;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -22,11 +26,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class AuthenticationFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $sm)
+    public function createService(ServiceLocatorInterface $sm): Authentication
     {
-        $service = $sm->get('UthandoServiceManager')->get('UthandoUser');
-        $storage = $sm->get('UthandoUser\Authentication\Storage');
-        $options = $sm->get('UthandoUser\Options\Auth');
+        $service = $sm->get(ServiceManager::class)->get(User::class);
+        $storage = $sm->get(Storage::class);
+        $options = $sm->get(AuthOptions::class);
 
         $auth = new Authentication();
 

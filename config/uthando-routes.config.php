@@ -1,5 +1,8 @@
 <?php
 
+use UthandoUser\Controller\AdminController;
+use UthandoUser\Controller\Settings;
+
 return [
     'router' => [
         'routes' => [
@@ -11,7 +14,7 @@ return [
                             'route'    => '/user',
                             'defaults' => [
                                 '__NAMESPACE__' => 'UthandoUser\Controller',
-                                'controller'    => UthandoUser\Controller\AdminController::class,
+                                'controller'    => AdminController::class,
                                 'action'        => 'index',
                             ],
                         ],
@@ -26,7 +29,7 @@ return [
                                         'id'		=> '\d+'
                                     ],
                                     'defaults'      => [
-                                        'controller'    => UthandoUser\Controller\AdminController::class,
+                                        'controller'    => AdminController::class,
                                         'action'        => 'edit',
                                     ],
                                 ],
@@ -39,7 +42,7 @@ return [
                                         'page'			=> '\d+'
                                     ],
                                     'defaults'      => [
-                                        'controller'    => UthandoUser\Controller\AdminController::class,
+                                        'controller'    => AdminController::class,
                                         'action'        => 'list',
                                         'page'          => 1,
                                     ],
@@ -53,7 +56,7 @@ return [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ],
                                     'defaults' => [
-                                        'controller'    => UthandoUser\Controller\Settings::class,
+                                        'controller'    => Settings::class,
                                         'action' => 'index',
                                     ]
                                 ],

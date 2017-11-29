@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -39,75 +39,49 @@ class AuthOptions extends AbstractOptions
      */
     protected $fallbackCredentialTreatment;
 
-    /**
-     * @return string
-     */
-    public function getAuthenticateMethod()
+    public function getAuthenticateMethod(): ?string
     {
         return $this->authenticateMethod;
     }
 
-    /**
-     * @param string $authenticateMethod
-     * @return $this
-     */
-    public function setAuthenticateMethod($authenticateMethod)
+    public function setAuthenticateMethod(string $authenticateMethod): AuthOptions
     {
         $this->authenticateMethod = $authenticateMethod;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCredentialTreatment()
+    public function getCredentialTreatment(): ?string
     {
         return $this->credentialTreatment;
     }
 
-    /**
-     * @param string $credentialTreatment
-     * @return $this
-     */
-    public function setCredentialTreatment($credentialTreatment)
+    public function setCredentialTreatment(string $credentialTreatment): AuthOptions
     {
         $this->credentialTreatment = $credentialTreatment;
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isUseFallbackTreatment()
+    public function isUseFallbackTreatment(): ?bool
     {
         return $this->useFallbackTreatment;
     }
 
-    /**
-     * @param boolean $useFallbackTreatment
-     * @return $this
-     */
-    public function setUseFallbackTreatment($useFallbackTreatment)
+    public function setUseFallbackTreatment(bool $useFallbackTreatment): AuthOptions
     {
         $this->useFallbackTreatment = $useFallbackTreatment;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFallbackCredentialTreatment()
+    public function getFallbackCredentialTreatment(): ?string
     {
         return $this->fallbackCredentialTreatment;
     }
 
-    /**
-     * @param string $fallbackCredentialTreatment
-     * @return $this
-     */
-    public function setFallbackCredentialTreatment($fallbackCredentialTreatment)
+    public function setFallbackCredentialTreatment(string $fallbackCredentialTreatment): AuthOptions
     {
         $this->fallbackCredentialTreatment = $fallbackCredentialTreatment;
         return $this;
     }
+
+
 }

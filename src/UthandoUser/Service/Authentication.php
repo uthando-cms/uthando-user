@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -12,6 +12,7 @@
 namespace UthandoUser\Service;
 
 use UthandoUser\Authentication\Adapter as AuthAdapter;
+use UthandoUser\Authentication\Storage;
 use UthandoUser\Model\User as UserModel;
 use UthandoUser\Options\AuthOptions;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
@@ -21,7 +22,7 @@ use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
  *
  * @package UthandoUser\Service
  * @method UserModel getIdentity()
- * @method \UthandoUser\Authentication\Storage getStorage()
+ * @method Storage getStorage()
  */
 class Authentication extends ZendAuthenticationService
 {
@@ -40,36 +41,18 @@ class Authentication extends ZendAuthenticationService
      */
     protected $options;
 
-    /**
-     * Set the user mapper
-     *
-     * @param User $service
-     * @return \UthandoUser\Service\Authentication
-     */
-    public function setUserService(User $service)
+    public function setUserService(User $service): Authentication
     {
         $this->userService = $service;
         return $this;
     }
 
-    /**
-     * Sets the auth options
-     *
-     * @param AuthOptions $options
-     */
-    public function setOptions(AuthOptions $options)
+    public function setOptions(AuthOptions $options): void
     {
         $this->options = $options;
     }
 
-    /**
-     * Authenticate a user
-     *
-     * @param  string $identity
-     * @param string $password
-     * @return boolean
-     */
-    public function doAuthentication($identity, $password)
+    public function doAuthentication(string $identity, string $password): bool
     {
         $authMethod = $this->options->getAuthenticateMethod();
         $user = $this->userService->$authMethod($identity, null, false, true);
@@ -79,7 +62,6 @@ class Authentication extends ZendAuthenticationService
         }
 
         // hash the password and verify.
-
         $adapter = $this->getAuthAdapter($password, $user);
         $result = $this->authenticate($adapter);
 
@@ -102,14 +84,7 @@ class Authentication extends ZendAuthenticationService
         return true;
     }
 
-    /**
-     * Get and configure the auth adapter
-     *
-     * @param string $password
-     * @param UserModel $user
-     * @return AuthAdapter
-     */
-    public function getAuthAdapter($password, UserModel $user)
+    public function getAuthAdapter(string $password, UserModel $user): AuthAdapter
     {
         if (null === $this->authAdapter) {
 
@@ -129,20 +104,12 @@ class Authentication extends ZendAuthenticationService
         return $this->authAdapter;
     }
 
-    /**
-     * Set the auth adapter.
-     *
-     * @param AuthAdapter $adapter
-     */
-    public function setAuthAdapter(AuthAdapter $adapter)
+    public function setAuthAdapter(AuthAdapter $adapter): void
     {
         $this->authAdapter = $adapter;
     }
 
-    /**
-     * Clear any authentication data
-     */
-    public function clear()
+    public function clear(): void
     {
         $this->getStorage()->forgetMe();
         $this->clearIdentity();

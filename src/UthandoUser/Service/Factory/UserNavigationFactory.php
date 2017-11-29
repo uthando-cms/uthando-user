@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -13,14 +13,9 @@ namespace UthandoUser\Service\Factory;
 
 use Zend\Navigation\Service\AbstractNavigationFactory;
 
-/**
- * Class UserNavigationFactory
- *
- * @package UthandoUser\Service\Factory
- */
 class UserNavigationFactory extends AbstractNavigationFactory
 {
-    protected function getName()
+    protected function getName(): string
     {
         return 'user';
     }

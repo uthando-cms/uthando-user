@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,6 +11,7 @@
 namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
+use Zend\Form\Element\Submit;
 
 /**
  * Class Password
@@ -34,7 +35,7 @@ class Password extends BaseUser
 
         $this->add([
             'name' => 'submit',
-            'type' => 'submit',
+            'type' => Submit::class,
             'options' => [
                 'label' => 'Change Password',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,

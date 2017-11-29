@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -42,9 +42,9 @@ class User extends AbstractDbMapper
      * @param null|string $ignore
      * @param bool $emptyPassword
      * @param bool $activeOnly
-     * @return array|\ArrayObject|null|object
+     * @return null|\UthandoUser\Model\User
      */
-    public function getUserByEmail($email, $ignore = null, $emptyPassword = true, $activeOnly = false)
+    public function getUserByEmail(string $email, $ignore = null, $emptyPassword = true, $activeOnly = false)
     {
         if ($emptyPassword) {
             /* @var $hydrator \UthandoUser\Hydrator\User */

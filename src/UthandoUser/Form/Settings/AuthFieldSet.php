@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -11,6 +11,11 @@
 namespace UthandoUser\Form\Settings;
 
 use UthandoUser\Options\AuthOptions;
+use Zend\Filter\Boolean;
+use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
+use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Hydrator\ClassMethods;
@@ -33,8 +38,8 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
     public function init()
     {
         $this->add([
-            'name' => 'authenticateMethod',
-            'type' => 'text',
+            'name' => 'authenticate_method',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Authenticate Method',
                 'column-size' => 'sm-6',
@@ -45,8 +50,8 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'credentialTreatment',
-            'type' => 'text',
+            'name' => 'credential_treatment',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Credential Treatment',
                 'column-size' => 'sm-6',
@@ -57,8 +62,8 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'useFallbackTreatment',
-            'type' => 'checkbox',
+            'name' => 'use_fallback_treatment',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'Use Fallback Treatment',
                 'use_hidden_element' => true,
@@ -70,8 +75,8 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'fallbackCredentialTreatment',
-            'type' => 'text',
+            'name' => 'fallback_credential_treatment',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Fallback Credential Treatment',
                 'column-size' => 'sm-6',
@@ -82,37 +87,37 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
     }
 
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
-            'authenticateMethod' => [
+            'authenticate_method' => [
                 'required' => true,
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
             ],
-            'credentialTreatment' => [
+            'credential_treatment' => [
                 'required' => true,
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
             ],
-            'useFallbackTreatment' => [
+            'use_fallback_treatment' => [
                 'required' => false,
                 'allow_empty' => true,
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
-                    ['name' => 'Boolean'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
+                    ['name' => Boolean::class],
                 ],
             ],
-            'fallbackCredentialTreatment' => [
+            'fallback_credential_treatment' => [
                 'required' => false,
                 'filters' => [
-                    ['name' => 'StripTags'],
-                    ['name' => 'StringTrim'],
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
                 ],
             ],
         ];

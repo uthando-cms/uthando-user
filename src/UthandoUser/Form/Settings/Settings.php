@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -22,7 +22,7 @@ class Settings extends Form
     public function init()
     {
         $this->add([
-            'type' => 'UthandoUserFieldSet',
+            'type' => UserFieldSet::class,
             'name' => 'user_options',
             'attributes' => [
                 'class' => 'col-sm-6',
@@ -33,7 +33,7 @@ class Settings extends Form
         ]);
 
         $this->add([
-            'type' => 'UthandoUserAuthFieldSet',
+            'type' => AuthFieldSet::class,
             'name' => 'auth',
             'attributes' => [
                 'class' => 'col-sm-6',

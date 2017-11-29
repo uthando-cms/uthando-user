@@ -1,5 +1,11 @@
 <?php
 
+use UthandoUser\Controller\AdminController;
+use UthandoUser\Controller\AdminRegistrationController;
+use UthandoUser\Controller\RegistrationController;
+use UthandoUser\Controller\Settings;
+use UthandoUser\Controller\UserController;
+
 return [
     'uthando_user' => [
         'acl' => [
@@ -10,10 +16,10 @@ return [
                     'privileges' => [
                         'allow' => [
                             'controllers' => [
-                                \UthandoUser\Controller\User::class => ['action' => [
+                                UserController::class => ['action' => [
                                     'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
                                 ]],
-                                \UthandoUser\Controller\Registration::class => ['action' => [
+                                RegistrationController::class => ['action' => [
                                     'verify-email',
                                 ]],
                             ],
@@ -26,17 +32,17 @@ return [
                     'privileges' => [
                         'deny' => [
                             'controllers' => [
-                                \UthandoUser\Controller\User::class => ['action' => [
+                                UserController::class => ['action' => [
                                     'register', 'thank-you', 'login', 'authenticate', 'forgot-password'
                                 ]],
-                                \UthandoUser\Controller\Registration::class => ['action' => [
+                                RegistrationController::class => ['action' => [
                                     'verify-email',
                                 ]],
                             ],
                         ],
                         'allow' => [
                             'controllers' => [
-                                \UthandoUser\Controller\User::class => ['action' => ['edit', 'password', 'logout']]
+                                UserController::class => ['action' => ['edit', 'password', 'logout']]
                             ],
                         ],
                     ],
@@ -47,22 +53,22 @@ return [
                     'privileges' => [
                         'allow' => [
                             'controllers' => [
-                                UthandoUser\Controller\AdminController::class => ['action' => 'all'],
-                                \UthandoUser\Controller\AdminRegistrationController::class => [
+                                AdminController::class => ['action' => 'all'],
+                                AdminRegistrationController::class => [
                                     'action' => ['index', 'list', 'delete']
                                 ],
-                                \UthandoUser\Controller\Settings::class => ['action' => 'all'],
+                                Settings::class => ['action' => 'all'],
                             ],
                         ],
                     ],
                 ],
             ],
             'resources' => [
-                \UthandoUser\Controller\AdminController::class,
-                \UthandoUser\Controller\AdminRegistrationController::class,
-                \UthandoUser\Controller\Registration::class,
-                \UthandoUser\Controller\Settings::class,
-                \UthandoUser\Controller\User::class,
+                AdminController::class,
+                AdminRegistrationController::class,
+                RegistrationController::class,
+                Settings::class,
+                UserController::class,
             ],
         ],
     ],
