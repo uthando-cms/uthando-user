@@ -11,6 +11,8 @@
 
 namespace UthandoUser\Model;
 
+use UthandoCommon\Model\ModelInterface;
+
 /**
  * Class ResourceTrait
  *
@@ -23,19 +25,12 @@ trait ResourceTrait
      */
     protected $resource;
 
-    /**
-     * @return string
-     */
     public function getResource(): string
     {
         return $this->resource;
     }
 
-    /**
-     * @param string $resource
-     * @return $this
-     */
-    public function setResource(string $resource)
+    public function setResource(string $resource): ModelInterface
     {
         $this->resource = $resource;
         return $this;

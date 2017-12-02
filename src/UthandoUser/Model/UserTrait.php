@@ -11,6 +11,8 @@
 
 namespace UthandoUser\Model;
 
+use UthandoCommon\Model\ModelInterface;
+
 /**
  * Class UserTrait
  *
@@ -25,22 +27,14 @@ trait UserTrait
      */
     protected $user;
 
-    /**
-     * @return User
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     * @return $this
-     */
-    public function setUser(User $user)
+    public function setUser(User $user): ModelInterface
     {
         $this->user = $user;
-
         return $this;
     }
 }

@@ -12,12 +12,7 @@ namespace UthandoUser\Option;
 
 use Zend\Stdlib\AbstractOptions;
 
-/**
- * Class UserOptions
- *
- * @package UthandoUser\Options
- */
-class UserOptions extends AbstractOptions
+class LoginOptions extends AbstractOptions
 {
     /**
      * @var int
@@ -44,7 +39,7 @@ class UserOptions extends AbstractOptions
         return $this->registerMinPasswordLength;
     }
 
-    public function setRegisterMinPasswordLength(int $registerMinPasswordLength): UserOptions
+    public function setRegisterMinPasswordLength(int $registerMinPasswordLength): LoginOptions
     {
         $this->registerMinPasswordLength = $registerMinPasswordLength;
         return $this;
@@ -55,7 +50,7 @@ class UserOptions extends AbstractOptions
         return $this->registerMaxPasswordLength;
     }
 
-    public function setRegisterMaxPasswordLength(int $registerMaxPasswordLength): UserOptions
+    public function setRegisterMaxPasswordLength(int $registerMaxPasswordLength): LoginOptions
     {
         $this->registerMaxPasswordLength = $registerMaxPasswordLength;
         return $this;
@@ -66,7 +61,7 @@ class UserOptions extends AbstractOptions
         return $this->loginMinPasswordLength;
     }
 
-    public function setLoginMinPasswordLength(int $loginMinPasswordLength): UserOptions
+    public function setLoginMinPasswordLength(int $loginMinPasswordLength): LoginOptions
     {
         $this->loginMinPasswordLength = $loginMinPasswordLength;
         return $this;
@@ -77,7 +72,7 @@ class UserOptions extends AbstractOptions
         return $this->loginMaxPasswordLength;
     }
 
-    public function setLoginMaxPasswordLength(int $loginMaxPasswordLength): UserOptions
+    public function setLoginMaxPasswordLength(int $loginMaxPasswordLength): LoginOptions
     {
         $this->loginMaxPasswordLength = $loginMaxPasswordLength;
         return $this;

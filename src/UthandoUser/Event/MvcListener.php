@@ -56,16 +56,16 @@ class MvcListener implements ListenerAggregateInterface
     public function doAuthentication(MvcEvent $event)
     {
         if (!$event->getRequest() instanceof Request) {
-            return;
+            return true;
         }
 
-        $application = $event->getApplication();
-        $sm = $application->getServiceManager();
-        $match = $event->getRouteMatch();
-        $controller = $match->getParam('controller');
-        $action = $match->getParam('action');
-        $plugin = $sm->get('ControllerPluginManager')->get(IsAllowed::class);
-        $hasIdentity = $plugin->getIdentity();
+        $application    = $event->getApplication();
+        $sm             = $application->getServiceManager();
+        $match          = $event->getRouteMatch();
+        $controller     = $match->getParam('controller');
+        $action         = $match->getParam('action');
+        $plugin         = $sm->get('ControllerPluginManager')->get(IsAllowed::class);
+        $hasIdentity    = $plugin->getIdentity();
 
         if (!$plugin->isAllowed($controller, $action)) {
 
@@ -80,6 +80,6 @@ class MvcListener implements ListenerAggregateInterface
             $event->stopPropagation();
             return $response;
         }
-        return;
+        return true;
     }
 }

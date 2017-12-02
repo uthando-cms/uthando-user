@@ -36,7 +36,7 @@ abstract class AbstractResourceList extends Select implements ServiceLocatorAwar
     /**
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $config = $this->getServiceLocator()
             ->getServiceLocator()

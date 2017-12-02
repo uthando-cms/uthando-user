@@ -100,51 +100,31 @@ class Password implements PasswordInterface
         return $verify;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isRehashIfNeeded()
+    public function isRehashIfNeeded(): bool
     {
         return $this->rehashIfNeeded;
     }
 
-    /**
-     * @param boolean $rehashIfNeeded
-     * @return $this
-     */
-    public function setRehashIfNeeded($rehashIfNeeded)
+    public function setRehashIfNeeded(bool $rehashIfNeeded): Password
     {
         $this->rehashIfNeeded = $rehashIfNeeded;
         return $this;
     }
 
-    /**
-     * Check if a hash needs redoing.
-     *
-     * @param $hash
-     * @return bool
-     */
-    public function needsRehash($hash)
+    public function needsRehash(string $hash): bool
     {
         return password_needs_rehash($hash, $this->getAglo(), $this->getOptions());
     }
 
-    /**
-     * @return string
-     */
-    public function getAglo()
+
+    public function getAglo(): int
     {
         return $this->aglo;
     }
 
-    /**
-     * @param string $aglo
-     * @return $this
-     * @throws InvalidArgumentException
-     */
-    public function setAglo($aglo)
+    public function setAglo(int $aglo): Password
     {
-        if (is_int($aglo)) {
+        if (!is_int($aglo)) {
             throw new InvalidArgumentException(
                 'The aglo must be algorithm constant denoting the algorithm to use when hashing the password
                 see http://php.net/manual/en/password.constants.php'
@@ -155,10 +135,7 @@ class Password implements PasswordInterface
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             'salt' => $this->getSalt(),
@@ -166,20 +143,12 @@ class Password implements PasswordInterface
         ];
     }
 
-    /**
-     * @return string
-     */
-    public function getSalt()
+    public function getSalt(): string
     {
         return $this->salt;
     }
 
-    /**
-     * @param string $salt
-     * @return $this
-     * @throws InvalidArgumentException
-     */
-    public function setSalt($salt)
+    public function setSalt(string $salt): Password
     {
         if (strlen($salt) < self::MIN_SALT_SIZE) {
             throw new InvalidArgumentException(
@@ -191,19 +160,12 @@ class Password implements PasswordInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCost()
+    public function getCost(): string
     {
         return $this->cost;
     }
 
-    /**
-     * @param string $cost
-     * @return $this
-     */
-    public function setCost($cost)
+    public function setCost(string $cost): Password
     {
         $this->cost = $cost;
         return $this;
@@ -218,14 +180,7 @@ class Password implements PasswordInterface
         return password_hash($password, $this->getAglo(), $this->getOptions());
     }
 
-    /**
-     * Get the hash info.
-     *
-     * @param $hash
-     * @return array
-     * @see http://php.net/manual/en/function.password-get-info.php
-     */
-    public function getInfo($hash)
+    public function getInfo(string $hash): array
     {
         return password_get_info($hash);
     }

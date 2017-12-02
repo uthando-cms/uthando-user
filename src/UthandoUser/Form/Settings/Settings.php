@@ -19,7 +19,7 @@ use Zend\Form\Form;
  */
 class Settings extends Form
 {
-    public function init()
+    public function init(): void
     {
         $this->add([
             'type' => UserFieldSet::class,
@@ -29,6 +29,17 @@ class Settings extends Form
             ],
             'options' => [
                 'label' => 'User Options',
+            ],
+        ]);
+
+        $this->add([
+            'type' => LoginFieldSet::class,
+            'name' => 'login_options',
+            'attributes' => [
+                'class' => 'col-sm-6',
+            ],
+            'options' => [
+                'label' => 'Login Options',
             ],
         ]);
 

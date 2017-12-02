@@ -12,10 +12,11 @@
 namespace UthandoUser\InputFilter;
 
 use UthandoCommon\Filter\Ucwords;
-use UthandoUser\Option\UserOptions;
+use UthandoUser\Option\LoginOptions;
 use Zend\Db\Adapter\Adapter;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
+use Zend\Filter\ToInt;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -37,8 +38,18 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    public function init()
+    public function init(): void
     {
+        $this->add([
+            'name' => 'userId',
+            'required' => false,
+            'filters' => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => ToInt::class],
+            ],
+        ]);
+
         $this->add([
             'name' => 'firstname',
             'required' => true,
@@ -128,7 +139,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
 
         $options = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get(UserOptions::class);
+            ->get(LoginOptions::class);
 
         $minMethod = 'get' . $type . 'MinPasswordLength';
         $maxMethod = 'get' . $type . 'MaxPasswordLength';
@@ -144,7 +155,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function addEmailNoRecordExists($exclude = null): User
+    public function addEmailNoRecordExists(?string $exclude): User
     {
         $exclude = (!$exclude) ?: [
             'field' => 'email',
@@ -163,7 +174,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function addEmailRecordExists($exclude = null)
+    public function addEmailRecordExists(?string $exclude): User
     {
         $exclude = (!$exclude) ?: [
             'field' => 'email',

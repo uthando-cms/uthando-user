@@ -35,7 +35,7 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
             ->setObject(new AuthOptions());
     }
 
-    public function init()
+    public function init(): void
     {
         $this->add([
             'name' => 'authenticate_method',

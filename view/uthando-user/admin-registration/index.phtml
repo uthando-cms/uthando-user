@@ -1,0 +1,44 @@
+<?php $this->headTitle('User Registration') ?>
+<?php $this->layout()->pageTitle = $this->translate('User Registration');?>
+
+<?php $this->placeholder('header-buttons')->captureStart();?>
+<a href="<?=$this->url('admin/user/settings');?>" data-toggle="tooltip" title="<?=$this->translate('Settings');?>" class="btn btn-primary">
+    <i class="fa fa-cog"></i>
+</a>
+
+<?php $this->placeholder('header-buttons')->captureEnd();?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?=$this->translate('Registration List');?></h3>
+    </div>
+    <div class="panel-body">
+        <?=$this->partial('uthando-admin/partial/search', [
+            'name'			=> 'register',
+            'searchInputs'	=> [
+                $this->translate('Email') => 'email',
+            ],
+        ]);?>
+    </div>
+    <div id="table-register" class="admin-table">
+        <?=$this->partial('uthando-user/admin-registration/list', [
+            'models' => $this->models
+        ]); ?>
+    </div>
+</div>
+
+<?php $this->placeholder('js-scripts')->captureStart();?>
+<script>
+    $(document).ready(function(){
+        $('#table-register').dataGrid({
+            url : '<?=$this->url('admin/user/registration/edit', [
+                    'action' => 'list',
+            ]);?>',
+            query: { sort : 'userRegistrationId' },
+            searchForm : $('#search-register'),
+            paging : 'links',
+            columnSort: true
+        });
+    });
+</script>
+<?php $this->placeholder('js-scripts')->captureEnd(); ?>

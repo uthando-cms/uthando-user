@@ -10,7 +10,7 @@
 
 namespace UthandoUser\Form\Settings;
 
-use UthandoUser\Option\UserOptions;
+use UthandoUser\Option\LoginOptions;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Form\Element\Number;
@@ -24,17 +24,17 @@ use Zend\InputFilter\InputFilterProviderInterface;
  *
  * @package UthandoUser\Form\Settings
  */
-class UserFieldSet extends Fieldset implements InputFilterProviderInterface
+class LoginFieldSet extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct($name = null, $options = [])
     {
         parent::__construct($name, $options);
 
         $this->setHydrator(new ClassMethods())
-            ->setObject(new UserOptions());
+            ->setObject(new LoginOptions());
     }
 
-    public function init()
+    public function init(): void
     {
         $this->add([
             'name' => 'login_min_password_length',

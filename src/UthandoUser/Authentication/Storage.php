@@ -20,11 +20,7 @@ use Zend\Authentication\Storage\Session;
  */
 class Storage extends Session
 {
-    /**
-     * @param int $rememberMe
-     * @param int $time default 14 days
-     */
-    public function rememberMe($rememberMe = 0, $time = 1209600)
+    public function rememberMe(int $rememberMe = 0, string $time = "1209600"): void
     {
         if ($rememberMe == 1) {
             ini_set('session.gc_maxlifetime', $time);
@@ -32,10 +28,7 @@ class Storage extends Session
         }
     }
 
-    /**
-     *
-     */
-    public function forgetMe()
+    public function forgetMe(): void
     {
         $this->session->getManager()->forgetMe();
     }

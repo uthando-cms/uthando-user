@@ -40,7 +40,7 @@ class BaseUser extends Form
         parent::__construct($name, $options);
     }
 
-    public function init()
+    public function init(): void
     {
         $this->add([
             'name' => 'active',
@@ -216,7 +216,7 @@ class BaseUser extends Form
         ]);
     }
 
-    public function addCaptcha()
+    public function addCaptcha(): void
     {
         $this->add([
             'name' => 'captcha',

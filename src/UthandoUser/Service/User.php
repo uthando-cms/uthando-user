@@ -43,10 +43,6 @@ class User extends AbstractMapperService
      */
     //protected $useCache = false;
 
-    /**
-     * (non-PHPdoc)
-     * @see \UthandoCommon\Service\AbstractService::attachEvents()
-     */
     public function attachEvents(): void
     {
         $this->getEventManager()->attach('post.add', [$this, 'sendEmail']);
@@ -56,9 +52,6 @@ class User extends AbstractMapperService
         $this->getEventManager()->attach('pre.save', [$this, 'preSave']);
     }
 
-    /**
-     * @param Event $e
-     */
     public function sendEmail(Event $e): void
     {
         $userId = $e->getParam('saved', null);
@@ -90,6 +83,7 @@ class User extends AbstractMapperService
      *
      * @param array $post
      * @return int|Form
+     * @throws \UthandoCommon\Service\ServiceException
      */
     public function register(array $post)
     {
@@ -104,9 +98,6 @@ class User extends AbstractMapperService
 
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $this->getInputFilter();
-        $inputFilter->addEmailNoRecordExists();
-        $inputFilter->addPasswordLength('register');
-
         $form->setInputFilter($inputFilter);
 
         return $this->add($post, $form);
@@ -164,13 +155,6 @@ class User extends AbstractMapperService
 
     }
 
-    /**
-     * Allows user to edit thier password
-     *
-     * @param array $post
-     * @param UserModel $user
-     * @return int|Form
-     */
     public function changePassword(array $post, UserModel $user)
     {
         /* @var $form Password */
@@ -216,7 +200,7 @@ class User extends AbstractMapperService
         $form = $e->getParam('form');
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter = $form->getInputFilter();
-        $inputFilter->addEmailNoRecordExists();
+        $inputFilter->addEmailNoRecordExists(null);
         $inputFilter->addPasswordLength('register');
         $form->setValidationGroup([
             'firstname', 'lastname', 'email', 'passwd', 'passwd-confirm', 'role', 'security',

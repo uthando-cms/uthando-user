@@ -58,47 +58,33 @@ class User implements RoleInterface, ModelInterface
     protected $role;
 
     /**
-     * @var int
+     * @var bool
      */
     protected $active = false;
 
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     * @return $this
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): User
     {
         $this->email = $email;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getPasswd()
+    public function getPasswd(): ?string
     {
         return $this->passwd;
     }
 
-    /**
-     * @param string $passwd
-     * @return $this
-     */
-    public function setPasswd($passwd)
+    public function setPasswd(?string $passwd): User
     {
         $this->passwd = $passwd;
         return $this;
     }
 
-    public function generatePassword()
+    public function generatePassword(): void
     {
         $password = Rand::getString(
             self::PASSWORD_LENGTH,
@@ -111,102 +97,65 @@ class User implements RoleInterface, ModelInterface
         $this->setPasswd($password);
     }
 
-    /**
-     * @return string
-     */
-    public function getRoleId()
+    public function getRoleId(): ?string
     {
         return $this->getRole();
     }
 
-    /**
-     * @return string
-     */
-    public function getRole()
+    public function getRole(): ?string
     {
         return $this->role;
     }
 
-    /**
-     * @param string $role
-     * @return $this
-     */
-    public function setRole($role)
+    public function setRole(?string $role): User
     {
         $this->role = $role;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFullName()
+    public function getFullName(): string
     {
         return $this->getFirstname() . ' ' . $this->getLastname();
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstname()
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    /**
-     * @param string $firstname
-     * @return $this
-     */
-    public function setFirstname($firstname)
+    public function setFirstname(string $firstname): User
     {
         $this->firstname = $firstname;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastname()
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    /**
-     * @param string $lastname
-     * @return $this
-     */
-    public function setLastname($lastname)
+    public function setLastname(string $lastname): User
     {
         $this->lastname = $lastname;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastNameFirst()
+    public function getLastNameFirst(): string
     {
         return $this->getLastname() . ', ' . $this->getFirstname();
     }
 
-    public function isActive()
+    public function isActive(): string
     {
         return (true === $this->getActive()) ? 'yes' : 'no';
     }
 
-    /**
-     * @return int
-     */
-    public function getActive()
+    public function getActive(): bool
     {
         return $this->active;
     }
 
-    /**
-     * @param int $active
-     * @return $this
-     */
-    public function setActive($active)
+    public function setActive(bool $active): User
     {
         $this->active = $active;
         return $this;

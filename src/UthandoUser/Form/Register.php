@@ -23,7 +23,7 @@ use Zend\InputFilter\InputFilterInterface;
  */
 class Register extends BaseUser
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
 

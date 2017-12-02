@@ -13,6 +13,7 @@ namespace UthandoUser\Controller\Plugin;
 
 use UthandoUser\Model\User;
 use UthandoUser\Service\Acl;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Role\RoleInterface;
@@ -21,46 +22,26 @@ use Zend\Permissions\Acl\Role\RoleInterface;
  * Class IsAllowed
  *
  * @package UthandoUser\Controller\Plugin
+ * @method  AbstractActionController getController()
  */
 class IsAllowed extends AbstractPlugin
 {
     /**
-     * @var \Zend\Permissions\Acl\Acl
+     * @var Acl
      */
     protected $acl;
 
     /**
-     * @var string
+     * @var RoleInterface
      */
     protected $identity;
 
-    public function __construct($acl = null)
-    {
-        if ($acl instanceof Acl) {
-            $this->acl = $acl;
-        }
-    }
-
-    /**
-     * Proxy to the isAllowed method
-     *
-     * @param null $resource
-     * @param null $privilege
-     * @return bool
-     */
-    public function __invoke($resource = null, $privilege = null)
+    public function __invoke(?string $resource, ?string $privilege): bool
     {
         return $this->isAllowed($resource, $privilege);
     }
 
-    /**
-     * Check the acl
-     *
-     * @param string $resource
-     * @param string $privilege
-     * @return boolean
-     */
-    public function isAllowed($resource = null, $privilege = null)
+    public function isAllowed(?string $resource, ?string $privilege): bool
     {
         if (null === $this->acl) {
             $this->getAcl();
@@ -69,30 +50,27 @@ class IsAllowed extends AbstractPlugin
         return $this->acl->isAllowed($this->getIdentity()->getRoleId(), $resource, $privilege);
     }
 
-    /**
-     * Get the current acl
-     *
-     * @return \Zend\Permissions\Acl\Acl
-     */
-    public function getAcl()
+    public function setAcl(Acl $acl): IsAllowed
+    {
+        $this->acl = $acl;
+        return $this;
+    }
+
+    public function getAcl(): Acl
     {
         if (!$this->acl) {
+            /* @var $acl Acl */
             $acl = $this->getController()
                 ->getServiceLocator()
-                ->get('UthandoUser\Service\Acl');
+                ->get(Acl::class);
 
-            $this->acl = $acl;
+            $this->setAcl($acl);
         }
 
         return $this->acl;
     }
 
-    /**
-     * Get the identity
-     *
-     * @return string
-     */
-    public function getIdentity()
+    public function getIdentity(): ?RoleInterface
     {
         if (null === $this->identity) {
             $identity = $this->getController()->plugin('identity');
@@ -102,21 +80,12 @@ class IsAllowed extends AbstractPlugin
         return $this->identity;
     }
 
-    /**
-     * Set the identity of the current request
-     *
-     * @param $identity
-     * @return Acl
-     * @throws \Exception
-     */
-    public function setIdentity($identity)
+    public function setIdentity(?User $identity): IsAllowed
     {
         if ($identity instanceof User) {
             $this->identity = $identity;
-        } elseif (null === $identity) {
+        } else {
             $this->identity = new Role('guest');
-        } elseif (!$identity instanceof RoleInterface) {
-            throw new \Exception('Invalid identity provided');
         }
 
         return $this;

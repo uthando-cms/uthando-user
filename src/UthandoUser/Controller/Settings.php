@@ -11,6 +11,7 @@
 namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\SettingsTrait;
+use UthandoUser\Form\Settings\Settings as SettingsForm;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
@@ -24,7 +25,7 @@ class Settings extends AbstractActionController
 
     public function __construct()
     {
-        $this->setFormName('UthandoUserSettings')
+        $this->setFormName(SettingsForm::class)
             ->setConfigKey('uthando_user');
     }
 }

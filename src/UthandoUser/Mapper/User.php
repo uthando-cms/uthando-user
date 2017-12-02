@@ -12,6 +12,7 @@
 namespace UthandoUser\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
+use UthandoUser\Model\User as UserModel;
 use Zend\Db\Sql\Select;
 
 /**
@@ -27,7 +28,7 @@ class User extends AbstractDbMapper
     /**
      * @param int $id
      * @param null $col
-     * @return array|\UthandoUser\Model\User
+     * @return array|UserModel
      */
     public function getById($id, $col = null)
     {
@@ -37,14 +38,23 @@ class User extends AbstractDbMapper
         return parent::getById($id);
     }
 
-    /**
-     * @param string $email
-     * @param null|string $ignore
-     * @param bool $emptyPassword
-     * @param bool $activeOnly
-     * @return null|\UthandoUser\Model\User
-     */
-    public function getUserByEmail(string $email, $ignore = null, $emptyPassword = true, $activeOnly = false)
+    public function getAdminUserByEmail(string $email): ?UserModel
+    {
+        $select = $this->getSelect();
+
+        $select->where
+            ->equalTo('email', $email)
+            ->and
+            ->equalTo('role', 'admin');
+
+        $rowSet = $this->fetchResult($select);
+        /* @var $row UserModel|null */
+        $row    = $rowSet->current();
+
+        return $row;
+    }
+
+    public function getUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): UserModel
     {
         if ($emptyPassword) {
             /* @var $hydrator \UthandoUser\Hydrator\User */
@@ -64,7 +74,7 @@ class User extends AbstractDbMapper
         }
 
         $rowSet = $this->fetchResult($select);
-        $row = $rowSet->current();
+        $row    = $rowSet->current() ?: new UserModel();
 
         return $row;
     }

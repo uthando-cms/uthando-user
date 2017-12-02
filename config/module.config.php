@@ -2,6 +2,7 @@
 
 use UthandoUser\Authentication\Storage;
 use UthandoUser\Controller\AdminController;
+use UthandoUser\Controller\AdminRegistrationController;
 use UthandoUser\Controller\Plugin\IsAllowed as IsAllowedPlugin;
 use UthandoUser\Controller\RegistrationController;
 use UthandoUser\Controller\Settings as SettingsController;
@@ -14,6 +15,7 @@ use UthandoUser\Form\Password;
 use UthandoUser\Form\Register;
 use UthandoUser\Form\Settings\AuthFieldSet;
 use UthandoUser\Form\Settings\Settings;
+use UthandoUser\Form\Settings\LoginFieldSet;
 use UthandoUser\Form\Settings\UserFieldSet;
 use UthandoUser\Form\User;
 use UthandoUser\Form\UserEdit;
@@ -24,12 +26,14 @@ use UthandoUser\Mapper\User as UserMapper;
 use UthandoUser\Mapper\UserRegistration as UserRegistrationMapper;
 use UthandoUser\Model\User as UserModel;
 use UthandoUser\Model\UserRegistration as UserRegistrationModel;
-use UthandoUser\Option\UserOptions;
+use UthandoUser\Option\LoginOptions;
 use UthandoUser\Options\AuthOptions;
+use UthandoUser\Options\UserOptions;
 use UthandoUser\Service\Acl;
 use UthandoUser\Service\Factory\AclFactory;
 use UthandoUser\Service\Factory\AuthenticationFactory;
 use UthandoUser\Service\Factory\AuthOptionsFactory;
+use UthandoUser\Service\Factory\LoginOptionsFactory;
 use UthandoUser\Service\Factory\UserNavigationFactory;
 use UthandoUser\Service\Factory\UserOptionsFactory;
 use UthandoUser\Service\User as UserService;
@@ -40,10 +44,11 @@ use Zend\Authentication\AuthenticationService;
 return [
     'controllers' => [
         'invokables' => [
-            AdminController::class          => AdminController::class,
-            RegistrationController::class   => RegistrationController::class,
-            SettingsController::class       => SettingsController::class,
-            UserController::class           => UserController::class,
+            AdminController::class              => AdminController::class,
+            AdminRegistrationController::class  => AdminRegistrationController::class,
+            RegistrationController::class       => RegistrationController::class,
+            SettingsController::class           => SettingsController::class,
+            UserController::class               => UserController::class,
         ],
     ],
     'controller_plugins' => [
@@ -68,7 +73,7 @@ return [
 
             'UthandoUserAuthFieldSet'   => AuthFieldSet::class,
             'UthandoUserSettings'       => Settings::class,
-            'UthandoUserFieldSet'       => UserFieldSet::class,
+            'UthandoUserLoginFieldSet'  => LoginFieldSet::class,
         ],
         'invokables' => [
             UserEdit::class         => UserEdit::class,
@@ -83,7 +88,8 @@ return [
 
             AuthFieldSet::class     => AuthFieldSet::class,
             Settings::class         => Settings::class,
-            UserFieldSet::class     => UserFieldSet::class,
+            LoginFieldSet::class    => LoginFieldSet::class,
+            UserFieldSet::class     => UserFieldSet::class
         ],
     ],
     'hydrators' => [
@@ -107,7 +113,7 @@ return [
     'service_manager' => [
         'aliases' => [
             'UthandoUser\Navigation'        => UserNavigationFactory::class,
-            'UthandoUser\Options\User'      => UserOptions::class,
+            'UthandoUser\Options\User'      => LoginOptions::class,
         ],
         'invokables' => [
             Storage::class => Storage::class,
@@ -117,7 +123,8 @@ return [
             Acl::class                      => AclFactory::class,
             UserNavigationFactory::class    => UserNavigationFactory::class,
             AuthOptions::class              => AuthOptionsFactory::class,
-            UserOptions::class              => UserOptionsFactory::class,
+            LoginOptions::class             => LoginOptionsFactory::class,
+            UserOptions::class              => UserOptionsFactory::class
         ],
     ],
     'uthando_mappers' => [

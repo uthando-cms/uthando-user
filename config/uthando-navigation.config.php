@@ -26,19 +26,12 @@ return [
                     'icon' => 'fa-users',
                 ],
                 'pages' => [
-                    'user-settings' => [
-                        'label' => 'Settings',
-                        'action' => 'index',
-                        'route' => 'admin/user/settings',
-                        'resource' => 'menu:admin',
-                        'visible' => false,
-                    ],
                     'list' => [
                         'label'     => 'User List',
                         'action'    => 'index',
                         'route'     => 'admin/user',
                         'resource'  => 'menu:admin',
-                        'visible'   => false,
+                        'visible'   => true,
                     ],
                     'edit' => [
                         'label'     => 'Edit User',
@@ -53,6 +46,20 @@ return [
                         'route'     => 'admin/user/edit',
                         'resource'  => 'menu:admin',
                         'visible'   => false,
+                    ],
+                    'registration' => [
+                        'label'     => 'User Registration',
+                        'action'    => 'index',
+                        'route'     => 'admin/user/registration',
+                        'resource'  => 'menu:admin',
+                        'visible'   => true,
+                    ],
+                    'user-settings' => [
+                        'label' => 'Settings',
+                        'action' => 'index',
+                        'route' => 'admin/user/settings',
+                        'resource' => 'menu:admin',
+                        'visible' => true,
                     ],
                 ],
 

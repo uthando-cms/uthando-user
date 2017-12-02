@@ -18,7 +18,7 @@ namespace UthandoUser\Form;
  */
 class User extends BaseUser
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
 

@@ -11,6 +11,8 @@
 
 namespace UthandoUser\Model;
 
+use UthandoCommon\Model\ModelInterface;
+
 /**
  * Class UserId
  *
@@ -23,19 +25,12 @@ trait UserIdTrait
      */
     protected $userId;
 
-    /**
-     * @return int
-     */
-    public function getUserId()
+    public function getUserId(): ?int
     {
         return $this->userId;
     }
 
-    /**
-     * @param $userId
-     * @return $this
-     */
-    public function setUserId($userId)
+    public function setUserId(int $userId): ModelInterface
     {
         $this->userId = $userId;
         return $this;

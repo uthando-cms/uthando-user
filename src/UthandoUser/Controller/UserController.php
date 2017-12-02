@@ -11,7 +11,15 @@
 
 namespace UthandoUser\Controller;
 
+use UthandoUser\Form\Login;
+use UthandoUser\Form\Password;
+use UthandoUser\Form\Register;
+use UthandoUser\Form\UserEdit;
+use UthandoUser\InputFilter\User as UserInputFilter;
 use UthandoUser\Model\User;
+use UthandoUser\Service\User as UserService;
+use UthandoUser\Service\UserRegistration;
+use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Form;
 use Zend\View\Model\ViewModel;
@@ -27,13 +35,13 @@ class UserController extends AbstractActionController
     use ServiceTrait;
 
     /**
-     * @var \UthandoUser\Service\User
+     * @var UserService
      */
     protected $userService;
 
     public function __construct()
     {
-        $this->serviceName = 'UthandoUser';
+        $this->serviceName = UserService::class;
     }
 
     public function thankYouAction()
@@ -49,7 +57,7 @@ class UserController extends AbstractActionController
         }
 
         /* @var $service \UthandoUser\Service\UserRegistration */
-        $service = $this->getService('UthandoUserRegistration');
+        $service = $this->getService(UserRegistration::class);
         $service->sendVerificationEmail($email);
 
         return [];
@@ -101,7 +109,7 @@ class UserController extends AbstractActionController
         }
 
         $form = $this->getUserService()
-            ->getForm('UthandoUserRegister');
+            ->getForm(Register::class);
 
         return new ViewModel(array(
             'registerForm' => $form,
@@ -109,7 +117,7 @@ class UserController extends AbstractActionController
     }
 
     /**
-     * @return \UthandoUser\Service\User
+     * @return UserService
      */
     protected function getUserService()
     {
@@ -181,7 +189,7 @@ class UserController extends AbstractActionController
             );
         }
 
-        $form = $this->getUserService()->getForm('UthandoUserPassword');
+        $form = $this->getUserService()->getForm(Password::class);
 
         return [
             'form' => $form,
@@ -232,7 +240,7 @@ class UserController extends AbstractActionController
         }
 
         /* @var \UthandoUser\Form\BaseUserEdit $form */
-        $form = $this->getUserService()->getForm('UthandoUserEdit');
+        $form = $this->getUserService()->getForm(UserEdit::class);
         $form->bind($user);
 
         return new ViewModel([
@@ -243,7 +251,7 @@ class UserController extends AbstractActionController
     public function loginAction()
     {
         $form = $this->getService('FormElementManager')
-            ->get('UthandoUserLogin');
+            ->get(Login::class);
 
         return [
             'loginForm' => $form
@@ -252,7 +260,7 @@ class UserController extends AbstractActionController
 
     public function logoutAction()
     {
-        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $auth = $this->getServiceLocator()->get(AuthenticationService::class);
 
         $auth->clear();
         return $this->redirect()->toRoute('home');
@@ -277,11 +285,11 @@ class UserController extends AbstractActionController
         }
 
         /* @var $form \UthandoUser\Form\Login */
-        $form = $this->getUserService()->getForm('UthandoUserLogin');
+        $form = $this->getUserService()->getForm(Login::class);
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter UserInputFilter */
         $inputFilter = $this->getService('InputFilterManager')
-            ->get('UthandoUser');
+            ->get(UserInputFilter::class);
         $inputFilter->addPasswordLength('login');
 
         $form->setInputFilter($inputFilter);
@@ -304,7 +312,7 @@ class UserController extends AbstractActionController
         $data = $form->getData();
 
         /* @var $auth \UthandoUser\Service\Authentication */
-        $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
+        $auth = $this->getServiceLocator()->get(AuthenticationService::class);
 
         if (false === $auth->doAuthentication($data['email'], $data['passwd'])) {
 

@@ -20,7 +20,7 @@ use Zend\Form\Element\Submit;
  */
 class ForgotPassword extends BaseUser
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
 

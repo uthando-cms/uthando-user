@@ -1,0 +1,49 @@
+<?php if (count($this->models) > 0): ?>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed sortable-table">
+            <thead>
+            <tr>
+                <th data-field="userRegistrationId"><?=$this->translate('User Id');?></th>
+                <th data-field="name"><?=$this->translate('Name');?></th>
+                <th data-field="email"><?=$this->translate('Email');?></th>
+                <th data-field="requestTime"><?=$this->translate('Request Time');?></th>
+                <th data-field="responded"><?=$this->translate('Responded');?></th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <?php /* @var $row \UthandoUser\Model\UserRegistration */ ?>
+            <?php foreach ($this->models as $row): ?>
+                <tr class="<?= $class; ?>">
+                    <td><?= $this->escapeHtml($row->getUserRegistrationId()); ?></td>
+                    <td><?= $this->escapeHtml($row->getUser()->getLastNameFirst()); ?></td>
+                    <td><?= $this->escapeHtml($row->getUser()->getEmail()); ?></td>
+                    <td><?= $this->escapeHtml($this->formatDate($row->getRequestTime())); ?></td>
+                    <td><?= $this->escapeHtml($row->getResponded() ? 'yes' : 'no'); ?></td>
+                    <td>
+                        <?= $this->partial('uthando-admin/partial/edit-actions', [
+                            'pk'        => 'userRegistrationId',
+                            'id'        => $row->getUserRegistrationId(),
+                            'tableName' => 'userRegistration',
+                            'route'     => 'admin/user/registration/edit',
+                            'edit'      => false,
+                        ]); ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?= $this->paginationControl(
+        $this->models,
+        'Elastic',
+        'application/partial/paginate',
+        ['route' => 'admin/user/registration/page']
+    ); ?>
+
+<?php else: ?>
+    <h4><?=$this->translate('No registrations where returned by search.');?></h4>
+<?php endif; ?>
+

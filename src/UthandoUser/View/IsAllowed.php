@@ -13,6 +13,7 @@ namespace UthandoUser\View;
 
 use UthandoCommon\View\AbstractViewHelper;
 use UthandoUser\Controller\Plugin\IsAllowed as PluginIsAllowed;
+use UthandoUser\Model\User;
 use UthandoUser\Service\Acl;
 
 class IsAllowed extends AbstractViewHelper
@@ -22,30 +23,38 @@ class IsAllowed extends AbstractViewHelper
      */
     protected $pluginIsAllowed;
 
-    public function __invoke($resource = null, $privilege = null): Acl
+    public function __invoke(?string $resource, ?string $privilege): Acl
     {
         return $this->isAllowed($resource, $privilege);
     }
 
-    public function __call(string $method, array $argv)
+    private function isAllowed(?string $resource, ?string $privilege)
     {
         $acl = $this->getPluginIsAllowed();
-        return call_user_func_array([$acl, $method], $argv);
+        return $acl->isAllowed($resource, $privilege);
     }
 
-    public function getPluginIsAllowed(): PluginIsAllowed
+    private function setPluginIsAllowed(PluginIsAllowed $pluginIsAllowed): IsAllowed
     {
-        if ($this->pluginIsAllowed) {
-            return $this->pluginIsAllowed;
+        $this->pluginIsAllowed = $pluginIsAllowed;
+        return $this;
+    }
+
+    private function getPluginIsAllowed(): PluginIsAllowed
+    {
+        if (!$this->pluginIsAllowed instanceof PluginIsAllowed) {
+            /* @var $acl Acl */
+            $acl = $this->getServiceLocator()
+                ->getServiceLocator()
+                ->get(Acl::class);
+            /* @var $identity User|null */
+            $identity = $this->getView()->plugin('identity');
+
+            $pluginIsAllowed = new PluginIsAllowed();
+            $pluginIsAllowed->setAcl($acl);
+            $pluginIsAllowed->setIdentity($identity);
+            $this->setPluginIsAllowed($pluginIsAllowed);
         }
-
-        $acl = $this->getServiceLocator()
-            ->getServiceLocator()
-            ->get(Acl::class);
-        $identity = $this->view->plugin('identity');
-
-        $this->pluginIsAllowed = new PluginIsAllowed($acl);
-        $this->pluginIsAllowed->setIdentity($identity());
 
         return $this->pluginIsAllowed;
     }

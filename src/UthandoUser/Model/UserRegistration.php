@@ -47,46 +47,29 @@ class UserRegistration implements ModelInterface
      */
     protected $responded = false;
 
-    /**
-     * @return number $userRegistrationId
-     */
-    public function getUserRegistrationId()
+    public function getUserRegistrationId(): ?int
     {
         return $this->userRegistrationId;
     }
 
-    /**
-     * @param number $userRegistrationId
-     * @return $this
-     */
-    public function setUserRegistrationId($userRegistrationId)
+    public function setUserRegistrationId(int $userRegistrationId): UserRegistration
     {
         $this->userRegistrationId = $userRegistrationId;
         return $this;
     }
 
-    /**
-     * @return string $token
-     */
-    public function getToken()
+    public function getToken(): ?string
     {
         return $this->token;
     }
 
-    /**
-     * @param string $token
-     * @return $this
-     */
-    public function setToken($token)
+    public function setToken(string $token): UserRegistration
     {
         $this->token = $token;
         return $this;
     }
 
-    /**
-     * generate a fresh token
-     */
-    public function generateToken()
+    public function generateToken(): void
     {
         $this->setToken(Rand::getString(
             self::REQUEST_KEY_LENGTH,
@@ -94,37 +77,23 @@ class UserRegistration implements ModelInterface
         ));
     }
 
-    /**
-     * @return DateTime $requestTime
-     */
-    public function getRequestTime()
+    public function getRequestTime(): ?\DateTime
     {
         return $this->requestTime;
     }
 
-    /**
-     * @param DateTime $requestTime
-     * @return $this
-     */
-    public function setRequestTime(\DateTime $requestTime = null)
+    public function setRequestTime(?\DateTime $requestTime): UserRegistration
     {
         $this->requestTime = $requestTime;
         return $this;
     }
 
-    /**
-     * @return boolean $responded
-     */
-    public function getResponded()
+    public function getResponded(): ?bool
     {
         return $this->responded;
     }
 
-    /**
-     * @param boolean $responded
-     * @return $this
-     */
-    public function setResponded($responded)
+    public function setResponded(bool $responded): UserRegistration
     {
         $this->responded = $responded;
         return $this;

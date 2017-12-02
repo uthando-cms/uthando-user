@@ -22,7 +22,7 @@ use Zend\Form\Element\Submit;
  */
 class Login extends BaseUser
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
 

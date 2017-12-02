@@ -11,6 +11,7 @@
 
 namespace UthandoUser\Controller;
 
+use UthandoUser\Service\UserRegistration;
 use Zend\Mvc\Controller\AbstractActionController;
 use UthandoCommon\Service\ServiceTrait;
 
@@ -26,7 +27,7 @@ class RegistrationController extends AbstractActionController
 
     public function __construct()
     {
-        $this->serviceName = 'UthandoUserRegistration';
+        $this->serviceName = UserRegistration::class;
     }
 
     public function verifyEmailAction()

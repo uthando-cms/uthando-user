@@ -13,6 +13,7 @@ namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\AbstractCrudController;
 use UthandoUser\Model\User;
+use UthandoUser\Service\User as UserService;
 
 /**
  * Class AdminController
@@ -21,7 +22,7 @@ use UthandoUser\Model\User;
 class AdminController extends AbstractCrudController
 {
     protected $controllerSearchOverrides = ['sort' => 'lastname'];
-    protected $serviceName = 'UthandoUser';
+    protected $serviceName = UserService::class;
     protected $route = 'admin/user';
 
     public function addAction()

@@ -20,7 +20,7 @@ use Zend\Form\Element\Submit;
  */
 class Password extends BaseUser
 {
-    public function init()
+    public function init(): void
     {
         parent::init();
 

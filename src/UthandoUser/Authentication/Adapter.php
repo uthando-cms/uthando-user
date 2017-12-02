@@ -14,6 +14,7 @@ namespace UthandoUser\Authentication;
 use UthandoUser\Model\User as UserModel;
 use Zend\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
+use Zend\Crypt\Password\PasswordInterface;
 
 /**
  * Class Adapter
@@ -68,12 +69,9 @@ class Adapter extends AbstractAdapter
         );
     }
 
-    /**
-     * @param $useFallback
-     * @return bool
-     */
-    public function verifyPassword($useFallback)
+    public function verifyPassword(bool $useFallback): bool
     {
+        /* @var $class PasswordInterface */
         if ($useFallback === false) {
             $class = new $this->credentialTreatment;
         } else {
@@ -92,55 +90,34 @@ class Adapter extends AbstractAdapter
         return $verified;
     }
 
-    /**
-     * @return bool
-     */
-    public function getUseFallback()
+    public function getUseFallback(): bool
     {
         return $this->useFallback;
     }
 
-    /**
-     * @param $useFallback
-     * @return $this
-     */
-    public function setUseFallback($useFallback)
+    public function setUseFallback(bool $useFallback): Adapter
     {
-        $this->useFallback = (bool)$useFallback;
+        $this->useFallback = $useFallback;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getCredentialTreatment()
+    public function getCredentialTreatment(): string
     {
         return $this->credentialTreatment;
     }
 
-    /**
-     * @param $credentialTreatment
-     * @return $this
-     */
-    public function setCredentialTreatment($credentialTreatment)
+    public function setCredentialTreatment(string $credentialTreatment): Adapter
     {
         $this->credentialTreatment = $credentialTreatment;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFallbackCredentialTreatment()
+    public function getFallbackCredentialTreatment(): string
     {
         return $this->fallbackCredentialTreatment;
     }
 
-    /**
-     * @param $fallbackCredentialTreatment
-     * @return $this
-     */
-    public function setFallbackCredentialTreatment($fallbackCredentialTreatment)
+    public function setFallbackCredentialTreatment(string $fallbackCredentialTreatment): Adapter
     {
         $this->fallbackCredentialTreatment = $fallbackCredentialTreatment;
         return $this;

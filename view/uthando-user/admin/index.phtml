@@ -33,14 +33,18 @@
     </div>
 </div>
 
-<?php $this->inlineScript()->captureStart(); ?>
-$(document).ready(function(){
-	$('#table-user').dataGrid({
-    	url : 'user/list',
-    	query: { sort : 'name' },
-    	searchForm : $('#search-user'),
-    	paging : 'links',
-    	columnSort: true
-	});
-});
-<?php $this->inlineScript()->captureEnd(); ?>
+<?php $this->placeholder('js-scripts')->captureStart();?>
+<script>
+    $(document).ready(function(){
+        $('#table-user').dataGrid({
+            url : '<?=$this->url('admin/user/edit', [
+                'action' => 'list',
+            ]);?>',
+            query: { sort : 'name' },
+            searchForm : $('#search-user'),
+            paging : 'links',
+            columnSort: true
+        });
+    });
+</script>
+<?php $this->placeholder('js-scripts')->captureEnd(); ?>
