@@ -11,6 +11,7 @@
 
 namespace UthandoUser\Service\Factory;
 
+use UthandoUser\Options\UserOptions;
 use UthandoUser\Service\Acl;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -24,12 +25,14 @@ class AclFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $sm): Acl
     {
-        $config = $sm->get('config');
-        $config = $config['uthando_user'];
+        $config     = $sm->get('config');
+        $config     = $config['uthando_user'];
+        /* @var $options UserOptions */
+        $options    = $sm->get(UserOptions::class);
 
         $aclRules = (array_key_exists('acl', $config)) ? $config['acl'] : [];
 
-        $acl = new Acl($aclRules);
+        $acl = new Acl($aclRules, $options);
 
         return $acl;
     }

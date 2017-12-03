@@ -11,6 +11,9 @@
 
 namespace UthandoUser\Service;
 
+use UthandoUser\Controller\RegistrationController;
+use UthandoUser\Controller\UserController;
+use UthandoUser\Options\UserOptions;
 use Zend\Permissions\Acl\Acl as ZendAcl;
 use Zend\Permissions\Acl\Role\GenericRole as Role;
 use Zend\Permissions\Acl\Resource\GenericResource as Resource;
@@ -23,34 +26,26 @@ use Zend\Permissions\Acl\Resource\GenericResource as Resource;
 class Acl extends ZendAcl
 {
     /**
-     * An array of user roles.
-     *
      * @var array
      */
     protected $userRoles = [];
 
     /**
-     * An array of resources.
-     *
      * @var array
      */
     protected $userResources = [];
 
     /**
-     * allow rules
-     *
      * @var array
      */
     protected $allowRules = [];
 
     /**
-     * deny rules
-     *
      * @var array
      */
     protected $denyRules = [];
 
-    public function __construct(array $config)
+    public function __construct(array $config, UserOptions $options)
     {
         // block all by default.
         $this->deny();
@@ -64,11 +59,43 @@ class Acl extends ZendAcl
             $this->userResources = $config['resources'];
         }
 
+        $this->addResources();
+        $this->addRoles();
+        $this->setupRules();
+
+        if (true === $options->getDisableUserLogin()) {
+            $this->removeAllow(
+                'guest',
+                UserController::class,
+                ['login', 'authenticate', 'forgot-password']
+            );
+        }
+
+        if (true === $options->getDisableUserRegister()) {
+            $this->removeAllow(
+                'guest',
+                UserController::class,
+                ['register', 'thank-you',]
+            );
+
+            $this->removeAllow(
+                'guest',
+                RegistrationController::class,
+                'verify-email'
+            );
+        }
+    }
+
+    protected function addResources(): void
+    {
         // add resources.
         foreach ($this->userResources as $value) {
             $this->addResource(new Resource($value));
         }
+    }
 
+    protected function addRoles(): void
+    {
         foreach ($this->userRoles as $role => $values) {
             $this->addRole(new Role($role), $values['parent']);
 
@@ -82,7 +109,10 @@ class Acl extends ZendAcl
                 }
             }
         }
+    }
 
+    protected function setupRules(): void
+    {
         // set up allow rules.
         // TODO: this needs serious rethinking...
         foreach ($this->allowRules as $role => $privileges) {
@@ -126,4 +156,5 @@ class Acl extends ZendAcl
             }
         }
     }
+
 }

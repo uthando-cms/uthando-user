@@ -30,13 +30,13 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
             ->setObject(new UserOptions());
     }
 
-    public function init()
+    public function init(): void
     {
         $this->add([
-            'name' => 'enable_user_login',
+            'name' => 'disable_user_login',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Enable User Login',
+                'label' => 'Disable User Login',
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
@@ -46,10 +46,10 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'enable_user_register',
+            'name' => 'disable_user_register',
             'type' => Checkbox::class,
             'options' => [
-                'label' => 'Enable User Register',
+                'label' => 'Disable User Register',
                 'use_hidden_element' => true,
                 'checked_value' => '1',
                 'unchecked_value' => '0',
@@ -62,22 +62,26 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification(): array
     {
         return [
-            'enable_user_login' => [
+            'disable_user_login' => [
                 'required' => false,
                 'allow_empty' => true,
                 'filters' => [
                     ['name' => StripTags::class],
                     ['name' => StringTrim::class],
-                    ['name' => Boolean::class],
+                    ['name' => Boolean::class, 'options' => [
+                        'type' => Boolean::TYPE_ZERO_STRING,
+                    ]],
                 ],
             ],
-            'enable_user_register' => [
+            'disable_user_register' => [
                 'required' => false,
                 'allow_empty' => true,
                 'filters' => [
                     ['name' => StripTags::class],
                     ['name' => StringTrim::class],
-                    ['name' => Boolean::class],
+                    ['name' => Boolean::class, 'options' => [
+                        'type' => Boolean::TYPE_ZERO_STRING,
+                    ]],
                 ],
             ],
         ];

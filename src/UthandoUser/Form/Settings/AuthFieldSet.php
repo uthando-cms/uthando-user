@@ -110,7 +110,9 @@ class AuthFieldSet extends Fieldset implements InputFilterProviderInterface
                 'filters' => [
                     ['name' => StripTags::class],
                     ['name' => StringTrim::class],
-                    ['name' => Boolean::class],
+                    ['name' => Boolean::class, 'options' => [
+                        'type' => Boolean::TYPE_ZERO_STRING,
+                    ]],
                 ],
             ],
             'fallback_credential_treatment' => [

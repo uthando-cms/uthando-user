@@ -17,32 +17,32 @@ class UserOptions extends AbstractOptions
     /**
      * @var bool
      */
-    protected $enableUserLogin = true;
+    protected $disableUserLogin = true;
 
     /**
      * @var bool
      */
-    protected $enableUserRegister = true;
+    protected $disableUserRegister = true;
 
-    public function getEnableUserLogin(): bool
+    public function getDisableUserLogin(): bool
     {
-        return $this->enableUserLogin;
+        return $this->disableUserLogin;
     }
 
-    public function setEnableUserLogin(bool $enableUserLogin): UserOptions
+    public function setDisableUserLogin(bool $disableUserLogin): UserOptions
     {
-        $this->enableUserLogin = $enableUserLogin;
+        $this->disableUserLogin = $disableUserLogin;
         return $this;
     }
 
-    public function getEnableUserRegister(): bool
+    public function getDisableUserRegister(): bool
     {
-        return $this->enableUserRegister;
+        return $this->disableUserRegister;
     }
 
-    public function setEnableUserRegister(bool $enableUserRegister): UserOptions
+    public function setDisableUserRegister(bool $disableUserRegister): UserOptions
     {
-        $this->enableUserRegister = $enableUserRegister;
+        $this->disableUserRegister = $disableUserRegister;
         return $this;
     }
 }

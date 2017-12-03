@@ -12,6 +12,7 @@
 namespace UthandoUser\Event;
 
 use UthandoUser\Controller\Plugin\IsAllowed;
+use UthandoUser\Controller\UserController;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\Http\Request;
@@ -70,7 +71,11 @@ class MvcListener implements ListenerAggregateInterface
         if (!$plugin->isAllowed($controller, $action)) {
 
             $router = $event->getRouter();
-            $url = $router->assemble([], ['name' => ('guest' === $hasIdentity->getRoleId()) ? 'user' : 'home']);
+            $route  = (
+                'guest' === $hasIdentity->getRoleId() &&
+                $plugin->isAllowed(UserController::class, 'login')
+            ) ? 'user' : 'home';
+            $url    = $router->assemble([], ['name' => $route]);
 
             $response = $event->getResponse();
             $response->setStatusCode(302);

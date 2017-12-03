@@ -10,7 +10,7 @@
 
 namespace UthandoUser\Service\Factory;
 
-use UthandoUser\Option\UserOptions;
+use UthandoUser\Options\UserOptions;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
