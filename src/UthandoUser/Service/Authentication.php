@@ -47,6 +47,11 @@ class Authentication extends ZendAuthenticationService
         return $this;
     }
 
+    public function getOptions(): AuthOptions
+    {
+        return $this->options;
+    }
+
     public function setOptions(AuthOptions $options): void
     {
         $this->options = $options;
@@ -55,7 +60,12 @@ class Authentication extends ZendAuthenticationService
     public function doAuthentication(string $identity, string $password): bool
     {
         $authMethod = $this->options->getAuthenticateMethod();
-        $user = $this->userService->$authMethod($identity, null, false, true);
+        $user = $this->userService->$authMethod(
+            $identity,
+            null,
+            false,
+            true
+        );
 
         if (!$user) {
             return false;

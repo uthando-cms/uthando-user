@@ -275,7 +275,12 @@ class User extends AbstractMapperService
     public function forgotPassword(array $post)
     {
         $email          = (isset($post['email'])) ? $post['email'] : '';
-        $user           = $this->getUserByEmail($email);
+        $user           = $this->getUserByEmail(
+            $email,
+            null,
+            true,
+            false
+        );
         /* @var $inputFilter \UthandoUser\InputFilter\User */
         $inputFilter    = $this->getInputFilter();
         /* @var $form \UthandoUser\Form\ForgotPassword */
@@ -294,7 +299,14 @@ class User extends AbstractMapperService
         return $this->resetPassword($user);
     }
 
-    public function getUserByEmail(string $email, string $ignore = null, bool $emptyPassword = true, bool $activeOnly = false): ?UserModel
+    public function getAdminUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
+    {
+        /* @var $mapper \UthandoUser\Mapper\User */
+        $mapper = $this->getMapper();
+        return $mapper->getAdminUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
+    }
+
+    public function getUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
     {
         /* @var $mapper \UthandoUser\Mapper\User */
         $mapper = $this->getMapper();

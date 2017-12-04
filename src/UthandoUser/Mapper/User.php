@@ -38,8 +38,14 @@ class User extends AbstractDbMapper
         return parent::getById($id);
     }
 
-    public function getAdminUserByEmail(string $email): ?UserModel
+    public function getAdminUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
     {
+        if ($emptyPassword) {
+            /* @var $hydrator \UthandoUser\Hydrator\User */
+            $hydrator = $this->getResultSet()->getHydrator();
+            $hydrator->emptyPassword();
+        }
+
         $select = $this->getSelect();
 
         $select->where
@@ -47,9 +53,16 @@ class User extends AbstractDbMapper
             ->and
             ->equalTo('role', 'admin');
 
+        if ($ignore) {
+            $select->where->notEqualTo('email', $ignore);
+        }
+
+        if ($activeOnly) {
+            $select->where->equalTo('active', 1);
+        }
+
         $rowSet = $this->fetchResult($select);
-        /* @var $row UserModel|null */
-        $row    = $rowSet->current();
+        $row    = $rowSet->current() ?: new UserModel();
 
         return $row;
     }

@@ -11,6 +11,7 @@
 
 namespace UthandoUser\Controller;
 
+use UthandoUser\Form\ForgotPassword;
 use UthandoUser\Form\Login;
 use UthandoUser\Form\Password;
 use UthandoUser\Form\Register;
@@ -156,7 +157,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getUserService()->getForm('UthandoUserForgotPassword');
+        $form = $this->getUserService()->getForm(ForgotPassword::class);
 
         return [
             'form' => $form,

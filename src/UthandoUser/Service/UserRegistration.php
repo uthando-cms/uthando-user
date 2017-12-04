@@ -42,9 +42,14 @@ class UserRegistration extends AbstractRelationalMapperService
      */
     protected $useCache = false;
 
-    public function sendVerificationEmail(string $email)
+    public function sendVerificationEmail(string $email): void
     {
-        $user = $this->getUserService()->getUserByEmail($email);
+        $user = $this->getUserService()->getUserByEmail(
+            $email,
+            null,
+            true,
+            false
+        );
 
         /* @var $registrationRecord \UthandoUser\Model\UserRegistration */
         $registrationRecord = $this->getModel();
@@ -79,7 +84,12 @@ class UserRegistration extends AbstractRelationalMapperService
 
     public function verify(string $token, string $email): bool
     {
-        $user = $this->getUserService()->getUserByEmail($email);
+        $user = $this->getUserService()->getUserByEmail(
+            $email,
+            null,
+            true,
+            false
+        );
         $registrationRecord = $this->getById($user->getUserId(), 'userId');
 
         if ($registrationRecord->getToken() === $token) {

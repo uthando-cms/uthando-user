@@ -185,7 +185,7 @@ return [
             'user' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/user/[:action]',
+                    'route'    => '/user[/[:action]]',
                     'constraints' => [
                         'action'     => '[a-zA-Z][a-zA-Z0-9_-]*'
             		],
