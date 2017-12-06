@@ -54,6 +54,13 @@ return [
                         'resource'  => 'menu:admin',
                         'visible'   => true,
                     ],
+                    'limit-login' => [
+                        'label'     => 'Limit Login',
+                        'action'    => 'index',
+                        'route'     => 'admin/user/limit-login',
+                        'resource'  => 'menu:admin',
+                        'visible'   => true,
+                    ],
                     'user-settings' => [
                         'label' => 'Settings',
                         'action' => 'index',

@@ -16,7 +16,7 @@
             <tbody>
             <?php /* @var $row \UthandoUser\Model\UserRegistration */ ?>
             <?php foreach ($this->models as $row): ?>
-                <tr class="<?= $class; ?>">
+                <tr>
                     <td><?= $this->escapeHtml($row->getUserRegistrationId()); ?></td>
                     <td><?= $this->escapeHtml($row->getUser()->getLastNameFirst()); ?></td>
                     <td><?= $this->escapeHtml($row->getUser()->getEmail()); ?></td>
@@ -46,4 +46,3 @@
 <?php else: ?>
     <h4><?=$this->translate('No registrations where returned by search.');?></h4>
 <?php endif; ?>
-

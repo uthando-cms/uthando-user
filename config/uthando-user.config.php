@@ -43,7 +43,9 @@ return [
                         ],
                         'allow' => [
                             'controllers' => [
-                                UserController::class => ['action' => ['edit', 'password', 'logout']]
+                                UserController::class => [
+                                    'action' => ['edit', 'password', 'logout']
+                                ]
                             ],
                         ],
                     ],
@@ -58,7 +60,9 @@ return [
                                 AdminRegistrationController::class => [
                                     'action' => ['index', 'list', 'delete']
                                 ],
-                                LimitLoginController::class => ['action' => 'all'],
+                                LimitLoginController::class => [
+                                    'action' => ['index', 'list', 'delete']
+                                ],
                                 Settings::class => ['action' => 'all'],
                             ],
                         ],

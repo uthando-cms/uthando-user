@@ -1,0 +1,51 @@
+<?php if (count($this->models) > 0): ?>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed sortable-table">
+            <thead>
+            <tr>
+                <th data-field="id"><?=$this->translate('Id');?></th>
+                <th data-field="ip"><?=$this->translate('IP Address');?></th>
+                <th data-field="appempts"><?=$this->translate('Attempts');?></th>
+                <th><?=$this->translate('Attempted Time');?></th>
+                <th><?=$this->translate('Ban Time (seconds)');?></th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <?php /* @var $row \UthandoUser\Model\LimitLoginModel */ ?>
+            <?php foreach ($this->models as $row): ?>
+                <tr>
+                    <td><?= $this->escapeHtml($row->getId()); ?></td>
+                    <td><?= $this->escapeHtml($row->getIp()); ?></td>
+                    <td><?= $this->escapeHtml($row->getAttempts()); ?></td>
+                    <td><?= $this->escapeHtml($this->formatDate($row->getAttemptTime())); ?></td>
+                    <td><?= $this->escapeHtml($row->getLockedTime()); ?></td>
+                    <td>
+                        <?= $this->partial('uthando-admin/partial/edit-actions', [
+                            'pk'        => 'id',
+                            'id'        => $row->getId(),
+                            'tableName' => 'limit_login',
+                            'route'     => 'admin/user/limit-login/edit',
+                            'edit'      => false,
+                        ]); ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?= $this->paginationControl(
+        $this->models,
+        'Elastic',
+        'application/partial/paginate',
+        ['route' => 'admin/user/limit-login/page']
+    ); ?>
+
+<?php else: ?>
+    <h4><?=$this->translate('No bans where returned by search.');?></h4>
+<?php endif; ?>
+
+
+

@@ -1,0 +1,44 @@
+<?php $this->headTitle('User Limit Login') ?>
+<?php $this->layout()->pageTitle = $this->translate('User Limit Login');?>
+
+<?php $this->placeholder('header-buttons')->captureStart();?>
+<a href="<?=$this->url('admin/user/settings');?>" data-toggle="tooltip" title="<?=$this->translate('Settings');?>" class="btn btn-primary">
+    <i class="fa fa-cog"></i>
+</a>
+
+<?php $this->placeholder('header-buttons')->captureEnd();?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?=$this->translate('Limit Login List');?></h3>
+    </div>
+    <div class="panel-body">
+        <?=$this->partial('uthando-admin/partial/search', [
+            'name'			=> 'limit-login',
+            'searchInputs'	=> [
+                $this->translate('IP Address') => 'ip',
+            ],
+        ]);?>
+    </div>
+    <div id="table-limit-login" class="admin-table">
+        <?=$this->partial('uthando-user/limit-login/list', [
+            'models' => $this->models
+        ]); ?>
+    </div>
+</div>
+
+<?php $this->placeholder('js-scripts')->captureStart();?>
+<script>
+    $(document).ready(function(){
+        $('#table-limit-login').dataGrid({
+            url : '<?=$this->url('admin/user/limit-login/edit', [
+                    'action' => 'list',
+            ]);?>',
+            query: { sort : 'id' },
+            searchForm : $('#search-limit-login'),
+            paging : 'links',
+            columnSort: true
+        });
+    });
+</script>
+<?php $this->placeholder('js-scripts')->captureEnd(); ?>

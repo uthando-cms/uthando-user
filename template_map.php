@@ -1,5 +1,7 @@
 <?php
 return [
+    'uthando-user/limit-login/list' => __DIR__ . '/./view/uthando-user/limit-login/list.phtml',
+    'uthando-user/limit-login/index' => __DIR__ . '/./view/uthando-user/limit-login/index.phtml',
     'uthando-user/admin/list' => __DIR__ . '/./view/uthando-user/admin/list.phtml',
     'uthando-user/admin/edit' => __DIR__ . '/./view/uthando-user/admin/edit.phtml',
     'uthando-user/admin/index' => __DIR__ . '/./view/uthando-user/admin/index.phtml',

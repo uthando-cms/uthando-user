@@ -11,8 +11,11 @@
 namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\AbstractCrudController;
+use UthandoUser\Service\LimitLoginService;
 
 class LimitLoginController extends AbstractCrudController
 {
-
+    protected $controllerSearchOverrides = ['sort' => 'id'];
+    protected $serviceName = LimitLoginService::class;
+    protected $route = 'admin/user/limit-login';
 }
