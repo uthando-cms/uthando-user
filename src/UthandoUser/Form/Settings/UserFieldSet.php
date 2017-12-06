@@ -10,7 +10,6 @@
 
 namespace UthandoUser\Form\Settings;
 
-
 use UthandoUser\Options\UserOptions;
 use Zend\Filter\Boolean;
 use Zend\Filter\StringTrim;
@@ -63,7 +62,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
     {
         return [
             'disable_user_login' => [
-                'required' => false,
+                'required' => true,
                 'allow_empty' => true,
                 'filters' => [
                     ['name' => StripTags::class],
@@ -74,7 +73,7 @@ class UserFieldSet extends Fieldset implements InputFilterProviderInterface
                 ],
             ],
             'disable_user_register' => [
-                'required' => false,
+                'required' => true,
                 'allow_empty' => true,
                 'filters' => [
                     ['name' => StripTags::class],

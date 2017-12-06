@@ -37,13 +37,37 @@ class Authentication extends ZendAuthenticationService
     protected $userService;
 
     /**
+     * @var LimitLoginService
+     */
+    protected $limitLoginService;
+
+    /**
      * @var AuthOptions
      */
     protected $options;
 
+    /**
+     * @return User
+     */
+    public function getUserService(): User
+    {
+        return $this->userService;
+    }
+
     public function setUserService(User $service): Authentication
     {
         $this->userService = $service;
+        return $this;
+    }
+
+    public function getLimitLoginService(): LimitLoginService
+    {
+        return $this->limitLoginService;
+    }
+
+    public function setLimitLoginService(LimitLoginService $limitLoginService): Authentication
+    {
+        $this->limitLoginService = $limitLoginService;
         return $this;
     }
 
@@ -59,8 +83,8 @@ class Authentication extends ZendAuthenticationService
 
     public function doAuthentication(string $identity, string $password): bool
     {
-        $authMethod = $this->options->getAuthenticateMethod();
-        $user = $this->userService->$authMethod(
+        $authMethod = $this->getOptions()->getAuthenticateMethod();
+        $user = $this->getUserService()->$authMethod(
             $identity,
             null,
             false,
@@ -84,7 +108,7 @@ class Authentication extends ZendAuthenticationService
         if (in_array('update password', $result->getMessages())) {
             $user->setPasswd($password);
             $user->setDateModified();
-            $this->userService->save($user);
+            $this->getUserService()->save($user);
         }
 
         $user->setPasswd(null);
@@ -94,21 +118,27 @@ class Authentication extends ZendAuthenticationService
         return true;
     }
 
+    public function checkIp()
+    {
+
+    }
+
     public function getAuthAdapter(string $password, UserModel $user): AuthAdapter
     {
         if (null === $this->authAdapter) {
 
             $authAdapter = new AuthAdapter();
 
-            $this->setAuthAdapter($authAdapter);
-            $this->authAdapter->setIdentity($user);
-            $this->authAdapter->setCredential($password);
-            $this->authAdapter->setCredentialTreatment($this->options->getCredentialTreatment());
+            $authAdapter->setIdentity($user);
+            $authAdapter->setCredential($password);
+            $authAdapter->setCredentialTreatment($this->getOptions()->getCredentialTreatment());
 
-            if ($this->options->isUseFallbackTreatment()) {
-                $this->authAdapter->setUseFallback($this->options->isUseFallbackTreatment());
-                $this->authAdapter->setFallbackCredentialTreatment($this->options->getFallbackCredentialTreatment());
+            if ($this->getOptions()->isUseFallbackTreatment()) {
+                $authAdapter->setUseFallback($this->getOptions()->isUseFallbackTreatment());
+                $authAdapter->setFallbackCredentialTreatment($this->getOptions()->getFallbackCredentialTreatment());
             }
+
+            $this->setAuthAdapter($authAdapter);
         }
 
         return $this->authAdapter;

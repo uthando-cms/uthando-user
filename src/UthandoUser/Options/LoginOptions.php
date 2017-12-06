@@ -15,24 +15,71 @@ use Zend\Stdlib\AbstractOptions;
 class LoginOptions extends AbstractOptions
 {
     /**
-     * @var int
+     * @var bool
      */
-    protected $registerMinPasswordLength;
+    protected $limitLogin = false;
 
     /**
      * @var int
      */
-    protected $registerMaxPasswordLength;
+    protected $maxLoginAttempts = 3;
 
     /**
      * @var int
      */
-    protected $loginMinPasswordLength;
+    protected $banTime = 1800;
+    /**
+     * @var int
+     */
+    protected $registerMinPasswordLength = 8;
 
     /**
      * @var int
      */
-    protected $loginMaxPasswordLength;
+    protected $registerMaxPasswordLength = 16;
+
+    /**
+     * @var int
+     */
+    protected $loginMinPasswordLength = 8;
+
+    /**
+     * @var int
+     */
+    protected $loginMaxPasswordLength = 16;
+
+    public function getLimitLogin(): bool
+    {
+        return $this->limitLogin;
+    }
+
+    public function setLimitLogin(bool $limitLogin): LoginOptions
+    {
+        $this->limitLogin = $limitLogin;
+        return $this;
+    }
+
+    public function getMaxLoginAttempts(): int
+    {
+        return $this->maxLoginAttempts;
+    }
+
+    public function setMaxLoginAttempts(int $maxLoginAttempts): LoginOptions
+    {
+        $this->maxLoginAttempts = $maxLoginAttempts;
+        return $this;
+    }
+
+    public function getBanTime(): int
+    {
+        return $this->banTime;
+    }
+
+    public function setBanTime(int $banTime): LoginOptions
+    {
+        $this->banTime = $banTime;
+        return $this;
+    }
 
     public function getRegisterMinPasswordLength(): ?int
     {

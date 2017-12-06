@@ -2,6 +2,7 @@
 
 use UthandoUser\Controller\AdminController;
 use UthandoUser\Controller\AdminRegistrationController;
+use UthandoUser\Controller\LimitLoginController;
 use UthandoUser\Controller\RegistrationController;
 use UthandoUser\Controller\Settings;
 use UthandoUser\Controller\UserController;
@@ -57,6 +58,7 @@ return [
                                 AdminRegistrationController::class => [
                                     'action' => ['index', 'list', 'delete']
                                 ],
+                                LimitLoginController::class => ['action' => 'all'],
                                 Settings::class => ['action' => 'all'],
                             ],
                         ],
@@ -66,6 +68,7 @@ return [
             'resources' => [
                 AdminController::class,
                 AdminRegistrationController::class,
+                LimitLoginController::class,
                 RegistrationController::class,
                 Settings::class,
                 UserController::class,

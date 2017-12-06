@@ -18,6 +18,8 @@ use UthandoUser\Form\Register;
 use UthandoUser\Form\UserEdit;
 use UthandoUser\InputFilter\User as UserInputFilter;
 use UthandoUser\Model\User;
+use UthandoUser\Service\Authentication;
+use UthandoUser\Service\LimitLoginService;
 use UthandoUser\Service\User as UserService;
 use UthandoUser\Service\UserRegistration;
 use Zend\Authentication\AuthenticationService;
@@ -254,6 +256,27 @@ class UserController extends AbstractActionController
         $form = $this->getService('FormElementManager')
             ->get(Login::class);
 
+        $limitLoginService = $this->getLimitLoginService();
+
+        if (true === $limitLoginService->getOptions()->getLimitLogin()) {
+            $limitLogin = $limitLoginService->getByIp();
+
+            if (true === $limitLoginService->checkBanIp($limitLogin)) {
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf(
+                        'Too many failed login attempts. Please try again in %s.',
+                        $limitLoginService->normalizeTime(
+                            $limitLoginService->getTimeDiff($limitLogin)
+                        )
+                    )
+                );
+
+                return [
+                    'loginForm' => $form
+                ];
+            }
+        }
+
         return [
             'loginForm' => $form
         ];
@@ -270,6 +293,18 @@ class UserController extends AbstractActionController
     public function authenticateAction()
     {
         $request = $this->getRequest();
+
+        $limitLoginService = $this->getLimitLoginService();
+
+        if (true === $limitLoginService->getOptions()->getLimitLogin()) {
+            $limitLogin = $limitLoginService->getByIp();
+
+            if (true === $limitLoginService->checkBanIp($limitLogin)) {
+                return $this->redirect()->toRoute('user', [
+                    'action' => 'login',
+                ]);
+            }
+        }
 
         if (!$request->isPost()) {
             return $this->redirect()->toRoute('user', [
@@ -312,7 +347,7 @@ class UserController extends AbstractActionController
 
         $data = $form->getData();
 
-        /* @var $auth \UthandoUser\Service\Authentication */
+        /* @var $auth Authentication */
         $auth = $this->getServiceLocator()->get(AuthenticationService::class);
 
         if (false === $auth->doAuthentication($data['email'], $data['passwd'])) {
@@ -320,14 +355,27 @@ class UserController extends AbstractActionController
             // check if user has regisitered but not activated their account
             $user = $this->getUserService()->getUserByEmail($data['email'], null, true, false);
             if ($user instanceof User && false === $user->getActive()) {
-                $this->flashMessenger()->addErrorMessage(
-                    'You have not activated you account.'
-                );
+                $message = 'You have not activated you account.';
+            } elseif (true === $limitLoginService->getOptions()->getLimitLogin()) {
+                $attempts = $limitLogin->getAttempts() + 1;
+                $limitLogin->setAttempts($attempts);
+                $limitLogin->setAttemptTime(strtotime('now'));
+                $message = ($attempts < $limitLoginService->getOptions()->getMaxLoginAttempts()) ?
+                    sprintf(
+                        'Login failed, Please try again. %s attempt remaining.',
+                        $limitLoginService->getOptions()->getMaxLoginAttempts() - $attempts
+                    ) :
+                    sprintf(
+                        'Too many failed login attempts. Please try again in %s.',
+                        $limitLoginService->normalizeTime(
+                            $limitLoginService->getTimeDiff($limitLogin)
+                        )
+                    );
+                $limitLoginService->save($limitLogin);
             } else {
-                $this->flashMessenger()->addErrorMessage(
-                    'Login failed, Please try again.'
-                );
+                $message = 'Login failed, Please try again.';
             }
+            $this->flashMessenger()->addErrorMessage($message);
 
             return $viewModel->setVariables(['loginForm' => $form]); // re-render the login form
         }
@@ -355,6 +403,13 @@ class UserController extends AbstractActionController
         $return = ($returnTo) ? $returnTo : ('admin' === $auth->getIdentity()->getRole()) ? $adminRoute : 'home';
 
         return $this->redirect()->toRoute($return);
+    }
+
+    protected function getLimitLoginService(): LimitLoginService
+    {
+        /* @var $service LimitLoginService */
+        $service = $this->getService(LimitLoginService::class);
+        return $service;
     }
 }
 
