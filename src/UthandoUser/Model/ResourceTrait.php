@@ -25,12 +25,12 @@ trait ResourceTrait
      */
     protected $resource;
 
-    public function getResource(): string
+    public function getResource(): ?string
     {
         return $this->resource;
     }
 
-    public function setResource(string $resource): ModelInterface
+    public function setResource(?string $resource): ModelInterface
     {
         $this->resource = $resource;
         return $this;
