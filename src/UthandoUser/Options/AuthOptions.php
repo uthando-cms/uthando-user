@@ -66,6 +66,11 @@ class AuthOptions extends AbstractOptions
         return $this->useFallbackTreatment;
     }
 
+    public function getUseFallbackTreatment(): ?bool
+    {
+        return $this->useFallbackTreatment;
+    }
+
     public function setUseFallbackTreatment(bool $useFallbackTreatment): AuthOptions
     {
         $this->useFallbackTreatment = $useFallbackTreatment;
