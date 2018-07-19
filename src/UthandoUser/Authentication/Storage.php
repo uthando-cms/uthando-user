@@ -23,7 +23,10 @@ class Storage extends Session
     public function rememberMe(int $rememberMe = 0, int $time = 1209600): void
     {
         if ($rememberMe == 1) {
-            //ini_set('session.gc_maxlifetime', (string) $time);
+            if (version_compare(PHP_VERSION, '7.2.0', '<')) {
+                ini_set('session.gc_maxlifetime', (string) $time);
+            }
+
             $this->session->getManager()->rememberMe($time);
         }
     }
