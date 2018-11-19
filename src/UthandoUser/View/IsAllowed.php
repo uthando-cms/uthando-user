@@ -23,12 +23,12 @@ class IsAllowed extends AbstractViewHelper
      */
     protected $pluginIsAllowed;
 
-    public function __invoke(?string $resource, ?string $privilege): Acl
+    public function __invoke(?string $resource, ?string $privilege): bool
     {
         return $this->isAllowed($resource, $privilege);
     }
 
-    private function isAllowed(?string $resource, ?string $privilege)
+    private function isAllowed(?string $resource, ?string $privilege): bool
     {
         $acl = $this->getPluginIsAllowed();
         return $acl->isAllowed($resource, $privilege);
@@ -48,7 +48,7 @@ class IsAllowed extends AbstractViewHelper
                 ->getServiceLocator()
                 ->get(Acl::class);
             /* @var $identity UserModel|null */
-            $identity = $this->getView()->plugin('identity');
+            $identity = $this->getView()->plugin('identity')();
 
             $pluginIsAllowed = new PluginIsAllowed();
             $pluginIsAllowed->setAcl($acl);
