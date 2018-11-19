@@ -23,7 +23,7 @@ use Zend\Math\Rand;
  *
  * @package UthandoUser\Model
  */
-class User implements RoleInterface, ModelInterface
+class UserModel implements RoleInterface, ModelInterface
 {
     use Model,
         UserIdTrait,
@@ -67,7 +67,7 @@ class User implements RoleInterface, ModelInterface
         return $this->email;
     }
 
-    public function setEmail(string $email): User
+    public function setEmail(string $email): UserModel
     {
         $this->email = $email;
         return $this;
@@ -78,7 +78,7 @@ class User implements RoleInterface, ModelInterface
         return $this->passwd;
     }
 
-    public function setPasswd(?string $passwd): User
+    public function setPasswd(?string $passwd): UserModel
     {
         $this->passwd = $passwd;
         return $this;
@@ -107,7 +107,7 @@ class User implements RoleInterface, ModelInterface
         return $this->role;
     }
 
-    public function setRole(?string $role): User
+    public function setRole(?string $role): UserModel
     {
         $this->role = $role;
         return $this;
@@ -123,7 +123,7 @@ class User implements RoleInterface, ModelInterface
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): User
+    public function setFirstname(string $firstname): UserModel
     {
         $this->firstname = $firstname;
         return $this;
@@ -134,7 +134,7 @@ class User implements RoleInterface, ModelInterface
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): User
+    public function setLastname(string $lastname): UserModel
     {
         $this->lastname = $lastname;
         return $this;
@@ -155,7 +155,7 @@ class User implements RoleInterface, ModelInterface
         return $this->active;
     }
 
-    public function setActive(bool $active): User
+    public function setActive(bool $active): UserModel
     {
         $this->active = $active;
         return $this;

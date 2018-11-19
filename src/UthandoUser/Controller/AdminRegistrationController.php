@@ -11,7 +11,7 @@
 namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\AbstractCrudController;
-use UthandoUser\Service\UserRegistration;
+use UthandoUser\Service\UserRegistrationService;
 
 /**
  * Class AdminRegistrationController
@@ -21,6 +21,6 @@ use UthandoUser\Service\UserRegistration;
 class AdminRegistrationController extends AbstractCrudController
 {
     protected $controllerSearchOverrides = ['sort' => 'requestTime'];
-    protected $serviceName = UserRegistration::class;
+    protected $serviceName = UserRegistrationService::class;
     protected $route = 'admin/user/registration';
 }

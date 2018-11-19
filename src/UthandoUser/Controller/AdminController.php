@@ -12,8 +12,8 @@
 namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\AbstractCrudController;
-use UthandoUser\Model\User;
-use UthandoUser\Service\User as UserService;
+use UthandoUser\Model\UserModel;
+use UthandoUser\Service\UserService as UserService;
 
 /**
  * Class AdminController
@@ -40,7 +40,7 @@ class AdminController extends AbstractCrudController
         $userId = $this->params()->fromRoute('id', null);
         $user = $this->getService()->getById($userId);
 
-        if ($user instanceof User) {
+        if ($user instanceof UserModel) {
             $result = $this->getService()->resetPassword($user);
 
             if ($result) {

@@ -12,6 +12,9 @@
 namespace UthandoUser\Service;
 
 use UthandoCommon\Service\AbstractRelationalMapperService;
+use UthandoUser\Hydrator\UserRegistrationHydrator;
+use UthandoUser\Mapper\UserRegistrationMapper;
+use UthandoUser\Model\UserRegistrationModel;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -20,12 +23,11 @@ use Zend\View\Model\ViewModel;
  * @package UthandoUser\Controller
  * @method \Zend\Session\Container sessionContainer()
  */
-class UserRegistration extends AbstractRelationalMapperService
+class UserRegistrationService extends AbstractRelationalMapperService
 {
-    /**
-     * @var string
-     */
-    protected $serviceAlias = 'UthandoUserRegistration';
+    protected $hydrator     = UserRegistrationHydrator::class;
+    protected $mapper       = UserRegistrationMapper::class;
+    protected $model        = UserRegistrationModel::class;
 
     /**
      * @var array
@@ -33,7 +35,7 @@ class UserRegistration extends AbstractRelationalMapperService
     protected $referenceMap = [
         'user' => [
             'refCol' => 'userId',
-            'service' => 'UthandoUser',
+            'service' => UserService::class
         ],
     ];
 
@@ -51,7 +53,7 @@ class UserRegistration extends AbstractRelationalMapperService
             false
         );
 
-        /* @var $registrationRecord \UthandoUser\Model\UserRegistration */
+        /* @var $registrationRecord \UthandoUser\Model\UserRegistrationModel */
         $registrationRecord = $this->getModel();
         $registrationRecord->generateToken();
         $registrationRecord->setUserId($user->getUserId());
@@ -77,7 +79,7 @@ class UserRegistration extends AbstractRelationalMapperService
         ]);
     }
 
-    public function getUserService(): User
+    public function getUserService(): UserService
     {
         return $this->getRelatedService('user');
     }

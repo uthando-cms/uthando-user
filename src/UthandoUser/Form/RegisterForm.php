@@ -12,7 +12,7 @@
 namespace UthandoUser\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
-use UthandoUser\InputFilter\User as UserInputFilter;
+use UthandoUser\InputFilter\UserInputFilter as UserInputFilter;
 use Zend\Form\Element\Submit;
 use Zend\InputFilter\InputFilterInterface;
 
@@ -21,7 +21,7 @@ use Zend\InputFilter\InputFilterInterface;
  *
  * @package UthandoUser\Form
  */
-class Register extends BaseUser
+class RegisterForm extends BaseUserForm
 {
     public function init(): void
     {

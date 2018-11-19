@@ -18,7 +18,7 @@ use Zend\Form\Element\Submit;
  *
  * @package UthandoUser\Form
  */
-class UserEdit extends BaseUser
+class UserEditForm extends BaseUserForm
 {
     public function init(): void
     {

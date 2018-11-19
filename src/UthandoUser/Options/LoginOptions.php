@@ -8,7 +8,7 @@
  * @license   see LICENSE
  */
 
-namespace UthandoUser\Option;
+namespace UthandoUser\Options;
 
 use Zend\Stdlib\AbstractOptions;
 

@@ -11,7 +11,7 @@
 namespace UthandoUser\Controller;
 
 use UthandoCommon\Controller\SettingsTrait;
-use UthandoUser\Form\Settings\Settings as SettingsForm;
+use UthandoUser\Form\Settings\SettingsForm as SettingsForm;
 use Zend\Mvc\Controller\AbstractActionController;
 
 /**
@@ -19,7 +19,7 @@ use Zend\Mvc\Controller\AbstractActionController;
  *
  * @package UthandoUser\Controller
  */
-class Settings extends AbstractActionController
+class SettingsController extends AbstractActionController
 {
     use SettingsTrait;
 

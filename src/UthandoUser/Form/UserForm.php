@@ -16,7 +16,7 @@ namespace UthandoUser\Form;
  *
  * @package UthandoUser\Form
  */
-class User extends BaseUser
+class UserForm extends BaseUserForm
 {
     public function init(): void
     {

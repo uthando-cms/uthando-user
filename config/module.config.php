@@ -6,31 +6,9 @@ use UthandoUser\Controller\AdminRegistrationController;
 use UthandoUser\Controller\LimitLoginController;
 use UthandoUser\Controller\Plugin\IsAllowed as IsAllowedPlugin;
 use UthandoUser\Controller\RegistrationController;
-use UthandoUser\Controller\Settings as SettingsController;
+use UthandoUser\Controller\SettingsController as SettingsController;
 use UthandoUser\Controller\UserController;
-use UthandoUser\Form\Element\RoleList;
-use UthandoUser\Form\Element\UserList;
-use UthandoUser\Form\ForgotPassword;
-use UthandoUser\Form\Login;
-use UthandoUser\Form\Password;
-use UthandoUser\Form\Register;
-use UthandoUser\Form\Settings\AuthFieldSet;
-use UthandoUser\Form\Settings\Settings;
-use UthandoUser\Form\Settings\LoginFieldSet;
-use UthandoUser\Form\Settings\UserFieldSet;
-use UthandoUser\Form\User;
-use UthandoUser\Form\UserEdit;
-use UthandoUser\Hydrator\LimitLoginHydrator;
-use UthandoUser\Hydrator\User as UserHydrator;
-use UthandoUser\Hydrator\UserRegistration;
-use UthandoUser\InputFilter\User as UserInputFilter;
-use UthandoUser\Mapper\LimitLoginMapper;
-use UthandoUser\Mapper\User as UserMapper;
-use UthandoUser\Mapper\UserRegistration as UserRegistrationMapper;
-use UthandoUser\Model\LimitLoginModel;
-use UthandoUser\Model\User as UserModel;
-use UthandoUser\Model\UserRegistration as UserRegistrationModel;
-use UthandoUser\Option\LoginOptions;
+use UthandoUser\Options\LoginOptions;
 use UthandoUser\Options\AuthOptions;
 use UthandoUser\Options\UserOptions;
 use UthandoUser\Service\Acl;
@@ -41,8 +19,8 @@ use UthandoUser\Service\Factory\LoginOptionsFactory;
 use UthandoUser\Service\Factory\UserNavigationFactory;
 use UthandoUser\Service\Factory\UserOptionsFactory;
 use UthandoUser\Service\LimitLoginService;
-use UthandoUser\Service\User as UserService;
-use UthandoUser\Service\UserRegistration as UserRegistrationService;
+use UthandoUser\Service\UserService as UserService;
+use UthandoUser\Service\UserRegistrationService as UserRegistrationService;
 use UthandoUser\View\IsAllowed;
 use Zend\Authentication\AuthenticationService;
 
@@ -65,58 +43,6 @@ return [
             IsAllowedPlugin::class => IsAllowedPlugin::class,
         ],
     ],
-    'form_elements' => [
-        'aliases' => [
-            'UthandoUserEdit'           => UserEdit::class,
-            'UthandoUserForgotPassword' => ForgotPassword::class,
-            'UthandoUserPassword'       => Password::class,
-            'UthandoUserLogin'          => Login::class,
-            'UthandoUserRegister'       => Register::class,
-            'UthandoUser'               => User::class,
-
-            'UthandoUserRoleList'       => RoleList::class,
-            'UthandoUserList'           => UserList::class,
-
-            'UthandoUserAuthFieldSet'   => AuthFieldSet::class,
-            'UthandoUserSettings'       => Settings::class,
-            'UthandoUserLoginFieldSet'  => LoginFieldSet::class,
-        ],
-        'invokables' => [
-            UserEdit::class         => UserEdit::class,
-            ForgotPassword::class   => ForgotPassword::class,
-            Password::class         => Password::class,
-            Login::class            => Login::class,
-            Register::class         => Register::class,
-            User::class             => User::class,
-
-            RoleList::class         => RoleList::class,
-            UserList::class         => UserList::class,
-
-            AuthFieldSet::class     => AuthFieldSet::class,
-            Settings::class         => Settings::class,
-            LoginFieldSet::class    => LoginFieldSet::class,
-            UserFieldSet::class     => UserFieldSet::class
-        ],
-    ],
-    'hydrators' => [
-        'aliases' => [
-            'UthandoUser'               => UserHydrator::class,
-            'UthandoUserRegistration'   => UserRegistration::class,
-        ],
-        'invokables' => [
-            LimitLoginHydrator::class => LimitLoginHydrator::class,
-            UserHydrator::class       => UserHydrator::class,
-            UserRegistration::class   => UserRegistration::class,
-        ],
-    ],
-    'input_filters' => [
-        'aliases' => [
-            'UthandoUser' => UserInputFilter::class,
-        ],
-        'invokables' => [
-            UserInputFilter::class => UserInputFilter::class,
-        ],
-    ],
     'service_manager' => [
         'aliases' => [
             'UthandoUser\Navigation'        => UserNavigationFactory::class,
@@ -134,33 +60,7 @@ return [
             UserOptions::class              => UserOptionsFactory::class
         ],
     ],
-    'uthando_mappers' => [
-        'aliases' => [
-            'UthandoUser'               => UserMapper::class,
-            'UthandoUserRegistration'   => UserRegistrationMapper::class,
-        ],
-        'invokables' => [
-            LimitLoginMapper::class         => LimitLoginMapper::class,
-            UserMapper::class               => UserMapper::class,
-            UserRegistrationMapper::class   => UserRegistrationMapper::class,
-        ],
-    ],
-    'uthando_models' => [
-        'aliases' => [
-            'UthandoUser'               => UserModel::class,
-            'UthandoUserRegistration'   => UserRegistrationModel::class,
-        ],
-        'invokables' => [
-            LimitLoginModel::class          => LimitLoginModel::class,
-            UserModel::class                => UserModel::class,
-            UserRegistrationModel::class    => UserRegistrationModel::class,
-        ],
-    ],
     'uthando_services' => [
-        'aliases' => [
-            'UthandoUser'               => UserService::class,
-            'UthandoUserRegistration'   => UserRegistrationService::class,
-        ],
         'invokables' => [
             LimitLoginService::class        => LimitLoginService::class,
             UserService::class              => UserService::class,

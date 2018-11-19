@@ -10,7 +10,7 @@
 
 namespace UthandoUser\Form\Settings;
 
-use UthandoUser\Option\LoginOptions;
+use UthandoUser\Options\LoginOptions;
 use Zend\Filter\Boolean;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;

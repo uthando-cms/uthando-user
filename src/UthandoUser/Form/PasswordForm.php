@@ -18,7 +18,7 @@ use Zend\Form\Element\Submit;
  *
  * @package UthandoUser\Form
  */
-class Password extends BaseUser
+class PasswordForm extends BaseUserForm
 {
     public function init(): void
     {

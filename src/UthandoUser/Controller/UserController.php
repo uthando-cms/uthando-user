@@ -11,17 +11,17 @@
 
 namespace UthandoUser\Controller;
 
-use UthandoUser\Form\ForgotPassword;
-use UthandoUser\Form\Login;
-use UthandoUser\Form\Password;
-use UthandoUser\Form\Register;
-use UthandoUser\Form\UserEdit;
-use UthandoUser\InputFilter\User as UserInputFilter;
-use UthandoUser\Model\User;
+use UthandoUser\Form\ForgotPasswordForm;
+use UthandoUser\Form\LoginForm;
+use UthandoUser\Form\PasswordForm;
+use UthandoUser\Form\RegisterForm;
+use UthandoUser\Form\UserEditForm;
+use UthandoUser\InputFilter\UserInputFilter as UserInputFilter;
+use UthandoUser\Model\UserModel;
 use UthandoUser\Service\Authentication;
 use UthandoUser\Service\LimitLoginService;
-use UthandoUser\Service\User as UserService;
-use UthandoUser\Service\UserRegistration;
+use UthandoUser\Service\UserService as UserService;
+use UthandoUser\Service\UserRegistrationService;
 use Zend\Authentication\AuthenticationService;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Form\Form;
@@ -59,8 +59,8 @@ class UserController extends AbstractActionController
             ]);
         }
 
-        /* @var $service \UthandoUser\Service\UserRegistration */
-        $service = $this->getService(UserRegistration::class);
+        /* @var $service \UthandoUser\Service\UserRegistrationService */
+        $service = $this->getService(UserRegistrationService::class);
         $service->sendVerificationEmail($email);
 
         return [];
@@ -112,7 +112,7 @@ class UserController extends AbstractActionController
         }
 
         $form = $this->getUserService()
-            ->getForm(Register::class);
+            ->getForm(RegisterForm::class);
 
         return new ViewModel(array(
             'registerForm' => $form,
@@ -159,7 +159,7 @@ class UserController extends AbstractActionController
             }
         }
 
-        $form = $this->getUserService()->getForm(ForgotPassword::class);
+        $form = $this->getUserService()->getForm(ForgotPasswordForm::class);
 
         return [
             'form' => $form,
@@ -169,7 +169,7 @@ class UserController extends AbstractActionController
     public function passwordAction()
     {
         $request = $this->getRequest();
-        /* @var $user \UthandoUser\Model\User */
+        /* @var $user \UthandoUser\Model\UserModel */
         $user = $this->identity();
 
         if ($request->isPost()) {
@@ -192,7 +192,7 @@ class UserController extends AbstractActionController
             );
         }
 
-        $form = $this->getUserService()->getForm(Password::class);
+        $form = $this->getUserService()->getForm(PasswordForm::class);
 
         return [
             'form' => $form,
@@ -201,7 +201,7 @@ class UserController extends AbstractActionController
 
     public function editAction()
     {
-        /* @var $user \UthandoUser\Model\User */
+        /* @var $user \UthandoUser\Model\UserModel */
         $user = $this->identity();
 
         $request = $this->getRequest();
@@ -242,8 +242,8 @@ class UserController extends AbstractActionController
             }
         }
 
-        /* @var \UthandoUser\Form\BaseUserEdit $form */
-        $form = $this->getUserService()->getForm(UserEdit::class);
+        /* @var \UthandoUser\Form\UserEditForm $form */
+        $form = $this->getUserService()->getForm(UserEditForm::class);
         $form->bind($user);
 
         return new ViewModel([
@@ -254,7 +254,7 @@ class UserController extends AbstractActionController
     public function loginAction()
     {
         $form = $this->getService('FormElementManager')
-            ->get(Login::class);
+            ->get(LoginForm::class);
 
         $limitLoginService = $this->getLimitLoginService();
 
@@ -320,8 +320,8 @@ class UserController extends AbstractActionController
             $post['rememberme'] = 0;
         }
 
-        /* @var $form \UthandoUser\Form\Login */
-        $form = $this->getUserService()->getForm(Login::class);
+        /* @var $form \UthandoUser\Form\LoginForm */
+        $form = $this->getUserService()->getForm(LoginForm::class);
 
         /* @var $inputFilter UserInputFilter */
         $inputFilter = $this->getService('InputFilterManager')
@@ -354,7 +354,7 @@ class UserController extends AbstractActionController
 
             // check if user has regisitered but not activated their account
             $user = $this->getUserService()->getUserByEmail($data['email'], null, true, false);
-            if ($user instanceof User && false === $user->getActive()) {
+            if ($user instanceof UserModel && false === $user->getActive()) {
                 $message = 'You have not activated you account.';
             } elseif (true === $limitLoginService->getOptions()->getLimitLogin()) {
                 $attempts = $limitLogin->getAttempts() + 1;

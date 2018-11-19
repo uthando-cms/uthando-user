@@ -15,7 +15,7 @@ use UthandoCommon\Service\ServiceManager;
 use UthandoUser\Authentication\Storage;
 use UthandoUser\Options\AuthOptions;
 use UthandoUser\Service\Authentication;
-use UthandoUser\Service\User;
+use UthandoUser\Service\UserService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -28,7 +28,7 @@ class AuthenticationFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $sm): Authentication
     {
-        $service = $sm->get(ServiceManager::class)->get(User::class);
+        $service = $sm->get(ServiceManager::class)->get(UserService::class);
         $storage = $sm->get(Storage::class);
         $options = $sm->get(AuthOptions::class);
 

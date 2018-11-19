@@ -17,7 +17,7 @@ use Zend\Form\Form;
  *
  * @package UthandoUser\Form\Settings
  */
-class Settings extends Form
+class SettingsForm extends Form
 {
     public function init(): void
     {

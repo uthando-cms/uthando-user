@@ -11,7 +11,7 @@
 
 namespace UthandoUser\Authentication;
 
-use UthandoUser\Model\User as UserModel;
+use UthandoUser\Model\UserModel as UserModel;
 use Zend\Authentication\Adapter\AbstractAdapter;
 use Zend\Authentication\Result as AuthenticationResult;
 use Zend\Crypt\Password\PasswordInterface;

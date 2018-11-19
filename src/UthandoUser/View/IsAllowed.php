@@ -13,7 +13,7 @@ namespace UthandoUser\View;
 
 use UthandoCommon\View\AbstractViewHelper;
 use UthandoUser\Controller\Plugin\IsAllowed as PluginIsAllowed;
-use UthandoUser\Model\User;
+use UthandoUser\Model\UserModel;
 use UthandoUser\Service\Acl;
 
 class IsAllowed extends AbstractViewHelper
@@ -47,7 +47,7 @@ class IsAllowed extends AbstractViewHelper
             $acl = $this->getServiceLocator()
                 ->getServiceLocator()
                 ->get(Acl::class);
-            /* @var $identity User|null */
+            /* @var $identity UserModel|null */
             $identity = $this->getView()->plugin('identity');
 
             $pluginIsAllowed = new PluginIsAllowed();

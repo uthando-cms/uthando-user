@@ -3,7 +3,7 @@
 use UthandoUser\Controller\AdminController;
 use UthandoUser\Controller\AdminRegistrationController;
 use UthandoUser\Controller\LimitLoginController;
-use UthandoUser\Controller\Settings;
+use UthandoUser\Controller\SettingsController;
 
 return [
     'router' => [
@@ -140,7 +140,7 @@ return [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                     ],
                                     'defaults' => [
-                                        'controller'    => Settings::class,
+                                        'controller'    => SettingsController::class,
                                         'action' => 'index',
                                     ]
                                 ],

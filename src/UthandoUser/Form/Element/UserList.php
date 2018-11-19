@@ -12,7 +12,7 @@
 namespace UthandoUser\Form\Element;
 
 use UthandoCommon\Service\ServiceManager;
-use UthandoUser\Service\User;
+use UthandoUser\Service\UserService;
 use Zend\Form\Element\Select;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -38,12 +38,12 @@ class UserList extends Select implements ServiceLocatorAwareInterface
         $users = $this->getServiceLocator()
             ->getServiceLocator()
             ->get(ServiceManager::class)
-            ->get(User::class)
+            ->get(UserService::class)
             ->fetchAll();
 
         $userOptions = [];
 
-        /* @var $user \UthandoUser\Model\User */
+        /* @var $user \UthandoUser\Model\UserModel */
         foreach ($users as $user) {
             $userOptions[] = [
                 'label' => $user->getFullName(),

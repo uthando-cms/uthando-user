@@ -14,7 +14,7 @@ use UthandoCommon\Service\AbstractMapperService;
 use UthandoUser\Hydrator\LimitLoginHydrator;
 use UthandoUser\Mapper\LimitLoginMapper;
 use UthandoUser\Model\LimitLoginModel;
-use UthandoUser\Option\LoginOptions;
+use UthandoUser\Options\LoginOptions;
 use Zend\Http\PhpEnvironment\RemoteAddress;
 
 class LimitLoginService extends AbstractMapperService

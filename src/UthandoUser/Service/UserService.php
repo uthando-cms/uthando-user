@@ -11,11 +11,15 @@
 
 namespace UthandoUser\Service;
 
-use UthandoUser\Form\ForgotPassword;
-use UthandoUser\Form\Password;
-use UthandoUser\Form\Register;
-use UthandoUser\Form\UserEdit;
-use UthandoUser\Model\User as UserModel;
+use UthandoUser\Form\ForgotPasswordForm;
+use UthandoUser\Form\PasswordForm;
+use UthandoUser\Form\RegisterForm;
+use UthandoUser\Form\UserEditForm;
+use UthandoUser\Form\UserForm;
+use UthandoUser\Hydrator\UserHydrator;
+use UthandoUser\InputFilter\UserInputFilter;
+use UthandoUser\Mapper\UserMapper;
+use UthandoUser\Model\UserModel;
 use UthandoCommon\Service\AbstractMapperService;
 use UthandoUser\Options\AuthOptions;
 use UthandoUser\UthandoUserException;
@@ -31,12 +35,13 @@ use Zend\View\Model\ViewModel;
  * @package UthandoUser\Service
  * @method UserModel getModel($model = null)
  */
-class User extends AbstractMapperService
+class UserService extends AbstractMapperService
 {
-    /**
-     * @var string
-     */
-    protected $serviceAlias = 'UthandoUser';
+    protected $form         = UserForm::class;
+    protected $hydrator     = UserHydrator::class;
+    protected $inputFilter  = UserInputFilter::class;
+    protected $mapper       = UserMapper::class;
+    protected $model        = UserModel::class;
 
     /**
      * @var bool
@@ -87,8 +92,8 @@ class User extends AbstractMapperService
      */
     public function register(array $post)
     {
-        /* @var $form Register */
-        $form = $this->getForm(Register::class);
+        /* @var $form RegisterForm */
+        $form = $this->getForm(RegisterForm::class);
 
         $model = $this->getModel();
         $model->setRole('registered');
@@ -96,7 +101,7 @@ class User extends AbstractMapperService
         $form->setHydrator($this->getHydrator());
         $form->bind($model);
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter = $this->getInputFilter();
         $form->setInputFilter($inputFilter);
 
@@ -108,7 +113,7 @@ class User extends AbstractMapperService
      *
      * @param UserModel $model
      * @param array $post
-     * @return int|UserEdit
+     * @return int|UserEditForm
      * @throws UthandoUserException
      * @throws \UthandoCommon\Service\ServiceException
      */
@@ -120,13 +125,13 @@ class User extends AbstractMapperService
 
         $model->setDateModified();
 
-        /* @var $form UserEdit */
-        $form = $this->getForm(UserEdit::class);
+        /* @var $form UserEditForm */
+        $form = $this->getForm(UserEditForm::class);
 
         $form->setHydrator($this->getHydrator());
         $form->bind($model);
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter = $this->getInputFilter();
 
         // we need to find if this email has changed,
@@ -157,10 +162,10 @@ class User extends AbstractMapperService
 
     public function changePassword(array $post, UserModel $user)
     {
-        /* @var $form Password */
-        $form = $this->getForm(Password::class);
+        /* @var $form PasswordForm */
+        $form = $this->getForm(PasswordForm::class);
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter = $this->getInputFilter();
 
         $inputFilter->addPasswordLength('register');
@@ -198,7 +203,7 @@ class User extends AbstractMapperService
     public function preAdd(Event $e): void
     {
         $form = $e->getParam('form');
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists(null);
         $inputFilter->addPasswordLength('register');
@@ -220,7 +225,7 @@ class User extends AbstractMapperService
         // if changed then reevaluate it.
         $email = ($model->getEmail() === $post['email']) ? $model->getEmail() : null;
 
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addEmailNoRecordExists($email);
 
@@ -281,11 +286,11 @@ class User extends AbstractMapperService
             true,
             false
         );
-        /* @var $inputFilter \UthandoUser\InputFilter\User */
+        /* @var $inputFilter \UthandoUser\InputFilter\UserInputFilter */
         $inputFilter    = $this->getInputFilter();
-        /* @var $form \UthandoUser\Form\ForgotPassword */
+        /* @var $form \UthandoUser\Form\ForgotPasswordForm */
         $form           = $this->getService('FormElementManager')
-            ->get(ForgotPassword::class);
+            ->get(ForgotPasswordForm::class);
 
         //$inputFilter->addEmailNoRecordExists();
         $form->setValidationGroup(['email', 'captcha', 'security']);
@@ -301,14 +306,14 @@ class User extends AbstractMapperService
 
     public function getAdminUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
     {
-        /* @var $mapper \UthandoUser\Mapper\User */
+        /* @var $mapper \UthandoUser\Mapper\UserMapper */
         $mapper = $this->getMapper();
         return $mapper->getAdminUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
     }
 
     public function getUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
     {
-        /* @var $mapper \UthandoUser\Mapper\User */
+        /* @var $mapper \UthandoUser\Mapper\UserMapper */
         $mapper = $this->getMapper();
         return $mapper->getUserByEmail($email, $ignore, $emptyPassword, $activeOnly);
     }

@@ -28,7 +28,7 @@ use Zend\Form\Form;
  *
  * @package UthandoUser\Form
  */
-class BaseUser extends Form
+class BaseUserForm extends Form
 {
     public function __construct($name = null, array $options =[])
     {

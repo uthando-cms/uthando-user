@@ -10,7 +10,7 @@
 
 namespace UthandoUserTest\Form;
 
-use UthandoUser\Form\UserEdit;
+use UthandoUser\Form\UserFormEdit;
 use UthandoUserTest\Framework\TestCase;
 
 class UserEditTest extends TestCase
@@ -21,12 +21,12 @@ class UserEditTest extends TestCase
             ->get('FormElementManager')
             ->get('UthandoUserEdit');
 
-        $this->assertInstanceOf('UthandoUser\Form\UserEdit', $form);
+        $this->assertInstanceOf('UthandoUser\Form\UserFormEdit', $form);
     }
 
     public function testInit()
     {
-        $form = new UserEdit();
+        $form = new UserFormEdit();
 
         $form->getFormFactory()->setFormElementManager($this->serviceManager->get('FormElementManager'));
         $form->init();

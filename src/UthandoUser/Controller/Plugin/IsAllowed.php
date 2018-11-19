@@ -11,7 +11,7 @@
 
 namespace UthandoUser\Controller\Plugin;
 
-use UthandoUser\Model\User;
+use UthandoUser\Model\UserModel;
 use UthandoUser\Service\Acl;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
@@ -80,9 +80,9 @@ class IsAllowed extends AbstractPlugin
         return $this->identity;
     }
 
-    public function setIdentity(?User $identity): IsAllowed
+    public function setIdentity(?UserModel $identity): IsAllowed
     {
-        if ($identity instanceof User) {
+        if ($identity instanceof UserModel) {
             $this->identity = $identity;
         } else {
             $this->identity = new Role('guest');

@@ -12,7 +12,7 @@
 namespace UthandoUser\InputFilter;
 
 use UthandoCommon\Filter\Ucwords;
-use UthandoUser\Option\LoginOptions;
+use UthandoUser\Options\LoginOptions;
 use Zend\Db\Adapter\Adapter;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
@@ -34,7 +34,7 @@ use Zend\Validator\StringLength;
  * @package UthandoUser\InputFilter
  * @method InputFilterPluginManager getServiceLocator()
  */
-class User extends InputFilter implements ServiceLocatorAwareInterface
+class UserInputFilter extends InputFilter implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
@@ -133,7 +133,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         ]);
     }
 
-    public function addPasswordLength(string $type): User
+    public function addPasswordLength(string $type): UserInputFilter
     {
         $type = ucfirst($type);
 
@@ -155,7 +155,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function addEmailNoRecordExists(?string $exclude): User
+    public function addEmailNoRecordExists(?string $exclude): UserInputFilter
     {
         $exclude = (!$exclude) ?: [
             'field' => 'email',
@@ -174,7 +174,7 @@ class User extends InputFilter implements ServiceLocatorAwareInterface
         return $this;
     }
 
-    public function addEmailRecordExists(?string $exclude): User
+    public function addEmailRecordExists(?string $exclude): UserInputFilter
     {
         $exclude = (!$exclude) ?: [
             'field' => 'email',

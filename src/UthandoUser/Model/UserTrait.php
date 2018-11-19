@@ -23,16 +23,16 @@ trait UserTrait
     use UserIdTrait;
 
     /**
-     * @var User
+     * @var UserModel
      */
     protected $user;
 
-    public function getUser(): User
+    public function getUser(): UserModel
     {
         return $this->user;
     }
 
-    public function setUser(User $user): ModelInterface
+    public function setUser(UserModel $user): ModelInterface
     {
         $this->user = $user;
         return $this;

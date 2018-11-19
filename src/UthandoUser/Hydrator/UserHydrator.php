@@ -21,7 +21,7 @@ use UthandoCommon\Hydrator\Strategy\TrueFalse;
  *
  * @package UthandoUser\Hydrator
  */
-class User extends AbstractHydrator
+class UserHydrator extends AbstractHydrator
 {
     public function __construct()
     {
@@ -35,14 +35,14 @@ class User extends AbstractHydrator
         return $this;
     }
 
-    public function emptyPassword(): User
+    public function emptyPassword(): UserHydrator
     {
         $this->addStrategy('passwd', new EmptyString());
         return $this;
     }
 
     /**
-     * @param \UthandoUser\Model\User $object
+     * @param \UthandoUser\Model\UserModel $object
      * @return array
      */
     public function extract($object): array

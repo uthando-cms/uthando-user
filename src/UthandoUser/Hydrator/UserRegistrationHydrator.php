@@ -20,7 +20,7 @@ use UthandoCommon\Hydrator\Strategy\TrueFalse;
  *
  * @package UthandoUser\Hydrator
  */
-class UserRegistration extends AbstractHydrator
+class UserRegistrationHydrator extends AbstractHydrator
 {
     public function __construct()
     {
@@ -33,7 +33,7 @@ class UserRegistration extends AbstractHydrator
     }
 
     /**
-     * @param \UthandoUser\Model\UserRegistration $object
+     * @param \UthandoUser\Model\UserRegistrationModel $object
      * @return array
      */
     public function extract($object): array

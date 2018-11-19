@@ -20,7 +20,7 @@ use Zend\Math\Rand;
  *
  * @package UthandoUser\Model
  */
-class UserRegistration implements ModelInterface
+class UserRegistrationModel implements ModelInterface
 {
     use Model,
         UserTrait;
@@ -52,7 +52,7 @@ class UserRegistration implements ModelInterface
         return $this->userRegistrationId;
     }
 
-    public function setUserRegistrationId(int $userRegistrationId): UserRegistration
+    public function setUserRegistrationId(int $userRegistrationId): UserRegistrationModel
     {
         $this->userRegistrationId = $userRegistrationId;
         return $this;
@@ -63,7 +63,7 @@ class UserRegistration implements ModelInterface
         return $this->token;
     }
 
-    public function setToken(string $token): UserRegistration
+    public function setToken(string $token): UserRegistrationModel
     {
         $this->token = $token;
         return $this;
@@ -82,7 +82,7 @@ class UserRegistration implements ModelInterface
         return $this->requestTime;
     }
 
-    public function setRequestTime(?\DateTime $requestTime): UserRegistration
+    public function setRequestTime(?\DateTime $requestTime): UserRegistrationModel
     {
         $this->requestTime = $requestTime;
         return $this;
@@ -93,7 +93,7 @@ class UserRegistration implements ModelInterface
         return $this->responded;
     }
 
-    public function setResponded(bool $responded): UserRegistration
+    public function setResponded(bool $responded): UserRegistrationModel
     {
         $this->responded = $responded;
         return $this;

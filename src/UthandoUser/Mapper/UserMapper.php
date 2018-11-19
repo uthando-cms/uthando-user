@@ -12,7 +12,7 @@
 namespace UthandoUser\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
-use UthandoUser\Model\User as UserModel;
+use UthandoUser\Model\UserModel as UserModel;
 use Zend\Db\Sql\Select;
 
 /**
@@ -20,7 +20,7 @@ use Zend\Db\Sql\Select;
  *
  * @package UthandoUser\Mapper
  */
-class User extends AbstractDbMapper
+class UserMapper extends AbstractDbMapper
 {
     protected $table = 'user';
     protected $primary = 'userId';
@@ -32,7 +32,7 @@ class User extends AbstractDbMapper
      */
     public function getById($id, $col = null)
     {
-        /* @var $hydrator \UthandoUser\Hydrator\User */
+        /* @var $hydrator \UthandoUser\Hydrator\UserHydrator */
         $hydrator = $this->getResultSet()->getHydrator();
         $hydrator->emptyPassword();
         return parent::getById($id);
@@ -41,7 +41,7 @@ class User extends AbstractDbMapper
     public function getAdminUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): ?UserModel
     {
         if ($emptyPassword) {
-            /* @var $hydrator \UthandoUser\Hydrator\User */
+            /* @var $hydrator \UthandoUser\Hydrator\UserHydrator */
             $hydrator = $this->getResultSet()->getHydrator();
             $hydrator->emptyPassword();
         }
@@ -70,7 +70,7 @@ class User extends AbstractDbMapper
     public function getUserByEmail(string $email, ?string $ignore, bool $emptyPassword, bool $activeOnly): UserModel
     {
         if ($emptyPassword) {
-            /* @var $hydrator \UthandoUser\Hydrator\User */
+            /* @var $hydrator \UthandoUser\Hydrator\UserHydrator */
             $hydrator = $this->getResultSet()->getHydrator();
             $hydrator->emptyPassword();
         }

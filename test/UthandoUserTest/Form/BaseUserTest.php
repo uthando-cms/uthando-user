@@ -10,21 +10,21 @@
 
 namespace UthandoUserTest\Form;
 
-use UthandoUser\Form\BaseUser;
+use UthandoUser\Form\BaseUserForm;
 use UthandoUserTest\Framework\TestCase;
 
 class BaseUserTest extends TestCase
 {
     public function testCanCreateForm()
     {
-        $form = new BaseUser();
+        $form = new BaseUserForm();
 
-        $this->assertInstanceOf('UthandoUser\Form\BaseUser', $form);
+        $this->assertInstanceOf('UthandoUser\Form\BaseUserForm', $form);
     }
 
     public function testInit()
     {
-        $form = new BaseUser();
+        $form = new BaseUserForm();
 
         $form->getFormFactory()->setFormElementManager($this->serviceManager->get('FormElementManager'));
         $form->init();
@@ -45,7 +45,7 @@ class BaseUserTest extends TestCase
 
     public function testAddCaptcha()
     {
-        $form = new BaseUser();
+        $form = new BaseUserForm();
 
         $form->getFormFactory()->setFormElementManager($this->serviceManager->get('FormElementManager'));
         $form->addCaptcha();

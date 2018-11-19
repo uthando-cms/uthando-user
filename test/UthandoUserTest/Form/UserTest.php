@@ -10,7 +10,7 @@
 
 namespace UthandoUserTest\Form;
 
-use UthandoUser\Form\User;
+use UthandoUser\Form\UserForm;
 use UthandoUserTest\Framework\TestCase;
 
 class UserTest extends TestCase
@@ -26,7 +26,7 @@ class UserTest extends TestCase
 
     public function testInit()
     {
-        $form = new User();
+        $form = new UserForm();
 
         $form->getFormFactory()->setFormElementManager($this->serviceManager->get('FormElementManager'));
         $form->init();
@@ -49,7 +49,7 @@ class UserTest extends TestCase
 
     public function testIncludePasswordOption()
     {
-        $form = new User(null, [
+        $form = new UserForm(null, [
             'include_password' => true,
         ]);
 

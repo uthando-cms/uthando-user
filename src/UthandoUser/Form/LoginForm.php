@@ -20,7 +20,7 @@ use Zend\Form\Element\Submit;
  *
  * @package UthandoUser\Form
  */
-class Login extends BaseUser
+class LoginForm extends BaseUserForm
 {
     public function init(): void
     {

@@ -18,7 +18,7 @@ use Zend\Form\Element\Submit;
  *
  * @package UthandoUser\Form
  */
-class ForgotPassword extends BaseUser
+class ForgotPasswordForm extends BaseUserForm
 {
     public function init(): void
     {

@@ -10,7 +10,7 @@
 
 namespace UthandoUserTest\Form\Settings;
 
-use UthandoUser\Form\Settings\Settings;
+use UthandoUser\Form\Settings\SettingsForm;
 use UthandoUserTest\Framework\TestCase;
 
 class SettingsTest extends TestCase
@@ -21,12 +21,12 @@ class SettingsTest extends TestCase
         $form = $this->serviceManager->get('FormElementManager')
             ->get('UthandoUserSettings');
 
-        $this->assertInstanceOf('UthandoUser\Form\Settings\Settings', $form);
+        $this->assertInstanceOf('UthandoUser\Form\Settings\SettingsForm', $form);
     }
 
     public function testInit()
     {
-        $form = new Settings();
+        $form = new SettingsForm();
 
         $form->getFormFactory()->setFormElementManager($this->serviceManager->get('FormElementManager'));
         $form->init();

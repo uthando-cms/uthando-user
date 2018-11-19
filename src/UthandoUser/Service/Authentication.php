@@ -13,7 +13,7 @@ namespace UthandoUser\Service;
 
 use UthandoUser\Authentication\Adapter as AuthAdapter;
 use UthandoUser\Authentication\Storage;
-use UthandoUser\Model\User as UserModel;
+use UthandoUser\Model\UserModel as UserModel;
 use UthandoUser\Options\AuthOptions;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 
@@ -32,7 +32,7 @@ class Authentication extends ZendAuthenticationService
     protected $authAdapter;
 
     /**
-     * @var User
+     * @var UserService
      */
     protected $userService;
 
@@ -47,14 +47,14 @@ class Authentication extends ZendAuthenticationService
     protected $options;
 
     /**
-     * @return User
+     * @return UserService
      */
-    public function getUserService(): User
+    public function getUserService(): UserService
     {
         return $this->userService;
     }
 
-    public function setUserService(User $service): Authentication
+    public function setUserService(UserService $service): Authentication
     {
         $this->userService = $service;
         return $this;
