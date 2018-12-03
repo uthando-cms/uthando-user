@@ -39,14 +39,14 @@ class UserRegistrationMapper extends AbstractDbMapper
                 [],
                 Select::JOIN_LEFT
             );
-        
-        /*if (str_replace('-', '', $sort) == 'name') {
+
+        if (str_replace('-', '', $sort) == 'name') {
             if (strchr($sort, '-')) {
-                $sort = ['-lastname', '-firstname'];
+                $sort = ['-user.lastname', '-user.firstname'];
             } else {
-                $sort = ['lastname', 'firstname'];
+                $sort = ['user.lastname', 'user.firstname'];
             }
-        }*/
+        }
 
         return parent::search($search, $sort, $select);
     }
