@@ -115,11 +115,7 @@ class UserInputFilter extends InputFilter implements ServiceLocatorAwareInterfac
                 ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name' => EmailAddress::class, 'options' => [
-                    'allow' => Hostname::ALLOW_DNS,
-                    'useMxCheck' => true,
-                    'useDeepMxCheck' => true
-                ]],
+                ['name' => EmailAddress::class, 'options' => $this->getLoginOptions()->getEmailValidateOptions()],
             ],
         ]);
 
@@ -191,5 +187,15 @@ class UserInputFilter extends InputFilter implements ServiceLocatorAwareInterfac
             ]);
 
         return $this;
+    }
+
+    /**
+     * @return LoginOptions
+     */
+    protected function getLoginOptions(): LoginOptions
+    {
+        /** @var LoginOptions $options */
+        $options = $this->getServiceLocator()->getServiceLocator()->get(LoginOptions::class);
+        return $options;
     }
 }

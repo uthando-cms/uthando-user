@@ -11,6 +11,7 @@
 namespace UthandoUser\Options;
 
 use Zend\Stdlib\AbstractOptions;
+use Zend\Validator\Hostname;
 
 class LoginOptions extends AbstractOptions
 {
@@ -47,6 +48,17 @@ class LoginOptions extends AbstractOptions
      * @var int
      */
     protected $loginMaxPasswordLength = 16;
+
+    /**
+     * @var array
+     */
+    protected $emailValidateOptions = [
+        'useMxCheck'        => false,
+        'useDeepMxCheck'    => false,
+        'useDomainCheck'    => true,
+        'strict'            => true,
+        'allow'             => Hostname::ALLOW_DNS,
+    ];
 
     public function getLimitLogin(): bool
     {
@@ -122,6 +134,24 @@ class LoginOptions extends AbstractOptions
     public function setLoginMaxPasswordLength(int $loginMaxPasswordLength): LoginOptions
     {
         $this->loginMaxPasswordLength = $loginMaxPasswordLength;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEmailValidateOptions(): array
+    {
+        return $this->emailValidateOptions;
+    }
+
+    /**
+     * @param array $emailValidateOptions
+     * @return LoginOptions
+     */
+    public function setEmailValidateOptions(array $emailValidateOptions): LoginOptions
+    {
+        $this->emailValidateOptions = $emailValidateOptions;
         return $this;
     }
 }

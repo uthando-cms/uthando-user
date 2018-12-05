@@ -16,6 +16,7 @@ use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
 use Zend\Form\Element\Checkbox;
+use Zend\Form\Element\MultiCheckbox;
 use Zend\Form\Element\Number;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods;
@@ -121,6 +122,17 @@ class LoginFieldSet extends Fieldset implements InputFilterProviderInterface
                 'label_attributes' => [
                     'class' => 'col-sm-6',
                 ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'email_validate_options',
+            'type' => EmailValidateOptionsFieldSet::class,
+            'attributes' => [
+                //'class' => 'col-sm-12',
+            ],
+            'options' => [
+                //'label' => 'Email Validate Options',
             ],
         ]);
     }
